@@ -29,31 +29,33 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include <ardrone_autonomy/Navdata.h>
+#include <sensor_msgs/Range.h>
 
-    double vx_=0.0;
-	double vy_=0.0;
-	double vz_=0.0;
+double vx_=0.0;
+double vy_=0.0;
+double vz_=0.0;
+float timestamp_anterior = 0.0;
 
-
-/**
- * This tutorial demonstrates simple receipt of messages over the ROS system.
- */
-// %Tag(CALLBACK)%
-void chatterCallback(const std_msgs::String::ConstPtr& msg)
+void sonar_front_callback(const sensor_msgs::Range& msg_in)
 {
-  ROS_INFO("I heard: [%s]", msg->data.c_str());
-}
+	//ROS_INFO("getting sensor reading");
+	ROS_INFO("Range: [%f]", msg_in.range);
 
+}
 
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
 	//Take in state of ardrone
+
+    float dt = msg_in.tm - timestamp_anterior;
+
 	vx_=msg_in.vx*0.001;
 	vy_=msg_in.vy*0.001;
 	vz_=msg_in.vz*0.001;
 	//ROS_INFO("getting sensor reading");
-	ROS_INFO("I heard vx: [%f]  vy: [%f] vz: [%f]", vx_, vy_, vz_);
-
+	//ROS_INFO("I heard vx: [%f]  vy: [%f] vz: [%f]", vx_, vy_, vz_);
+    ROS_INFO("Time: [%f]", dt);
+    timestamp_anterior = msg_in.tm;
 }
 // %EndTag(CALLBACK)%
 
@@ -95,9 +97,9 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
 // %Tag(SUBSCRIBER)%
-  ros::Subscriber sub = n.subscribe("/ardrone/navdata", 1, nav_callback);
+  ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
-
+//  ros::Subscriber sub_sensor = n.subscribe("/sonar_front", 1, sonar_front_callback);
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
