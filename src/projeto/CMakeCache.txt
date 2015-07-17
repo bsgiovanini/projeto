@@ -185,6 +185,9 @@ USERCONFIG:FILEPATH=USERCONFIG-NOTFOUND
 //Path to a file.
 _file_name:FILEPATH=/home/bruno/ros_workspace/src/projeto/src/takeoff.cpp
 
+//Dependencies for the target
+hector_gazebo_ros_sonar_LIB_DEPENDS:STATIC=general;/usr/local/lib/liboctomap.so;general;/usr/local/lib/liboctomath.so;general;image_transport;general;poco_lite;general;boost_fs_wrapper;general;tinyxml;general;roslib;general;message_filters;general;roscpp;general;rostime;general;rosconsole;general;roscpp_serialization;general;xmlrpcpp;general;tf;general;boost_thread-mt;general;BulletDynamics;general;BulletCollision;general;LinearMath;general;camera_info_manager;general;camera_calibration_parsers;
+
 //The directory containing a CMake configuration file for octomap.
 octomap_DIR:PATH=/usr/local/share/octomap
 

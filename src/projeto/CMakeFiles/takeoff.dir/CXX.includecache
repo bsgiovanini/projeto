@@ -23,6 +23,14 @@ math.h
 -
 eigen3/Eigen/Dense
 -
+signal.h
+-
+stdlib.h
+-
+stdio.h
+-
+unistd.h
+-
 
 /home/bruno/workshop/ardrone_autonomy/msg_gen/cpp/include/ardrone_autonomy/Navdata.h
 string
