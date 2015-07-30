@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Wno-error  -O3 -funroll-loops -DNDEBUG    CMakeFiles/eval_octree_accuracy.dir/eval_octree_accuracy.cpp.o  -o ../../../bin/eval_octree_accuracy -rdynamic -L/home/bruno/octomap/lib ../../../lib/liboctomap.so.1.6.8 ../../../lib/liboctomath.so.1.6.8 -Wl,-rpath,/home/bruno/octomap/lib: 

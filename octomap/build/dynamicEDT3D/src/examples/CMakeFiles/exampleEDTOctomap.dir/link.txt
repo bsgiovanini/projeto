@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Wno-error  -O3 -funroll-loops -DNDEBUG    CMakeFiles/exampleEDTOctomap.dir/exampleEDTOctomap.cpp.o  -o ../../../../bin/exampleEDTOctomap -rdynamic -L/home/bruno/octomap/lib ../../../../lib/libdynamicedt3d.so.1.6.8 -loctomap -loctomath -Wl,-rpath,/home/bruno/octomap/lib 

@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Wno-error  -O3 -funroll-loops -DNDEBUG    CMakeFiles/color_tree_histogram.dir/color_tree_histogram.cpp.o  -o ../../../../bin/color_tree_histogram -rdynamic -L/home/bruno/octomap/lib ../../../../lib/liboctomap.so.1.6.8 ../../../../lib/liboctomath.so.1.6.8 -Wl,-rpath,/home/bruno/octomap/lib 

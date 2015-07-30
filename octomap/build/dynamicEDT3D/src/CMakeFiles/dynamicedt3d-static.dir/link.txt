@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../lib/libdynamicedt3d.a  CMakeFiles/dynamicedt3d-static.dir/dynamicEDT3D.cpp.o CMakeFiles/dynamicedt3d-static.dir/dynamicEDTOctomap.cpp.o
+/usr/bin/ranlib ../../../lib/libdynamicedt3d.a
