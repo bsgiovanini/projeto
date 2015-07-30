@@ -1,0 +1,1 @@
+/usr/bin/c++       CMakeFiles/simple.dir/simple.cpp.o  -o simple -rdynamic -L/usr/local/lib /usr/local/lib/liboctomap.so /usr/local/lib/liboctomath.so -Wl,-rpath,/usr/local/lib 
