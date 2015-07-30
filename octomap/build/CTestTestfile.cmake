@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/bruno/octomap
-# Build directory: /home/bruno/octomap/build
+# Source directory: /home/robotica/bruno_workspace/src/projeto/octomap
+# Build directory: /home/robotica/bruno_workspace/src/projeto/octomap/build
 # 
 # This file includes the relevent testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

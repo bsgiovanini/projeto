@@ -202,7 +202,7 @@ ros/ros.h
 math.h
 -
 
-/home/bruno/octomap/octomap/src/testing/test_scans.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/testing/test_scans.cpp
 stdio.h
 -
 octomap/octomap.h

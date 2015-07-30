@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -108,7 +108,7 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	/usr/bin/cpack --config ./CPackSourceConfig.cmake /home/bruno/octomap/build/CPackSourceConfig.cmake
+	/usr/bin/cpack --config ./CPackSourceConfig.cmake /home/robotica/bruno_workspace/src/projeto/octomap/build/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -137,9 +137,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/octomap/build/CMakeFiles /home/bruno/octomap/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/octomap/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target

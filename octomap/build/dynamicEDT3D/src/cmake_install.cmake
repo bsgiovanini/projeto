@@ -1,4 +1,4 @@
-# Install script for directory: /home/bruno/octomap/dynamicEDT3D/src
+# Install script for directory: /home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -46,9 +46,9 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
     ENDIF()
   ENDFOREACH()
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/bruno/octomap/lib/libdynamicedt3d.so.1.6.8"
-    "/home/bruno/octomap/lib/libdynamicedt3d.so.1.6"
-    "/home/bruno/octomap/lib/libdynamicedt3d.so"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/libdynamicedt3d.so.1.6.8"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/libdynamicedt3d.so.1.6"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/libdynamicedt3d.so"
     )
   FOREACH(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libdynamicedt3d.so.1.6.8"
@@ -59,7 +59,7 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
        NOT IS_SYMLINK "${file}")
       FILE(RPATH_CHANGE
            FILE "${file}"
-           OLD_RPATH "/home/bruno/octomap/lib:"
+           OLD_RPATH "/home/robotica/bruno_workspace/src/projeto/octomap/lib:"
            NEW_RPATH "/usr/local/lib")
       IF(CMAKE_INSTALL_DO_STRIP)
         EXECUTE_PROCESS(COMMAND "/usr/bin/strip" "${file}")
@@ -69,12 +69,12 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bruno/octomap/lib/libdynamicedt3d.a")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/robotica/bruno_workspace/src/projeto/octomap/lib/libdynamicedt3d.a")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/bruno/octomap/build/dynamicEDT3D/src/examples/cmake_install.cmake")
+  INCLUDE("/home/robotica/bruno_workspace/src/projeto/octomap/build/dynamicEDT3D/src/examples/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 

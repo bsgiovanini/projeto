@@ -28,13 +28,13 @@ iostream
 math.h
 -
 
-/home/bruno/octomap/octomap/src/math/Pose6D.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/math/Pose6D.cpp
 octomap/math/Pose6D.h
 -
 math.h
 -
 
-/home/bruno/octomap/octomap/src/math/Quaternion.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/math/Quaternion.cpp
 octomap/math/Vector3.h
 -
 octomap/math/Quaternion.h
@@ -46,7 +46,7 @@ cassert
 math.h
 -
 
-/home/bruno/octomap/octomap/src/math/Vector3.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/math/Vector3.cpp
 octomap/math/Vector3.h
 -
 cassert

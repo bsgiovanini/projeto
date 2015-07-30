@@ -1,4 +1,4 @@
-# Install script for directory: /home/bruno/octomap/dynamicEDT3D/src/examples
+# Install script for directory: /home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src/examples
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

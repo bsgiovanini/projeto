@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Include any dependencies generated for this target.
 include octomap/src/CMakeFiles/octomap.dir/depend.make
@@ -48,17 +48,17 @@ include octomap/src/CMakeFiles/octomap.dir/flags.make
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o: ../octomap/src/AbstractOcTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/AbstractOcTree.cpp.o -c /home/bruno/octomap/octomap/src/AbstractOcTree.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/AbstractOcTree.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOcTree.cpp
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/AbstractOcTree.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/AbstractOcTree.cpp > CMakeFiles/octomap.dir/AbstractOcTree.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOcTree.cpp > CMakeFiles/octomap.dir/AbstractOcTree.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/AbstractOcTree.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/AbstractOcTree.cpp -o CMakeFiles/octomap.dir/AbstractOcTree.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOcTree.cpp -o CMakeFiles/octomap.dir/AbstractOcTree.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o.requires
@@ -71,17 +71,17 @@ octomap/src/CMakeFiles/octomap.dir/AbstractOcTree.cpp.o.provides.build: octomap/
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o: ../octomap/src/AbstractOccupancyOcTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o -c /home/bruno/octomap/octomap/src/AbstractOccupancyOcTree.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOccupancyOcTree.cpp
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/AbstractOccupancyOcTree.cpp > CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOccupancyOcTree.cpp > CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/AbstractOccupancyOcTree.cpp -o CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/AbstractOccupancyOcTree.cpp -o CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o.requires
@@ -94,17 +94,17 @@ octomap/src/CMakeFiles/octomap.dir/AbstractOccupancyOcTree.cpp.o.provides.build:
 
 octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o: ../octomap/src/Pointcloud.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/Pointcloud.cpp.o -c /home/bruno/octomap/octomap/src/Pointcloud.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/Pointcloud.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/Pointcloud.cpp
 
 octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/Pointcloud.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/Pointcloud.cpp > CMakeFiles/octomap.dir/Pointcloud.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/Pointcloud.cpp > CMakeFiles/octomap.dir/Pointcloud.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/Pointcloud.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/Pointcloud.cpp -o CMakeFiles/octomap.dir/Pointcloud.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/Pointcloud.cpp -o CMakeFiles/octomap.dir/Pointcloud.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o.requires
@@ -117,17 +117,17 @@ octomap/src/CMakeFiles/octomap.dir/Pointcloud.cpp.o.provides.build: octomap/src/
 
 octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o: ../octomap/src/ScanGraph.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/ScanGraph.cpp.o -c /home/bruno/octomap/octomap/src/ScanGraph.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/ScanGraph.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ScanGraph.cpp
 
 octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/ScanGraph.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/ScanGraph.cpp > CMakeFiles/octomap.dir/ScanGraph.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ScanGraph.cpp > CMakeFiles/octomap.dir/ScanGraph.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/ScanGraph.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/ScanGraph.cpp -o CMakeFiles/octomap.dir/ScanGraph.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ScanGraph.cpp -o CMakeFiles/octomap.dir/ScanGraph.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o.requires
@@ -140,17 +140,17 @@ octomap/src/CMakeFiles/octomap.dir/ScanGraph.cpp.o.provides.build: octomap/src/C
 
 octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o: ../octomap/src/CountingOcTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/CountingOcTree.cpp.o -c /home/bruno/octomap/octomap/src/CountingOcTree.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/CountingOcTree.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/CountingOcTree.cpp
 
 octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/CountingOcTree.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/CountingOcTree.cpp > CMakeFiles/octomap.dir/CountingOcTree.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/CountingOcTree.cpp > CMakeFiles/octomap.dir/CountingOcTree.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/CountingOcTree.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/CountingOcTree.cpp -o CMakeFiles/octomap.dir/CountingOcTree.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/CountingOcTree.cpp -o CMakeFiles/octomap.dir/CountingOcTree.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o.requires
@@ -163,17 +163,17 @@ octomap/src/CMakeFiles/octomap.dir/CountingOcTree.cpp.o.provides.build: octomap/
 
 octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o: ../octomap/src/OcTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTree.cpp.o -c /home/bruno/octomap/octomap/src/OcTree.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTree.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTree.cpp
 
 octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/OcTree.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/OcTree.cpp > CMakeFiles/octomap.dir/OcTree.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTree.cpp > CMakeFiles/octomap.dir/OcTree.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/OcTree.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/OcTree.cpp -o CMakeFiles/octomap.dir/OcTree.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTree.cpp -o CMakeFiles/octomap.dir/OcTree.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o.requires
@@ -186,17 +186,17 @@ octomap/src/CMakeFiles/octomap.dir/OcTree.cpp.o.provides.build: octomap/src/CMak
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o: ../octomap/src/OcTreeNode.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeNode.cpp.o -c /home/bruno/octomap/octomap/src/OcTreeNode.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeNode.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeNode.cpp
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/OcTreeNode.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/OcTreeNode.cpp > CMakeFiles/octomap.dir/OcTreeNode.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeNode.cpp > CMakeFiles/octomap.dir/OcTreeNode.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/OcTreeNode.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/OcTreeNode.cpp -o CMakeFiles/octomap.dir/OcTreeNode.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeNode.cpp -o CMakeFiles/octomap.dir/OcTreeNode.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o.requires
@@ -209,17 +209,17 @@ octomap/src/CMakeFiles/octomap.dir/OcTreeNode.cpp.o.provides.build: octomap/src/
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o: ../octomap/src/OcTreeStamped.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeStamped.cpp.o -c /home/bruno/octomap/octomap/src/OcTreeStamped.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeStamped.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeStamped.cpp
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/OcTreeStamped.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/OcTreeStamped.cpp > CMakeFiles/octomap.dir/OcTreeStamped.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeStamped.cpp > CMakeFiles/octomap.dir/OcTreeStamped.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/OcTreeStamped.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/OcTreeStamped.cpp -o CMakeFiles/octomap.dir/OcTreeStamped.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeStamped.cpp -o CMakeFiles/octomap.dir/OcTreeStamped.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o.requires
@@ -232,17 +232,17 @@ octomap/src/CMakeFiles/octomap.dir/OcTreeStamped.cpp.o.provides.build: octomap/s
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o: ../octomap/src/OcTreeLUT.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeLUT.cpp.o -c /home/bruno/octomap/octomap/src/OcTreeLUT.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/OcTreeLUT.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeLUT.cpp
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/OcTreeLUT.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/OcTreeLUT.cpp > CMakeFiles/octomap.dir/OcTreeLUT.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeLUT.cpp > CMakeFiles/octomap.dir/OcTreeLUT.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/OcTreeLUT.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/OcTreeLUT.cpp -o CMakeFiles/octomap.dir/OcTreeLUT.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/OcTreeLUT.cpp -o CMakeFiles/octomap.dir/OcTreeLUT.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o.requires
@@ -255,17 +255,17 @@ octomap/src/CMakeFiles/octomap.dir/OcTreeLUT.cpp.o.provides.build: octomap/src/C
 
 octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.o: octomap/src/CMakeFiles/octomap.dir/flags.make
 octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.o: ../octomap/src/ColorOcTree.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.o"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/ColorOcTree.cpp.o -c /home/bruno/octomap/octomap/src/ColorOcTree.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octomap.dir/ColorOcTree.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ColorOcTree.cpp
 
 octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octomap.dir/ColorOcTree.cpp.i"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octomap/src/ColorOcTree.cpp > CMakeFiles/octomap.dir/ColorOcTree.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ColorOcTree.cpp > CMakeFiles/octomap.dir/ColorOcTree.cpp.i
 
 octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octomap.dir/ColorOcTree.cpp.s"
-	cd /home/bruno/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octomap/src/ColorOcTree.cpp -o CMakeFiles/octomap.dir/ColorOcTree.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/ColorOcTree.cpp -o CMakeFiles/octomap.dir/ColorOcTree.cpp.s
 
 octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.o.requires:
 .PHONY : octomap/src/CMakeFiles/octomap.dir/ColorOcTree.cpp.o.requires
@@ -306,8 +306,8 @@ octomap_EXTERNAL_OBJECTS =
 ../lib/liboctomap.so.1.6.8: octomap/src/CMakeFiles/octomap.dir/build.make
 ../lib/liboctomap.so.1.6.8: octomap/src/CMakeFiles/octomap.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library ../../../lib/liboctomap.so"
-	cd /home/bruno/octomap/build/octomap/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octomap.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/bruno/octomap/build/octomap/src && $(CMAKE_COMMAND) -E cmake_symlink_library ../../../lib/liboctomap.so.1.6.8 ../../../lib/liboctomap.so.1.6 ../../../lib/liboctomap.so
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octomap.dir/link.txt --verbose=$(VERBOSE)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && $(CMAKE_COMMAND) -E cmake_symlink_library ../../../lib/liboctomap.so.1.6.8 ../../../lib/liboctomap.so.1.6 ../../../lib/liboctomap.so
 
 ../lib/liboctomap.so.1.6: ../lib/liboctomap.so.1.6.8
 
@@ -330,10 +330,10 @@ octomap/src/CMakeFiles/octomap.dir/requires: octomap/src/CMakeFiles/octomap.dir/
 .PHONY : octomap/src/CMakeFiles/octomap.dir/requires
 
 octomap/src/CMakeFiles/octomap.dir/clean:
-	cd /home/bruno/octomap/build/octomap/src && $(CMAKE_COMMAND) -P CMakeFiles/octomap.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src && $(CMAKE_COMMAND) -P CMakeFiles/octomap.dir/cmake_clean.cmake
 .PHONY : octomap/src/CMakeFiles/octomap.dir/clean
 
 octomap/src/CMakeFiles/octomap.dir/depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/octomap/src /home/bruno/octomap/build /home/bruno/octomap/build/octomap/src /home/bruno/octomap/build/octomap/src/CMakeFiles/octomap.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/src/CMakeFiles/octomap.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : octomap/src/CMakeFiles/octomap.dir/depend
 

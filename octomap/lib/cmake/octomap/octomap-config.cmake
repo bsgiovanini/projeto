@@ -23,12 +23,12 @@
 # ===================================================================================
 
  
-set(OCTOMAP_INCLUDE_DIRS "/home/bruno/octomap/octomap/include")
-set(OCTOMAP_LIBRARY_DIRS "/home/bruno/octomap/lib")
+set(OCTOMAP_INCLUDE_DIRS "/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include")
+set(OCTOMAP_LIBRARY_DIRS "/home/robotica/bruno_workspace/src/projeto/octomap/lib")
  
 
 # Set library names as absolute paths:
 set(OCTOMAP_LIBRARIES
-  "/home/bruno/octomap/lib/liboctomap.so"
-  "/home/bruno/octomap/lib/liboctomath.so"
+  "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomap.so"
+  "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomath.so"
 )

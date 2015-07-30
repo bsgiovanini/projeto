@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Utility rule file for docs.
 
@@ -43,9 +43,9 @@ CMAKE_BINARY_DIR = /home/bruno/octomap/build
 include octomap/CMakeFiles/docs.dir/progress.make
 
 octomap/CMakeFiles/docs:
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating documentation (Doxygen) at location /home/bruno/octomap/octomap/doc/html/"
-	cd /home/bruno/octomap/octomap && /usr/bin/doxygen /home/bruno/octomap/build/octomap/octomap.dox
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating documentation (Doxygen) at location /home/robotica/bruno_workspace/src/projeto/octomap/octomap/doc/html/"
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/octomap && /usr/bin/doxygen /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/octomap.dox
 
 docs: octomap/CMakeFiles/docs
 docs: octomap/CMakeFiles/docs.dir/build.make
@@ -56,10 +56,10 @@ octomap/CMakeFiles/docs.dir/build: docs
 .PHONY : octomap/CMakeFiles/docs.dir/build
 
 octomap/CMakeFiles/docs.dir/clean:
-	cd /home/bruno/octomap/build/octomap && $(CMAKE_COMMAND) -P CMakeFiles/docs.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap && $(CMAKE_COMMAND) -P CMakeFiles/docs.dir/cmake_clean.cmake
 .PHONY : octomap/CMakeFiles/docs.dir/clean
 
 octomap/CMakeFiles/docs.dir/depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/octomap /home/bruno/octomap/build /home/bruno/octomap/build/octomap /home/bruno/octomap/build/octomap/CMakeFiles/docs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/octomap /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/CMakeFiles/docs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : octomap/CMakeFiles/docs.dir/depend
 

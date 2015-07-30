@@ -1,14 +1,14 @@
-MathVector 1 0.00897406
-MathPose 1 0.0097439
-InsertRay 1 2.06989
-InsertScan 1 0.910948
-ReadGraph 1 0.046112
-StampedTree 1 1.2239
-OcTreeKey 1 0.0128921
-test_raycasting 1 3.033
-test_io 1 0.907346
-test_pruning 1 0.056451
-test_iterators 1 1.25797
-test_mapcollection 1 0.414495
-test_color_tree 1 0.207953
+MathVector 1 0.00379705
+MathPose 1 0.00361605
+InsertRay 1 1.50394
+InsertScan 1 0.575637
+ReadGraph 1 0.029986
+StampedTree 1 1.11515
+OcTreeKey 1 0.00529594
+test_raycasting 1 2.15571
+test_io 1 0.643433
+test_pruning 1 0.0406891
+test_iterators 1 0.800784
+test_mapcollection 1 0.281095
+test_color_tree 1 0.144236
 ---

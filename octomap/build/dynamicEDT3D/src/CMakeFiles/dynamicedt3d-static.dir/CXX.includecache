@@ -228,7 +228,7 @@ ros/ros.h
 math.h
 -
 
-/home/bruno/octomap/dynamicEDT3D/src/dynamicEDT3D.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src/dynamicEDT3D.cpp
 dynamicEDT3D/dynamicEDT3D.h
 -
 math.h
@@ -236,7 +236,7 @@ math.h
 stdlib.h
 -
 
-/home/bruno/octomap/dynamicEDT3D/src/dynamicEDTOctomap.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src/dynamicEDTOctomap.cpp
 dynamicEDT3D/dynamicEDTOctomap.h
 -
 

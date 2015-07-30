@@ -637,7 +637,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written
 # to stderr.
 
-WARN_LOGFILE           = "/home/bruno/octomap/build/octomap/doxygen_warnings.log"
+WARN_LOGFILE           = "/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/doxygen_warnings.log"
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files

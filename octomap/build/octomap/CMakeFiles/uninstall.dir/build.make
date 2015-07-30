@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Utility rule file for uninstall.
 
@@ -43,7 +43,7 @@ CMAKE_BINARY_DIR = /home/bruno/octomap/build
 include octomap/CMakeFiles/uninstall.dir/progress.make
 
 octomap/CMakeFiles/uninstall:
-	cd /home/bruno/octomap/build/octomap && /usr/bin/cmake -P /home/bruno/octomap/build/octomap/cmake_uninstall.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap && /usr/bin/cmake -P /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/cmake_uninstall.cmake
 
 uninstall: octomap/CMakeFiles/uninstall
 uninstall: octomap/CMakeFiles/uninstall.dir/build.make
@@ -54,10 +54,10 @@ octomap/CMakeFiles/uninstall.dir/build: uninstall
 .PHONY : octomap/CMakeFiles/uninstall.dir/build
 
 octomap/CMakeFiles/uninstall.dir/clean:
-	cd /home/bruno/octomap/build/octomap && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap && $(CMAKE_COMMAND) -P CMakeFiles/uninstall.dir/cmake_clean.cmake
 .PHONY : octomap/CMakeFiles/uninstall.dir/clean
 
 octomap/CMakeFiles/uninstall.dir/depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/octomap /home/bruno/octomap/build /home/bruno/octomap/build/octomap /home/bruno/octomap/build/octomap/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/octomap /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/CMakeFiles/uninstall.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : octomap/CMakeFiles/uninstall.dir/depend
 

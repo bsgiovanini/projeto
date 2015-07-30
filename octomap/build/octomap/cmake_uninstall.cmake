@@ -1,8 +1,8 @@
-if (NOT EXISTS "/home/bruno/octomap/build/octomap/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/home/bruno/octomap/build/octomap/install_manifest.txt\"")
-endif(NOT EXISTS "/home/bruno/octomap/build/octomap/install_manifest.txt")
+if (NOT EXISTS "/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/install_manifest.txt\"")
+endif(NOT EXISTS "/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/install_manifest.txt")
 
-file(READ "/home/bruno/octomap/build/octomap/install_manifest.txt" files)
+file(READ "/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 list(REVERSE files)
 foreach (file ${files})

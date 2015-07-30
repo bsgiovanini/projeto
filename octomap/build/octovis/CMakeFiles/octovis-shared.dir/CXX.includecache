@@ -246,29 +246,29 @@ SceneObject.h
 vector
 -
 
-/home/bruno/octomap/octovis/src/ColorOcTreeDrawer.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ColorOcTreeDrawer.cpp
 octovis/ColorOcTreeDrawer.h
 -
 
-/home/bruno/octomap/octovis/src/OcTreeDrawer.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/OcTreeDrawer.cpp
 octovis/OcTreeDrawer.h
 -
 
-/home/bruno/octomap/octovis/src/PointcloudDrawer.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/PointcloudDrawer.cpp
 octovis/PointcloudDrawer.h
 -
 
-/home/bruno/octomap/octovis/src/SceneObject.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SceneObject.cpp
 octovis/SceneObject.h
 -
 
-/home/bruno/octomap/octovis/src/SelectionBox.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SelectionBox.cpp
 octovis/SelectionBox.h
 -
 manipulatedFrame.h
 -
 
-/home/bruno/octomap/octovis/src/TrajectoryDrawer.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/TrajectoryDrawer.cpp
 octovis/TrajectoryDrawer.h
 -
 

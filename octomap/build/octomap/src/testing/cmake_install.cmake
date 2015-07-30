@@ -1,4 +1,4 @@
-# Install script for directory: /home/bruno/octomap/octomap/src/testing
+# Install script for directory: /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/testing
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -210,7 +210,7 @@ Vector3d predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0,
 
 }
 
-int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
+/*int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
     float c_factor = (octree_resolution/2) + quadrotor_sphere_radius;
 
@@ -265,7 +265,7 @@ int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
     return verify_x && verify_y && verify_z;
 
-}
+}*/
 
 int is_occupied(point3d center, point3d direction, double shortest_dist) {
 
@@ -308,6 +308,38 @@ int it_is_safe(point3d center, double clearence) {
 
 }
 
+int bounding_box_is_free_at_position(Vector3d position) {
+
+    float factor = quadrotor_sphere_radius;
+
+    point3d min_vol = point3d(position(0)-factor, position(1)-factor, position(2)-factor);
+    point3d max_vol = point3d(position(0)+factor, position(1)+factor, position(2)+factor);
+
+    OcTreeKey bbxMinKey, bbxMaxKey;
+
+    tree.coordToKeyChecked(min_vol, bbxMinKey);
+    tree.coordToKeyChecked(max_vol, bbxMaxKey);
+
+    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
+    {
+        point3d coords = it.getCoordinate();
+        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
+        if (it->getValue() > 0.0) {
+
+            return 0;
+
+        }
+      //manipulate node, e.g.:
+      //cout << "Node center: " << it.getCoordinate() << endl;
+      //cout << "Node size: " << it.getSize() << endl;
+      //cout << "Node value: " << it->getValue() << endl;
+    }
+
+    return 1;
+
+
+}
+
 
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
@@ -344,56 +376,24 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d future_position = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + 0.5, dt);
 
-    OcTreeKey bbxMinKey, bbxMaxKey;
-
-    //tree.getMetricMin(temp_x,temp_y,temp_z);
-    //point3d min_vol(temp_x,temp_y,temp_z);
-
-    //tree.getMetricMax(temp_x,temp_y,temp_z);
-    //point3d max_vol(temp_x,temp_y,temp_z);
-
-    point3d min_vol = point3d(x(0)-1, x(1)-1, x(2)-1);
-    point3d max_vol = point3d(x(0)+1, x(1)+1, x(2)+1);
-
-    tree.coordToKeyChecked(min_vol, bbxMinKey);
-    tree.coordToKeyChecked(max_vol, bbxMaxKey);
-
-    //OcTree::leaf_bbx_iterator end_bbx = tree.end_leafs_bbx();
-
-    //cout << "points min "<< min_vol <<" max " << max_vol << endl;
-
     double distance_to_goal = 1000;
     Vector3d best_avoiding_position(0,0,0);
 
-    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
-    {
-        point3d coords = it.getCoordinate();
-        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
-        if (it->getValue() > 0.0) {
-            if (there_will_be_collision(future_position, wrapped_coords)) {
-                cout << "Opa!! vai colidir!!!";
-            }
-        } else {
+    if (!bounding_box_is_free_at_position(future_position)) {
 
-            double clearence = 0.0;
 
-            double dist = (wrapped_coords - future_position).norm();
+        cout << "Opa!! vai colidir!!!" << endl;
 
-            if(it_is_safe(coords, clearence) && dist < distance_to_goal) {
 
-                best_avoiding_position = wrapped_coords;
-                distance_to_goal = dist;
-            }
-        }
-      //manipulate node, e.g.:
-      //cout << "Node center: " << it.getCoordinate() << endl;
-      //cout << "Node size: " << it.getSize() << endl;
-      //cout << "Node value: " << it->getValue() << endl;
+    } else {
+        cout << "Vai na fé!! Tá livre!!!" << endl;
     }
 
-    ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
-    ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
-    ROS_INFO("distance to goal: [%f]", distance_to_goal);
+
+
+    //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
+    //ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
+    //ROS_INFO("distance to goal: [%f]", distance_to_goal);
 
 	//ROS_INFO("getting sensor reading");
 	//

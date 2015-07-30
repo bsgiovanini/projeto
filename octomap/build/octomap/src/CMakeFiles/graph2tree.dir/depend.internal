@@ -25,4 +25,4 @@ octomap/src/CMakeFiles/graph2tree.dir/graph2tree.cpp.o
  ../octomap/include/octomap/octomap_timing.h
  ../octomap/include/octomap/octomap_types.h
  ../octomap/include/octomap/octomap_utils.h
- /home/bruno/octomap/octomap/src/graph2tree.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/graph2tree.cpp

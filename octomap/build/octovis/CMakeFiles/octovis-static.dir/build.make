@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Include any dependencies generated for this target.
 include octovis/CMakeFiles/octovis-static.dir/depend.make
@@ -48,17 +48,17 @@ include octovis/CMakeFiles/octovis-static.dir/flags.make
 
 octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o: ../octovis/src/SceneObject.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o -c /home/bruno/octomap/octovis/src/SceneObject.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SceneObject.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/SceneObject.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/SceneObject.cpp > CMakeFiles/octovis-static.dir/src/SceneObject.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SceneObject.cpp > CMakeFiles/octovis-static.dir/src/SceneObject.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/SceneObject.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/SceneObject.cpp -o CMakeFiles/octovis-static.dir/src/SceneObject.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SceneObject.cpp -o CMakeFiles/octovis-static.dir/src/SceneObject.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o.requires
@@ -71,17 +71,17 @@ octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o.provides.build: octo
 
 octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o: ../octovis/src/PointcloudDrawer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o -c /home/bruno/octomap/octovis/src/PointcloudDrawer.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/PointcloudDrawer.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/PointcloudDrawer.cpp > CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/PointcloudDrawer.cpp > CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/PointcloudDrawer.cpp -o CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/PointcloudDrawer.cpp -o CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o.requires
@@ -94,17 +94,17 @@ octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o.provides.build:
 
 octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o: ../octovis/src/OcTreeDrawer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o -c /home/bruno/octomap/octovis/src/OcTreeDrawer.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/OcTreeDrawer.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/OcTreeDrawer.cpp > CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/OcTreeDrawer.cpp > CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/OcTreeDrawer.cpp -o CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/OcTreeDrawer.cpp -o CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o.requires
@@ -117,17 +117,17 @@ octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o.provides.build: oct
 
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o: ../octovis/src/SelectionBox.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o -c /home/bruno/octomap/octovis/src/SelectionBox.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SelectionBox.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/SelectionBox.cpp > CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SelectionBox.cpp > CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/SelectionBox.cpp -o CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SelectionBox.cpp -o CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o.requires
@@ -140,17 +140,17 @@ octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o.provides.build: oct
 
 octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o: ../octovis/src/TrajectoryDrawer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o -c /home/bruno/octomap/octovis/src/TrajectoryDrawer.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/TrajectoryDrawer.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/TrajectoryDrawer.cpp > CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/TrajectoryDrawer.cpp > CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/TrajectoryDrawer.cpp -o CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/TrajectoryDrawer.cpp -o CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o.requires
@@ -163,17 +163,17 @@ octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o.provides.build:
 
 octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o: octovis/CMakeFiles/octovis-static.dir/flags.make
 octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o: ../octovis/src/ColorOcTreeDrawer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o -c /home/bruno/octomap/octovis/src/ColorOcTreeDrawer.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ColorOcTreeDrawer.cpp
 
 octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ColorOcTreeDrawer.cpp > CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ColorOcTreeDrawer.cpp > CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.i
 
 octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ColorOcTreeDrawer.cpp -o CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ColorOcTreeDrawer.cpp -o CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.s
 
 octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o.requires
@@ -205,8 +205,8 @@ octovis__static_EXTERNAL_OBJECTS =
 ../lib/liboctovis.a: octovis/CMakeFiles/octovis-static.dir/build.make
 ../lib/liboctovis.a: octovis/CMakeFiles/octovis-static.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX static library ../../lib/liboctovis.a"
-	cd /home/bruno/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis-static.dir/cmake_clean_target.cmake
-	cd /home/bruno/octomap/build/octovis && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octovis-static.dir/link.txt --verbose=$(VERBOSE)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis-static.dir/cmake_clean_target.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octovis-static.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 octovis/CMakeFiles/octovis-static.dir/build: ../lib/liboctovis.a
@@ -221,10 +221,10 @@ octovis/CMakeFiles/octovis-static.dir/requires: octovis/CMakeFiles/octovis-stati
 .PHONY : octovis/CMakeFiles/octovis-static.dir/requires
 
 octovis/CMakeFiles/octovis-static.dir/clean:
-	cd /home/bruno/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis-static.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis-static.dir/cmake_clean.cmake
 .PHONY : octovis/CMakeFiles/octovis-static.dir/clean
 
 octovis/CMakeFiles/octovis-static.dir/depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/octovis /home/bruno/octomap/build /home/bruno/octomap/build/octovis /home/bruno/octomap/build/octovis/CMakeFiles/octovis-static.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/octovis /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/CMakeFiles/octovis-static.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : octovis/CMakeFiles/octovis-static.dir/depend
 

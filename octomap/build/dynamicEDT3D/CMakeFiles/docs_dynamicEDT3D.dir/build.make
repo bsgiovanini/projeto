@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Utility rule file for docs_dynamicEDT3D.
 
@@ -43,9 +43,9 @@ CMAKE_BINARY_DIR = /home/bruno/octomap/build
 include dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/progress.make
 
 dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D:
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating documentation (Doxygen)..."
-	cd /home/bruno/octomap/dynamicEDT3D && /usr/bin/doxygen /home/bruno/octomap/dynamicEDT3D/dynamicEDT3D.dox
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D && /usr/bin/doxygen /home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/dynamicEDT3D.dox
 
 docs_dynamicEDT3D: dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D
 docs_dynamicEDT3D: dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/build.make
@@ -56,10 +56,10 @@ dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/build: docs_dynamicEDT3D
 .PHONY : dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/build
 
 dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/clean:
-	cd /home/bruno/octomap/build/dynamicEDT3D && $(CMAKE_COMMAND) -P CMakeFiles/docs_dynamicEDT3D.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/dynamicEDT3D && $(CMAKE_COMMAND) -P CMakeFiles/docs_dynamicEDT3D.dir/cmake_clean.cmake
 .PHONY : dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/clean
 
 dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/dynamicEDT3D /home/bruno/octomap/build /home/bruno/octomap/build/dynamicEDT3D /home/bruno/octomap/build/dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/dynamicEDT3D /home/robotica/bruno_workspace/src/projeto/octomap/build/dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : dynamicEDT3D/CMakeFiles/docs_dynamicEDT3D.dir/depend
 

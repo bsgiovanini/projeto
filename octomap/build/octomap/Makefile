@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -98,7 +98,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target package
 package: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /home/bruno/octomap/build && /usr/bin/cpack --config ./CPackConfig.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && /usr/bin/cpack --config ./CPackConfig.cmake
 .PHONY : package
 
 # Special rule for the target package
@@ -108,7 +108,7 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /home/bruno/octomap/build && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/bruno/octomap/build/CPackSourceConfig.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/robotica/bruno_workspace/src/projeto/octomap/build/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -137,14 +137,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/octomap/build/CMakeFiles /home/bruno/octomap/build/octomap/CMakeFiles/progress.marks
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/octomap/build/CMakeFiles 0
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles /home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/CMakeFiles/progress.marks
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/clean
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/clean
 .PHONY : clean
 
 # The main clean target
@@ -153,22 +153,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/preinstall
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/preinstall
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 octomap/CMakeFiles/docs.dir/rule:
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/CMakeFiles/docs.dir/rule
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/CMakeFiles/docs.dir/rule
 .PHONY : octomap/CMakeFiles/docs.dir/rule
 
 # Convenience name for target.
@@ -177,12 +177,12 @@ docs: octomap/CMakeFiles/docs.dir/rule
 
 # fast build rule for target.
 docs/fast:
-	cd /home/bruno/octomap/build && $(MAKE) -f octomap/CMakeFiles/docs.dir/build.make octomap/CMakeFiles/docs.dir/build
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f octomap/CMakeFiles/docs.dir/build.make octomap/CMakeFiles/docs.dir/build
 .PHONY : docs/fast
 
 # Convenience name for target.
 octomap/CMakeFiles/uninstall.dir/rule:
-	cd /home/bruno/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/CMakeFiles/uninstall.dir/rule
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f CMakeFiles/Makefile2 octomap/CMakeFiles/uninstall.dir/rule
 .PHONY : octomap/CMakeFiles/uninstall.dir/rule
 
 # Convenience name for target.
@@ -191,7 +191,7 @@ uninstall: octomap/CMakeFiles/uninstall.dir/rule
 
 # fast build rule for target.
 uninstall/fast:
-	cd /home/bruno/octomap/build && $(MAKE) -f octomap/CMakeFiles/uninstall.dir/build.make octomap/CMakeFiles/uninstall.dir/build
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(MAKE) -f octomap/CMakeFiles/uninstall.dir/build.make octomap/CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
 # Help Target
@@ -222,6 +222,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

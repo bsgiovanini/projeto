@@ -14,12 +14,12 @@
 #  DYNAMICEDT3D_LIBRARIES    - libraries to link against
  
 # Tell the user project where to find our headers and libraries
-set(DYNAMICEDT3D_INCLUDE_DIRS "/home/bruno/octomap/dynamicEDT3D/include")
-set(DYNAMICEDT3D_LIBRARY_DIRS "/home/bruno/octomap/lib")
+set(DYNAMICEDT3D_INCLUDE_DIRS "/home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/include")
+set(DYNAMICEDT3D_LIBRARY_DIRS "/home/robotica/bruno_workspace/src/projeto/octomap/lib")
  
 # Our library dependencies (contains definitions for IMPORTED targets)
 # include("/FooBarLibraryDepends.cmake")
  
 set(DYNAMICEDT3D_LIBRARIES
- "/home/bruno/octomap/lib/libdynamicedt3d.so"
+ "/home/robotica/bruno_workspace/src/projeto/octomap/lib/libdynamicedt3d.so"
 )

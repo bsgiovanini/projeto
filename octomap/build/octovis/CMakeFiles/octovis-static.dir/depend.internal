@@ -28,7 +28,7 @@ octovis/CMakeFiles/octovis-static.dir/src/ColorOcTreeDrawer.cpp.o
  ../octovis/include/octovis/ColorOcTreeDrawer.h
  ../octovis/include/octovis/OcTreeDrawer.h
  ../octovis/include/octovis/SceneObject.h
- /home/bruno/octomap/octovis/src/ColorOcTreeDrawer.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ColorOcTreeDrawer.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h
@@ -189,7 +189,7 @@ octovis/CMakeFiles/octovis-static.dir/src/OcTreeDrawer.cpp.o
  ../octomap/include/octomap/octomap_utils.h
  ../octovis/include/octovis/OcTreeDrawer.h
  ../octovis/include/octovis/SceneObject.h
- /home/bruno/octomap/octovis/src/OcTreeDrawer.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/OcTreeDrawer.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h
@@ -350,7 +350,7 @@ octovis/CMakeFiles/octovis-static.dir/src/PointcloudDrawer.cpp.o
  ../octomap/include/octomap/octomap_utils.h
  ../octovis/include/octovis/PointcloudDrawer.h
  ../octovis/include/octovis/SceneObject.h
- /home/bruno/octomap/octovis/src/PointcloudDrawer.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/PointcloudDrawer.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h
@@ -510,7 +510,7 @@ octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o
  ../octomap/include/octomap/octomap_types.h
  ../octomap/include/octomap/octomap_utils.h
  ../octovis/include/octovis/SceneObject.h
- /home/bruno/octomap/octovis/src/SceneObject.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SceneObject.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h
@@ -648,7 +648,7 @@ octovis/CMakeFiles/octovis-static.dir/src/SceneObject.cpp.o
  /usr/include/qt4/QtXml/qdom.h
 octovis/CMakeFiles/octovis-static.dir/src/SelectionBox.cpp.o
  ../octovis/include/octovis/SelectionBox.h
- /home/bruno/octomap/octovis/src/SelectionBox.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/SelectionBox.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h
@@ -809,7 +809,7 @@ octovis/CMakeFiles/octovis-static.dir/src/TrajectoryDrawer.cpp.o
  ../octomap/include/octomap/octomap_utils.h
  ../octovis/include/octovis/SceneObject.h
  ../octovis/include/octovis/TrajectoryDrawer.h
- /home/bruno/octomap/octovis/src/TrajectoryDrawer.cpp
+ /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/TrajectoryDrawer.cpp
  /usr/include/QGLViewer/camera.h
  /usr/include/QGLViewer/config.h
  /usr/include/QGLViewer/constraint.h

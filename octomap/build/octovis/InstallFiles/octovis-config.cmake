@@ -5,7 +5,7 @@
 #  OCTOVIS_LIBRARY_DIRS - library directories for OctoMap viewer 
 #  OCTOVIS_LIBRARIES    - libraries to link against
  
-set(OCTOVIS_INCLUDE_DIRS "/usr/include/QGLViewer" "/home/bruno/octomap/octovis/include")
+set(OCTOVIS_INCLUDE_DIRS "/usr/include/QGLViewer" "/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include")
 set(OCTOVIS_LIBRARY_DIRS "/usr/lib/i386-linux-gnu" "/usr/local/lib")
 
 

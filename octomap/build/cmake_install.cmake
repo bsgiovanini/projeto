@@ -1,4 +1,4 @@
-# Install script for directory: /home/bruno/octomap
+# Install script for directory: /home/robotica/bruno_workspace/src/projeto/octomap
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,9 +34,9 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  INCLUDE("/home/bruno/octomap/build/octomap/cmake_install.cmake")
-  INCLUDE("/home/bruno/octomap/build/octovis/cmake_install.cmake")
-  INCLUDE("/home/bruno/octomap/build/dynamicEDT3D/cmake_install.cmake")
+  INCLUDE("/home/robotica/bruno_workspace/src/projeto/octomap/build/octomap/cmake_install.cmake")
+  INCLUDE("/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/cmake_install.cmake")
+  INCLUDE("/home/robotica/bruno_workspace/src/projeto/octomap/build/dynamicEDT3D/cmake_install.cmake")
 
 ENDIF(NOT CMAKE_INSTALL_LOCAL_ONLY)
 
@@ -46,7 +46,7 @@ ELSE(CMAKE_INSTALL_COMPONENT)
   SET(CMAKE_INSTALL_MANIFEST "install_manifest.txt")
 ENDIF(CMAKE_INSTALL_COMPONENT)
 
-FILE(WRITE "/home/bruno/octomap/build/${CMAKE_INSTALL_MANIFEST}" "")
+FILE(WRITE "/home/robotica/bruno_workspace/src/projeto/octomap/build/${CMAKE_INSTALL_MANIFEST}" "")
 FOREACH(file ${CMAKE_INSTALL_MANIFEST_FILES})
-  FILE(APPEND "/home/bruno/octomap/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
+  FILE(APPEND "/home/robotica/bruno_workspace/src/projeto/octomap/build/${CMAKE_INSTALL_MANIFEST}" "${file}\n")
 ENDFOREACH(file)

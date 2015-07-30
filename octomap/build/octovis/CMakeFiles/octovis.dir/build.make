@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/octomap
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/octomap
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/octomap/build
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/octomap/build
 
 # Include any dependencies generated for this target.
 include octovis/CMakeFiles/octovis.dir/depend.make
@@ -48,17 +48,17 @@ include octovis/CMakeFiles/octovis.dir/flags.make
 
 octovis/CMakeFiles/octovis.dir/src/main.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/main.cpp.o: ../octovis/src/main.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/main.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/main.cpp.o -c /home/bruno/octomap/octovis/src/main.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/main.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/main.cpp
 
 octovis/CMakeFiles/octovis.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/main.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/main.cpp > CMakeFiles/octovis.dir/src/main.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/main.cpp > CMakeFiles/octovis.dir/src/main.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/main.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/main.cpp -o CMakeFiles/octovis.dir/src/main.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/main.cpp -o CMakeFiles/octovis.dir/src/main.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/main.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/main.cpp.o.requires
@@ -71,17 +71,17 @@ octovis/CMakeFiles/octovis.dir/src/main.cpp.o.provides.build: octovis/CMakeFiles
 
 octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o: ../octovis/src/ViewerGui.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerGui.cpp.o -c /home/bruno/octomap/octovis/src/ViewerGui.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerGui.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerGui.cpp
 
 octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/ViewerGui.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ViewerGui.cpp > CMakeFiles/octovis.dir/src/ViewerGui.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerGui.cpp > CMakeFiles/octovis.dir/src/ViewerGui.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/ViewerGui.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ViewerGui.cpp -o CMakeFiles/octovis.dir/src/ViewerGui.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerGui.cpp -o CMakeFiles/octovis.dir/src/ViewerGui.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o.requires
@@ -94,17 +94,17 @@ octovis/CMakeFiles/octovis.dir/src/ViewerGui.cpp.o.provides.build: octovis/CMake
 
 octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o: ../octovis/src/ViewerWidget.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o -c /home/bruno/octomap/octovis/src/ViewerWidget.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerWidget.cpp
 
 octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/ViewerWidget.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ViewerWidget.cpp > CMakeFiles/octovis.dir/src/ViewerWidget.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerWidget.cpp > CMakeFiles/octovis.dir/src/ViewerWidget.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/ViewerWidget.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ViewerWidget.cpp -o CMakeFiles/octovis.dir/src/ViewerWidget.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerWidget.cpp -o CMakeFiles/octovis.dir/src/ViewerWidget.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o.requires
@@ -117,17 +117,17 @@ octovis/CMakeFiles/octovis.dir/src/ViewerWidget.cpp.o.provides.build: octovis/CM
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o: ../octovis/src/ViewerSettings.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o -c /home/bruno/octomap/octovis/src/ViewerSettings.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettings.cpp
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/ViewerSettings.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ViewerSettings.cpp > CMakeFiles/octovis.dir/src/ViewerSettings.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettings.cpp > CMakeFiles/octovis.dir/src/ViewerSettings.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/ViewerSettings.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ViewerSettings.cpp -o CMakeFiles/octovis.dir/src/ViewerSettings.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettings.cpp -o CMakeFiles/octovis.dir/src/ViewerSettings.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o.requires
@@ -140,17 +140,17 @@ octovis/CMakeFiles/octovis.dir/src/ViewerSettings.cpp.o.provides.build: octovis/
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o: ../octovis/src/ViewerSettingsPanel.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o -c /home/bruno/octomap/octovis/src/ViewerSettingsPanel.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanel.cpp
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ViewerSettingsPanel.cpp > CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanel.cpp > CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ViewerSettingsPanel.cpp -o CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanel.cpp -o CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o.requires
@@ -163,17 +163,17 @@ octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanel.cpp.o.provides.build: oct
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o: ../octovis/src/ViewerSettingsPanelCamera.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o -c /home/bruno/octomap/octovis/src/ViewerSettingsPanelCamera.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanelCamera.cpp
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/ViewerSettingsPanelCamera.cpp > CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanelCamera.cpp > CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/ViewerSettingsPanelCamera.cpp -o CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanelCamera.cpp -o CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o.requires
@@ -186,17 +186,17 @@ octovis/CMakeFiles/octovis.dir/src/ViewerSettingsPanelCamera.cpp.o.provides.buil
 
 octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o: ../octovis/src/CameraFollowMode.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o -c /home/bruno/octomap/octovis/src/CameraFollowMode.cpp
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o -c /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/CameraFollowMode.cpp
 
 octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/octovis/src/CameraFollowMode.cpp > CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/CameraFollowMode.cpp > CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.i
 
 octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/octovis/src/CameraFollowMode.cpp -o CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/CameraFollowMode.cpp -o CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.s
 
 octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o.requires
@@ -209,17 +209,17 @@ octovis/CMakeFiles/octovis.dir/src/CameraFollowMode.cpp.o.provides.build: octovi
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o: octovis/include/octovis/moc_ViewerGui.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o.requires
@@ -232,17 +232,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerGui.cxx.o.provides.buil
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o: octovis/include/octovis/moc_ViewerWidget.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o.requires
@@ -255,17 +255,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerWidget.cxx.o.provides.b
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o: octovis/include/octovis/moc_ViewerSettings.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o.requires
@@ -278,17 +278,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettings.cxx.o.provides
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o: octovis/include/octovis/moc_ViewerSettingsPanel.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_11)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o.requires
@@ -301,17 +301,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanel.cxx.o.pro
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o: octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_12)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx > CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx.o.requires
@@ -324,17 +324,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_ViewerSettingsPanelCamera.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o: octovis/include/octovis/moc_CameraFollowMode.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_13)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_13)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o -c /home/bruno/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx > CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx > CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.i
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx -o CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.s
 
 octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o.requires
@@ -347,17 +347,17 @@ octovis/CMakeFiles/octovis.dir/include/octovis/moc_CameraFollowMode.cxx.o.provid
 
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o: octovis/CMakeFiles/octovis.dir/flags.make
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o: octovis/qrc_icons.cxx
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_14)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_14)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/qrc_icons.cxx.o -c /home/bruno/octomap/build/octovis/qrc_icons.cxx
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/octovis.dir/qrc_icons.cxx.o -c /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/qrc_icons.cxx
 
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/octovis.dir/qrc_icons.cxx.i"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/bruno/octomap/build/octovis/qrc_icons.cxx > CMakeFiles/octovis.dir/qrc_icons.cxx.i
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/qrc_icons.cxx > CMakeFiles/octovis.dir/qrc_icons.cxx.i
 
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/octovis.dir/qrc_icons.cxx.s"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/bruno/octomap/build/octovis/qrc_icons.cxx -o CMakeFiles/octovis.dir/qrc_icons.cxx.s
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/qrc_icons.cxx -o CMakeFiles/octovis.dir/qrc_icons.cxx.s
 
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o.requires:
 .PHONY : octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o.requires
@@ -369,54 +369,54 @@ octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o.provides: octovis/CMakeFiles/octo
 octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o.provides.build: octovis/CMakeFiles/octovis.dir/qrc_icons.cxx.o
 
 octovis/ui_ViewerGui.h: ../octovis/include/octovis/ViewerGui.ui
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_15)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_15)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating ui_ViewerGui.h"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/bruno/octomap/build/octovis/ui_ViewerGui.h /home/bruno/octomap/octovis/include/octovis/ViewerGui.ui
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/ui_ViewerGui.h /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerGui.ui
 
 octovis/ui_ViewerSettings.h: ../octovis/include/octovis/ViewerSettings.ui
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_16)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_16)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating ui_ViewerSettings.h"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/bruno/octomap/build/octovis/ui_ViewerSettings.h /home/bruno/octomap/octovis/include/octovis/ViewerSettings.ui
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/ui_ViewerSettings.h /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettings.ui
 
 octovis/ui_ViewerSettingsPanel.h: ../octovis/include/octovis/ViewerSettingsPanel.ui
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_17)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating ui_ViewerSettingsPanel.h"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/bruno/octomap/build/octovis/ui_ViewerSettingsPanel.h /home/bruno/octomap/octovis/include/octovis/ViewerSettingsPanel.ui
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/ui_ViewerSettingsPanel.h /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettingsPanel.ui
 
 octovis/ui_ViewerSettingsPanelCamera.h: ../octovis/include/octovis/ViewerSettingsPanelCamera.ui
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_18)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_18)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating ui_ViewerSettingsPanelCamera.h"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/bruno/octomap/build/octovis/ui_ViewerSettingsPanelCamera.h /home/bruno/octomap/octovis/include/octovis/ViewerSettingsPanelCamera.ui
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/uic-qt4 -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/ui_ViewerSettingsPanelCamera.h /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettingsPanelCamera.ui
 
 octovis/include/octovis/moc_ViewerGui.cxx: ../octovis/include/octovis/ViewerGui.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_19)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_19)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_ViewerGui.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx /home/bruno/octomap/octovis/include/octovis/ViewerGui.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerGui.h
 
 octovis/include/octovis/moc_ViewerWidget.cxx: ../octovis/include/octovis/ViewerWidget.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_20)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_20)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_ViewerWidget.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx /home/bruno/octomap/octovis/include/octovis/ViewerWidget.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerWidget.h
 
 octovis/include/octovis/moc_ViewerSettings.cxx: ../octovis/include/octovis/ViewerSettings.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_21)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_21)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_ViewerSettings.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx /home/bruno/octomap/octovis/include/octovis/ViewerSettings.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettings.h
 
 octovis/include/octovis/moc_ViewerSettingsPanel.cxx: ../octovis/include/octovis/ViewerSettingsPanel.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_22)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_22)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_ViewerSettingsPanel.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx /home/bruno/octomap/octovis/include/octovis/ViewerSettingsPanel.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettingsPanel.h
 
 octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx: ../octovis/include/octovis/ViewerSettingsPanelCamera.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_23)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_23)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_ViewerSettingsPanelCamera.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx /home/bruno/octomap/octovis/include/octovis/ViewerSettingsPanelCamera.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/ViewerSettingsPanelCamera.h
 
 octovis/include/octovis/moc_CameraFollowMode.cxx: ../octovis/include/octovis/CameraFollowMode.h
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_24)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_24)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating include/octovis/moc_CameraFollowMode.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/bruno/octomap/octomap/include -I/home/bruno/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/bruno/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx /home/bruno/octomap/octovis/include/octovis/CameraFollowMode.h
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/moc-qt4 -I/home/robotica/bruno_workspace/src/projeto/octomap/octomap/include -I/home/robotica/bruno_workspace/src/projeto/octomap/octovis/include -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/QGLViewer -DQT_OPENGL_LIB -DQT_GUI_LIB -DQT_XML_LIB -DQT_CORE_LIB -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/include/octovis/CameraFollowMode.h
 
 octovis/qrc_icons.cxx: ../octovis/src/icons/media-playback-start.png
 octovis/qrc_icons.cxx: ../octovis/src/icons/media-seek-backward.png
@@ -441,9 +441,9 @@ octovis/qrc_icons.cxx: ../octovis/src/icons/list-add.png
 octovis/qrc_icons.cxx: ../octovis/src/icons/list-remove.png
 octovis/qrc_icons.cxx: octovis/src/icons.qrc.depends
 octovis/qrc_icons.cxx: ../octovis/src/icons.qrc
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/octomap/build/CMakeFiles $(CMAKE_PROGRESS_25)
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/octomap/build/CMakeFiles $(CMAKE_PROGRESS_25)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Generating qrc_icons.cxx"
-	cd /home/bruno/octomap/build/octovis && /usr/bin/rcc -name icons -o /home/bruno/octomap/build/octovis/qrc_icons.cxx /home/bruno/octomap/octovis/src/icons.qrc
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && /usr/bin/rcc -name icons -o /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/qrc_icons.cxx /home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/icons.qrc
 
 # Object files for target octovis
 octovis_OBJECTS = \
@@ -493,7 +493,7 @@ octovis_EXTERNAL_OBJECTS =
 ../bin/octovis: octovis/CMakeFiles/octovis.dir/build.make
 ../bin/octovis: octovis/CMakeFiles/octovis.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable ../../bin/octovis"
-	cd /home/bruno/octomap/build/octovis && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octovis.dir/link.txt --verbose=$(VERBOSE)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/octovis.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 octovis/CMakeFiles/octovis.dir/build: ../bin/octovis
@@ -516,7 +516,7 @@ octovis/CMakeFiles/octovis.dir/requires: octovis/CMakeFiles/octovis.dir/qrc_icon
 .PHONY : octovis/CMakeFiles/octovis.dir/requires
 
 octovis/CMakeFiles/octovis.dir/clean:
-	cd /home/bruno/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis.dir/cmake_clean.cmake
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis && $(CMAKE_COMMAND) -P CMakeFiles/octovis.dir/cmake_clean.cmake
 .PHONY : octovis/CMakeFiles/octovis.dir/clean
 
 octovis/CMakeFiles/octovis.dir/depend: octovis/ui_ViewerGui.h
@@ -530,6 +530,6 @@ octovis/CMakeFiles/octovis.dir/depend: octovis/include/octovis/moc_ViewerSetting
 octovis/CMakeFiles/octovis.dir/depend: octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
 octovis/CMakeFiles/octovis.dir/depend: octovis/include/octovis/moc_CameraFollowMode.cxx
 octovis/CMakeFiles/octovis.dir/depend: octovis/qrc_icons.cxx
-	cd /home/bruno/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/octomap /home/bruno/octomap/octovis /home/bruno/octomap/build /home/bruno/octomap/build/octovis /home/bruno/octomap/build/octovis/CMakeFiles/octovis.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/octomap/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/octomap /home/robotica/bruno_workspace/src/projeto/octomap/octovis /home/robotica/bruno_workspace/src/projeto/octomap/build /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis /home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/CMakeFiles/octovis.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : octovis/CMakeFiles/octovis.dir/depend
 

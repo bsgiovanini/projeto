@@ -354,19 +354,19 @@ octomap/octomap.h
 qglviewer.h
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
 SceneObject.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/OcTreeDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/OcTreeDrawer.h
 SceneObject.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/PointcloudDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/PointcloudDrawer.h
 SceneObject.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 qglobal.h
 -
 QtCore/qt_windows.h
@@ -380,17 +380,17 @@ qglviewer.h
 octomap/octomap.h
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SelectionBox.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SelectionBox.h
 qglviewer.h
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/TrajectoryDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/TrajectoryDrawer.h
 SceneObject.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 vector
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerGui.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerGui.h
 QtGui/QMainWindow
 -
 QFileDialog
@@ -404,23 +404,23 @@ string
 cmath
 -
 TrajectoryDrawer.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/TrajectoryDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/TrajectoryDrawer.h
 PointcloudDrawer.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/PointcloudDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/PointcloudDrawer.h
 OcTreeDrawer.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/OcTreeDrawer.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/OcTreeDrawer.h
 CameraFollowMode.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
 ViewerWidget.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
 ViewerSettings.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
 ViewerSettingsPanel.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
 ViewerSettingsPanelCamera.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
 ui_ViewerGui.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerGui.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerGui.h
 octomap/AbstractOcTree.h
 -
 octomap/OcTreeBase.h
@@ -428,71 +428,71 @@ octomap/OcTreeBase.h
 octovis/OcTreeRecord.h
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
 QtGui/QDialog
 -
 ui_ViewerSettings.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettings.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettings.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
 math.h
 -
 qglviewer.h
 -
 ui_ViewerSettingsPanel.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettingsPanel.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettingsPanel.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
 QtGui/QWidget
 -
 ui_ViewerSettingsPanelCamera.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettingsPanelCamera.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ui_ViewerSettingsPanelCamera.h
 
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
 SceneObject.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SceneObject.h
 SelectionBox.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SelectionBox.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/SelectionBox.h
 octomap/octomap.h
 -
 qglviewer.h
 -
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_CameraFollowMode.cxx
 ../../../../octovis/include/octovis/CameraFollowMode.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/CameraFollowMode.h
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerGui.cxx
 ../../../../octovis/include/octovis/ViewerGui.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerGui.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerGui.h
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettings.cxx
 ../../../../octovis/include/octovis/ViewerSettings.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettings.h
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanel.cxx
 ../../../../octovis/include/octovis/ViewerSettingsPanel.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanel.h
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerSettingsPanelCamera.cxx
 ../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerSettingsPanelCamera.h
 
-/home/bruno/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/moc_ViewerWidget.cxx
 ../../../../octovis/include/octovis/ViewerWidget.h
-/home/bruno/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/include/octovis/../../../../octovis/include/octovis/ViewerWidget.h
 
-/home/bruno/octomap/build/octovis/qrc_icons.cxx
+/home/robotica/bruno_workspace/src/projeto/octomap/build/octovis/qrc_icons.cxx
 QtCore/qglobal.h
 -
 
-/home/bruno/octomap/octovis/src/CameraFollowMode.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/CameraFollowMode.cpp
 octovis/CameraFollowMode.h
 -
 iostream
 -
 
-/home/bruno/octomap/octovis/src/ViewerGui.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerGui.cpp
 iostream
 -
 fstream
@@ -504,27 +504,27 @@ octovis/ColorOcTreeDrawer.h
 octomap/MapCollection.h
 -
 
-/home/bruno/octomap/octovis/src/ViewerSettings.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettings.cpp
 octovis/ViewerSettings.h
 -
 
-/home/bruno/octomap/octovis/src/ViewerSettingsPanel.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanel.cpp
 octovis/ViewerSettingsPanel.h
 -
 
-/home/bruno/octomap/octovis/src/ViewerSettingsPanelCamera.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerSettingsPanelCamera.cpp
 octovis/ViewerSettingsPanelCamera.h
 -
 iostream
 -
 
-/home/bruno/octomap/octovis/src/ViewerWidget.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/ViewerWidget.cpp
 octovis/ViewerWidget.h
 -
 manipulatedCameraFrame.h
 -
 
-/home/bruno/octomap/octovis/src/main.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/octovis/src/main.cpp
 QtGui
 -
 QApplication

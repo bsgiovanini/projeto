@@ -1,4 +1,4 @@
-# Install script for directory: /home/bruno/octomap/octomap/src/math
+# Install script for directory: /home/robotica/bruno_workspace/src/projeto/octomap/octomap/src/math
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -46,9 +46,9 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
     ENDIF()
   ENDFOREACH()
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/bruno/octomap/lib/liboctomath.so.1.6.8"
-    "/home/bruno/octomap/lib/liboctomath.so.1.6"
-    "/home/bruno/octomap/lib/liboctomath.so"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomath.so.1.6.8"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomath.so.1.6"
+    "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomath.so"
     )
   FOREACH(file
       "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/liboctomath.so.1.6.8"
@@ -69,6 +69,6 @@ IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/bruno/octomap/lib/liboctomath.a")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/robotica/bruno_workspace/src/projeto/octomap/lib/liboctomath.a")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

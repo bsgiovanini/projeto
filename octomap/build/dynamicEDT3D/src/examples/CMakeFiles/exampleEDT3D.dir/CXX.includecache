@@ -38,7 +38,7 @@ bucketedqueue.h
 
 ../dynamicEDT3D/include/dynamicEDT3D/point.h
 
-/home/bruno/octomap/dynamicEDT3D/src/examples/exampleEDT3D.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src/examples/exampleEDT3D.cpp
 dynamicEDT3D/dynamicEDT3D.h
 -
 iostream

@@ -228,7 +228,7 @@ ros/ros.h
 math.h
 -
 
-/home/bruno/octomap/dynamicEDT3D/src/examples/exampleEDTOctomap.cpp
+/home/robotica/bruno_workspace/src/projeto/octomap/dynamicEDT3D/src/examples/exampleEDTOctomap.cpp
 dynamicEDT3D/dynamicEDTOctomap.h
 -
 iostream
