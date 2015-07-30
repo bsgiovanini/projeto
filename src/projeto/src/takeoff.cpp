@@ -80,31 +80,30 @@ Quaternion<double> rotation(Vector3d theta) {
     return q;
 }
 
-Vector3d thetadot2omega(Vector3d thetadot, Vector3d angles) {
+Matrix3d angularTransformationMatrix(Vector3d angles) {
     float phi = angles(0);
     float theta = angles(1);
-    float psi = angles(2);
+    //float psi = angles(2);
     Matrix3d W;
     W <<
         1, 0, -sin(theta),
         0, cos(phi), cos(theta)*sin(phi),
         0, -sin(phi), cos(theta)*cos(phi)
     ;
-    return (W * thetadot);
+    return W;
+
+}
+
+Vector3d thetadot2omega(Vector3d thetadot, Vector3d angles) {
+
+    Matrix3d T = angularTransformationMatrix(angles);
+    return (T * thetadot);
 }
 
 Vector3d omega2thetadot(Vector3d omega, Vector3d angles) {
-    float phi = angles(0);
-    float theta = angles(1);
-    float psi = angles(2);
-    Matrix3d W;
-    W <<
-        1, 0, -sin(theta),
-        0, cos(phi), cos(theta)*sin(phi),
-        0, -sin(phi), cos(theta)*cos(phi)
-    ;
 
-    return (W.inverse() * omega);
+    Matrix3d T = angularTransformationMatrix(angles).inverse();
+    return (T * omega);
 }
 
 
@@ -123,7 +122,7 @@ void load_sonar_rel_transform_m() {
 
 void sonar_front_callback(const sensor_msgs::Range& msg_in)
 {
-	ROS_INFO("Range: [%f]", msg_in.range);
+	//ROS_INFO("Range: [%f]", msg_in.range);
 
     Vector3d global_s_front_pose = x + rotation(theta).matrix() * s_front_rel_pose;
     //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_s_front_pose(0), global_s_front_pose(1), global_s_front_pose(2));
@@ -268,6 +267,47 @@ int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
 }
 
+int is_occupied(point3d center, point3d direction, double shortest_dist) {
+
+    point3d obstacle;
+    int is_occupied = tree.castRay(center, direction, obstacle, false, MAX_RANGE);
+
+    double dist = (obstacle - center).norm();
+    if (dist < shortest_dist) {
+        shortest_dist = dist;
+    }
+    return is_occupied;
+}
+
+
+int it_is_safe(point3d center, double clearence) {
+
+    float c_factor = (octree_resolution/2) + quadrotor_sphere_radius;
+
+    double shortest_dist = (point3d(1000,1000,1000)-center).norm();
+
+    int is_occupied_111 = is_occupied(center, point3d(1,1,1), shortest_dist);
+
+    int is_occupied_m111 = is_occupied(center, point3d(-1,1,1), shortest_dist);
+
+    int is_occupied_1m11 = is_occupied(center, point3d(1,-1,1), shortest_dist);
+
+    int is_occupied_11m1 = is_occupied(center, point3d(1,1,-1), shortest_dist);
+
+    int is_occupied_m1m11 = is_occupied(center, point3d(-1,-1,1), shortest_dist);
+
+    int is_occupied_1m1m1 = is_occupied(center, point3d(1,-1,-1), shortest_dist);
+
+    int is_occupied_m11m1 = is_occupied(center, point3d(-1,1,-1), shortest_dist);
+
+    int is_occupied_m1m1m1 = is_occupied(center, point3d(-1,-1,-1), shortest_dist);
+
+    clearence = shortest_dist - c_factor;
+
+    return shortest_dist > c_factor;
+
+}
+
 
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
@@ -322,12 +362,27 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     //cout << "points min "<< min_vol <<" max " << max_vol << endl;
 
+    double distance_to_goal = 1000;
+    Vector3d best_avoiding_position(0,0,0);
+
     for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
     {
+        point3d coords = it.getCoordinate();
+        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
         if (it->getValue() > 0.0) {
-            point3d coords = it.getCoordinate();
-            if (there_will_be_collision(future_position, Vector3d(coords(0), coords(1), coords(2)))) {
+            if (there_will_be_collision(future_position, wrapped_coords)) {
                 cout << "Opa!! vai colidir!!!";
+            }
+        } else {
+
+            double clearence = 0.0;
+
+            double dist = (wrapped_coords - future_position).norm();
+
+            if(it_is_safe(coords, clearence) && dist < distance_to_goal) {
+
+                best_avoiding_position = wrapped_coords;
+                distance_to_goal = dist;
             }
         }
       //manipulate node, e.g.:
@@ -336,6 +391,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
       //cout << "Node value: " << it->getValue() << endl;
     }
 
+    ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
+    ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
+    ROS_INFO("distance to goal: [%f]", distance_to_goal);
 
 	//ROS_INFO("getting sensor reading");
 	//
