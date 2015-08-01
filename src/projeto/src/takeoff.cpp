@@ -42,6 +42,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <vector>
 
 using namespace Eigen;
 using namespace std;
@@ -176,12 +177,13 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 
 }
 
-Vector3d predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p) {
+vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
     Vector3d omega_p = omega0;
     Vector3d theta_p = theta0;
     Vector3d xdot_p = xdot0;
     Vector3d x_p = x0;
+    vector<Vector3d> trajectory;
 
     int nIntervals = (tend - tstart)/dt_p;
 
@@ -202,15 +204,21 @@ Vector3d predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0,
         //cout << xdot << endl;
         x_p = x_p + (dt_p * xdot_p); //posicao linear
 
+        trajectory.push_back(x_p);
+
     }
 
-    return x_p;
+    future_position = x_p;
+
+    cout << trajectory.size() << endl;
+
+    return trajectory;
 
     //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", x_p(0), x_p(1), x_p(2));
 
 }
 
-/*int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
+int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
     float c_factor = (octree_resolution/2) + quadrotor_sphere_radius;
 
@@ -265,7 +273,7 @@ Vector3d predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0,
 
     return verify_x && verify_y && verify_z;
 
-}*/
+}
 
 int is_occupied(point3d center, point3d direction, double shortest_dist) {
 
@@ -374,22 +382,58 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d acc_linear = (vel - previous_vel)/dt;
 
-    Vector3d future_position = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + 0.5, dt);
+    Vector3d future_position;
+
+    vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + 0.5, dt, future_position);
+
+
+
+    OcTreeKey bbxMinKey, bbxMaxKey;
+
+    point3d min_vol = point3d(x(0)-1, x(1)-1, x(2)-1);
+    point3d max_vol = point3d(x(0)+1, x(1)+1, x(2)+1);
+
+    tree.coordToKeyChecked(min_vol, bbxMinKey);
+    tree.coordToKeyChecked(max_vol, bbxMaxKey);
 
     double distance_to_goal = 1000;
     Vector3d best_avoiding_position(0,0,0);
 
-    if (!bounding_box_is_free_at_position(future_position)) {
+    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
+    {
+        point3d coords = it.getCoordinate();
+        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
+        if (it->getValue() > 0.0) {
 
+            for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
-        cout << "Opa!! vai colidir!!!" << endl;
+                Vector3d pos = *it;
 
+                if (there_will_be_collision(pos, wrapped_coords)) {
 
-    } else {
-        cout << "Vai na fé!! Tá livre!!!" << endl;
+                    cout << "Opa!! vai colidir com " << pos << endl;
+                    break;
+                }
+
+            }
+
+        } /*else {
+
+            double clearence = 0.0;
+
+            double dist = (wrapped_coords - future_position).norm();
+
+            if(it_is_safe(coords, clearence) && dist < distance_to_goal) {
+
+                best_avoiding_position = wrapped_coords;
+                distance_to_goal = dist;
+            }
+        }*/
+      //manipulate node, e.g.:
+      //cout << "Node center: " << it.getCoordinate() << endl;
+      //cout << "Node size: " << it.getSize() << endl;
+      //cout << "Node value: " << it->getValue() << endl;
     }
-
-
 
     //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
     //ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
