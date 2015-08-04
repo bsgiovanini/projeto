@@ -27,6 +27,11 @@
 
 #define M_PI 3.14159265358979323846
 #define MAX_RANGE 2.99
+#define MAX_DIST 1000
+#define V_MAX 2 // max velocity considered in m/s
+#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
+#define DELTA_VOL V_MAX*TIME_AHEAD
+
 
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
@@ -48,9 +53,6 @@ using namespace Eigen;
 using namespace std;
 using namespace octomap;
 
-double vx_=0.0;
-double vy_=0.0;
-double vz_=0.0;
 
 Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
@@ -210,8 +212,6 @@ vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d
 
     future_position = x_p;
 
-    cout << trajectory.size() << endl;
-
     return trajectory;
 
     //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", x_p(0), x_p(1), x_p(2));
@@ -356,9 +356,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     //timestamp in microsecs
     float dt = timestamp - previous_tm; //geting dt in secs
 
-	vx_=msg_in.vx*0.001;
-	vy_=msg_in.vy*0.001;
-	vz_=msg_in.vz*0.001;
+	double vx_= msg_in.vx*0.001;
+	double vy_= msg_in.vy*0.001;
+	double vz_= msg_in.vz*0.001;
 
 	theta(0) = degree_to_rad(msg_in.rotX);
 	theta(1) = degree_to_rad(msg_in.rotY);
@@ -384,20 +384,19 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d future_position;
 
-    vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + 0.5, dt, future_position);
+    vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + TIME_AHEAD, dt, future_position);
 
 
 
     OcTreeKey bbxMinKey, bbxMaxKey;
 
-    point3d min_vol = point3d(x(0)-1, x(1)-1, x(2)-1);
-    point3d max_vol = point3d(x(0)+1, x(1)+1, x(2)+1);
+    point3d min_vol = point3d(x(0)-DELTA_VOL, x(1)-DELTA_VOL, x(2)-DELTA_VOL);
+    point3d max_vol = point3d(x(0)+DELTA_VOL, x(1)+DELTA_VOL, x(2)+DELTA_VOL);
 
     tree.coordToKeyChecked(min_vol, bbxMinKey);
     tree.coordToKeyChecked(max_vol, bbxMaxKey);
 
-    double distance_to_goal = 1000;
-    Vector3d best_avoiding_position(0,0,0);
+    float short_dist = MAX_DIST;
 
     for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
     {
@@ -411,7 +410,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
                 if (there_will_be_collision(pos, wrapped_coords)) {
 
-                    cout << "Opa!! vai colidir com " << pos << endl;
+                    float dist = (wrapped_coords - x).norm();
+
+                    if (dist < short_dist) {
+                        short_dist = dist;
+                    }
                     break;
                 }
 
@@ -433,6 +436,12 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
       //cout << "Node center: " << it.getCoordinate() << endl;
       //cout << "Node size: " << it.getSize() << endl;
       //cout << "Node value: " << it->getValue() << endl;
+    }
+
+    if (short_dist < MAX_DIST) {
+        float ttc = short_dist/vel.norm();
+        cout << "Opa!! vai colidir em " << ttc << "s" << endl;
+
     }
 
     //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
