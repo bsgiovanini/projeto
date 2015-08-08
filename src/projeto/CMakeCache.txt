@@ -183,7 +183,7 @@ ROSPACK_EXE:FILEPATH=/opt/ros/fuerte/bin/rospack
 USERCONFIG:FILEPATH=USERCONFIG-NOTFOUND
 
 //Path to a file.
-_file_name:FILEPATH=/home/bruno/ros_workspace/src/projeto/src/takeoff.cpp
+_file_name:FILEPATH=/home/bruno/ros_workspace/src/projeto/src/operation.cpp
 
 //The directory containing a CMake configuration file for octomap.
 octomap_DIR:PATH=/usr/local/share/octomap

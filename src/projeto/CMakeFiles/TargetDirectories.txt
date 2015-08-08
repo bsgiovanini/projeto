@@ -3,6 +3,7 @@
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/ROSBUILD_gensrv_cpp.dir
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/ROSBUILD_gensrv_lisp.dir
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/clean-test-results.dir
+/home/bruno/ros_workspace/src/projeto/CMakeFiles/operation.dir
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/rosbuild_precompile.dir
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/rosbuild_premsgsrvgen.dir
 /home/bruno/ros_workspace/src/projeto/CMakeFiles/rospack_genmsg.dir

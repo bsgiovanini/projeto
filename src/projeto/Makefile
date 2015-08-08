@@ -161,6 +161,19 @@ clean-test-results/fast:
 .PHONY : clean-test-results/fast
 
 #=============================================================================
+# Target rules for targets named operation
+
+# Build rule for target.
+operation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 operation
+.PHONY : operation
+
+# fast build rule for target.
+operation/fast:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/build
+.PHONY : operation/fast
+
+#=============================================================================
 # Target rules for targets named rosbuild_precompile
 
 # Build rule for target.
@@ -304,6 +317,21 @@ tests/fast:
 .PHONY : tests/fast
 
 # target to build an object file
+src/operation.o:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.o
+.PHONY : src/operation.o
+
+# target to preprocess a source file
+src/operation.i:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.i
+.PHONY : src/operation.i
+
+# target to generate assembly for a file
+src/operation.s:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.s
+.PHONY : src/operation.s
+
+# target to build an object file
 src/takeoff.o:
 	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.o
 .PHONY : src/takeoff.o
@@ -330,6 +358,7 @@ help:
 	@echo "... ROSBUILD_gensrv_lisp"
 	@echo "... clean-test-results"
 	@echo "... edit_cache"
+	@echo "... operation"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_precompile"
 	@echo "... rosbuild_premsgsrvgen"
@@ -342,6 +371,9 @@ help:
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
+	@echo "... src/operation.o"
+	@echo "... src/operation.i"
+	@echo "... src/operation.s"
 	@echo "... src/takeoff.o"
 	@echo "... src/takeoff.i"
 	@echo "... src/takeoff.s"

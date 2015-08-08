@@ -39,4 +39,5 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #target_link_libraries(example ${PROJECT_NAME})
 
 rosbuild_add_executable(takeoff src/takeoff.cpp)
+rosbuild_add_executable(operation src/operation.cpp)
 #ADD_EXECUTABLE(mapping src/mapping.cpp)

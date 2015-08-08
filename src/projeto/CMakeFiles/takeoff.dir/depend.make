@@ -5,6 +5,8 @@ CMakeFiles/takeoff.dir/src/takeoff.o: src/takeoff.cpp
 CMakeFiles/takeoff.dir/src/takeoff.o: /home/bruno/workshop/ardrone_autonomy/msg_gen/cpp/include/ardrone_autonomy/Navdata.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/XmlRpcDecl.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/XmlRpcValue.h
+CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/geometry_msgs/Twist.h
+CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/geometry_msgs/Vector3.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/ros/advertise_options.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/ros/advertise_service_options.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/ros/assert.h
@@ -58,6 +60,7 @@ CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/ros/wall_timer.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/ros/wall_timer_options.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/rosconsole/macros_generated.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/sensor_msgs/Range.h
+CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/std_msgs/Bool.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/std_msgs/Header.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/include/std_msgs/String.h
 CMakeFiles/takeoff.dir/src/takeoff.o: /usr/local/include/octomap/AbstractOcTree.h

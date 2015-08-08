@@ -28,20 +28,26 @@
 #define M_PI 3.14159265358979323846
 #define MAX_RANGE 2.99
 #define MAX_DIST 1000
-#define V_MAX 2 // max velocity considered in m/s
-#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
+#define V_MAX 1.5 // max velocity considered in m/s
+#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
+#define TTC_LIMIT 5.0
 
 
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
+#include "geometry_msgs/Twist.h"
+
 #include <ardrone_autonomy/Navdata.h>
 #include <sensor_msgs/Range.h>
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 #include <math.h>
 #include <eigen3/Eigen/Dense>
+
+#include <sys/time.h>
 
 #include <signal.h>
 #include <stdlib.h>
@@ -53,6 +59,12 @@ using namespace Eigen;
 using namespace std;
 using namespace octomap;
 
+using namespace std;
+
+
+ros::Publisher pub_enable_collision_mode, pub_vel;
+geometry_msgs::Twist twist;
+
 
 Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
@@ -63,6 +75,27 @@ Vector3d previous_vel(0,0,0);
 float previous_tm = 0.0;
 
 float quadrotor_sphere_radius = 0.2;
+
+
+
+class Command
+{
+   public:
+      double x_l;
+      double y_l;
+      double z_l;
+      double z_a;
+
+      Command(double x, double y, double z, double z_2) {
+            x_l = x;
+            y_l = y;
+            z_l = z;
+            z_a = z_2;
+      }
+
+};
+
+vector<Command> collision_avoiding_commands;
 
 float octree_resolution = 0.1;
 OcTree tree (octree_resolution);  // create empty tree with resolution 0.1
@@ -180,6 +213,8 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 }
 
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
+
+
 
     Vector3d omega_p = omega0;
     Vector3d theta_p = theta0;
@@ -348,9 +383,42 @@ int bounding_box_is_free_at_position(Vector3d position) {
 
 }
 
+void generate_commands(Vector3d linear_vel, Vector3d angular_vel) {
+
+    for(int i = 3; i >= 0; i-= 1) {
+        float scale = i;
+        Command command(-linear_vel(0)*scale, -linear_vel(1)*scale, -linear_vel(2)*scale, scale);
+        collision_avoiding_commands.insert(collision_avoiding_commands.begin(), command);
+    }
+
+
+
+}
+
+void send_collision_mode_msg(bool value) {
+
+    std_msgs::Bool msg;
+    msg.data = value;
+    pub_enable_collision_mode.publish(msg);
+}
+
+void send_velocity_command(Command cmd) {
+
+    twist.linear.x = cmd.x_l; // forward, backward
+    twist.linear.y = cmd.y_l; // left right
+    twist.linear.z = cmd.z_l; // up down
+    twist.angular.z = cmd.z_a; // yaw
+    pub_vel.publish(twist);
+
+
+}
 
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
+
+    struct timeval stop, start;
+    gettimeofday(&start, NULL);
+    //do stuff
 
     float timestamp = msg_in.tm/1000000;
     //timestamp in microsecs
@@ -390,8 +458,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     OcTreeKey bbxMinKey, bbxMaxKey;
 
-    point3d min_vol = point3d(x(0)-DELTA_VOL, x(1)-DELTA_VOL, x(2)-DELTA_VOL);
-    point3d max_vol = point3d(x(0)+DELTA_VOL, x(1)+DELTA_VOL, x(2)+DELTA_VOL);
+    point3d min_vol = point3d(x(0), x(1)-DELTA_VOL, x(2)-0.5);
+    point3d max_vol = point3d(x(0)+DELTA_VOL, x(1)+DELTA_VOL, x(2)+0.5);
 
     tree.coordToKeyChecked(min_vol, bbxMinKey);
     tree.coordToKeyChecked(max_vol, bbxMaxKey);
@@ -440,8 +508,32 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     if (short_dist < MAX_DIST) {
         float ttc = short_dist/vel.norm();
+        if (ttc < TTC_LIMIT) {
+
+            send_collision_mode_msg(true);
+
+            if (collision_avoiding_commands.empty() ) {
+                generate_commands(velV, omegadot);
+
+            }
+
+            Command cmd = collision_avoiding_commands.back();
+            send_velocity_command(cmd);
+            collision_avoiding_commands.pop_back();
+
+        } else {
+
+            collision_avoiding_commands.clear();
+
+            send_collision_mode_msg(false);
+
+        }
         cout << "Opa!! vai colidir em " << ttc << "s" << endl;
 
+    } else {
+
+        send_collision_mode_msg(false);
+        collision_avoiding_commands.clear();
     }
 
     //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
@@ -460,6 +552,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     previous_theta = theta;
 
     previous_omega = omega;
+
+    gettimeofday(&stop, NULL);
+
+    cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
+
 }
 // %EndTag(CALLBACK)%
 
@@ -482,6 +579,9 @@ void my_handler(int s){
 int main(int argc, char **argv)
 {
     load_sonar_rel_transform_m();
+
+
+
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -492,7 +592,8 @@ int main(int argc, char **argv)
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-  ros::init(argc, argv, "listener");
+
+   ros::init(argc, argv, "listener");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
@@ -520,11 +621,16 @@ int main(int argc, char **argv)
   ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
   ros::Subscriber sub_sensor = n.subscribe("/sonar_front", 1, sonar_front_callback);
+
+  pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
+  pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
+
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
    * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
    */
+
 // %Tag(SPIN)%
   ros::spin();
 // %EndTag(SPIN)%
