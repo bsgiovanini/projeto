@@ -29,9 +29,10 @@
 #define MAX_RANGE 2.99
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 1.25 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
 #define TTC_LIMIT 5.0
+#define OCTREE_RESOLUTION 0.15
 
 
 // %Tag(FULLTEXT)%
@@ -74,7 +75,7 @@ Vector3d previous_vel(0,0,0);
 
 float previous_tm = 0.0;
 
-float quadrotor_sphere_radius = 0.2;
+float quadrotor_sphere_radius = 0.8;
 
 
 
@@ -97,8 +98,7 @@ class Command
 
 vector<Command> collision_avoiding_commands;
 
-float octree_resolution = 0.1;
-OcTree tree (octree_resolution);  // create empty tree with resolution 0.1
+OcTree tree (OCTREE_RESOLUTION);  // create empty tree with resolution
 
 Vector3d x(0,0,0);// global pose quadrotor
 Vector3d s_front_rel_pose;
@@ -255,7 +255,7 @@ vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d
 
 int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
-    float c_factor = (octree_resolution/2) + quadrotor_sphere_radius;
+    float c_factor = (OCTREE_RESOLUTION/2) + quadrotor_sphere_radius;
 
     //front - left - bottom
     float flb_x_c_obstacle = obs_center(0) - c_factor;
@@ -325,7 +325,7 @@ int is_occupied(point3d center, point3d direction, double shortest_dist) {
 
 int it_is_safe(point3d center, double clearence) {
 
-    float c_factor = (octree_resolution/2) + quadrotor_sphere_radius;
+    float c_factor = (OCTREE_RESOLUTION/2) + quadrotor_sphere_radius;
 
     double shortest_dist = (point3d(1000,1000,1000)-center).norm();
 
@@ -385,9 +385,9 @@ int bounding_box_is_free_at_position(Vector3d position) {
 
 void generate_commands(Vector3d linear_vel, Vector3d angular_vel) {
 
-    for(int i = 3; i >= 0; i-= 1) {
+    for(int i = 6; i >= 0; i-= 1) {
         float scale = i;
-        Command command(-linear_vel(0)*scale, -linear_vel(1)*scale, -linear_vel(2)*scale, scale);
+        Command command(-linear_vel(0)*scale, -linear_vel(1)*scale, -linear_vel(2)*scale, 0);
         collision_avoiding_commands.insert(collision_avoiding_commands.begin(), command);
     }
 
@@ -452,8 +452,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d future_position;
 
-    vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + TIME_AHEAD, dt, future_position);
-
+    vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
 
 
     OcTreeKey bbxMinKey, bbxMaxKey;
@@ -465,6 +464,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     tree.coordToKeyChecked(max_vol, bbxMaxKey);
 
     float short_dist = MAX_DIST;
+
+
 
     for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
     {
@@ -505,6 +506,10 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
       //cout << "Node size: " << it.getSize() << endl;
       //cout << "Node value: " << it->getValue() << endl;
     }
+
+    gettimeofday(&stop, NULL);
+
+    cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
     if (short_dist < MAX_DIST) {
         float ttc = short_dist/vel.norm();
@@ -553,9 +558,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     previous_omega = omega;
 
-    gettimeofday(&stop, NULL);
+    //gettimeofday(&stop, NULL);
 
-    cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
+    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
 }
 // %EndTag(CALLBACK)%
