@@ -63,6 +63,7 @@ using namespace std;
 
 
 ros::Publisher pub_enable_collision_mode, pub_vel;
+ros::Subscriber joy_sub;
 geometry_msgs::Twist twist;
 
 
@@ -621,6 +622,8 @@ int main(int argc, char **argv)
   ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
   ros::Subscriber sub_sensor = n.subscribe("/sonar_front", 1, sonar_front_callback);
+
+  ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
   pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
