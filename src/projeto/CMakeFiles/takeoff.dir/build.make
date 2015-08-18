@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 # Include any dependencies generated for this target.
 include CMakeFiles/takeoff.dir/depend.make
@@ -70,22 +70,22 @@ CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/geometry/tf/manifes
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/common_rosdeps/manifest.xml
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/image_common/camera_calibration_parsers/manifest.xml
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/image_common/camera_info_manager/manifest.xml
-CMakeFiles/takeoff.dir/src/takeoff.o: /home/bruno/workshop/ardrone_autonomy/manifest.xml
+CMakeFiles/takeoff.dir/src/takeoff.o: /home/robotica/workshop/ardrone_autonomy/manifest.xml
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/geometry/tf/msg_gen/generated
 CMakeFiles/takeoff.dir/src/takeoff.o: /opt/ros/fuerte/stacks/geometry/tf/srv_gen/generated
-CMakeFiles/takeoff.dir/src/takeoff.o: /home/bruno/workshop/ardrone_autonomy/msg_gen/generated
-CMakeFiles/takeoff.dir/src/takeoff.o: /home/bruno/workshop/ardrone_autonomy/srv_gen/generated
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/bruno/ros_workspace/src/projeto/CMakeFiles $(CMAKE_PROGRESS_1)
+CMakeFiles/takeoff.dir/src/takeoff.o: /home/robotica/workshop/ardrone_autonomy/msg_gen/generated
+CMakeFiles/takeoff.dir/src/takeoff.o: /home/robotica/workshop/ardrone_autonomy/srv_gen/generated
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/takeoff.dir/src/takeoff.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/takeoff.dir/src/takeoff.o -c /home/bruno/ros_workspace/src/projeto/src/takeoff.cpp
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -o CMakeFiles/takeoff.dir/src/takeoff.o -c /home/robotica/bruno_workspace/src/projeto/src/projeto/src/takeoff.cpp
 
 CMakeFiles/takeoff.dir/src/takeoff.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/takeoff.dir/src/takeoff.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/bruno/ros_workspace/src/projeto/src/takeoff.cpp > CMakeFiles/takeoff.dir/src/takeoff.i
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -E /home/robotica/bruno_workspace/src/projeto/src/projeto/src/takeoff.cpp > CMakeFiles/takeoff.dir/src/takeoff.i
 
 CMakeFiles/takeoff.dir/src/takeoff.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/takeoff.dir/src/takeoff.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/bruno/ros_workspace/src/projeto/src/takeoff.cpp -o CMakeFiles/takeoff.dir/src/takeoff.s
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -DBT_USE_DOUBLE_PRECISION -DBT_EULER_DEFAULT_ZYX -W -Wall -Wno-unused-parameter -fno-strict-aliasing -pthread -S /home/robotica/bruno_workspace/src/projeto/src/projeto/src/takeoff.cpp -o CMakeFiles/takeoff.dir/src/takeoff.s
 
 CMakeFiles/takeoff.dir/src/takeoff.o.requires:
 .PHONY : CMakeFiles/takeoff.dir/src/takeoff.o.requires
@@ -123,6 +123,6 @@ CMakeFiles/takeoff.dir/clean:
 .PHONY : CMakeFiles/takeoff.dir/clean
 
 CMakeFiles/takeoff.dir/depend:
-	cd /home/bruno/ros_workspace/src/projeto && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto/CMakeFiles/takeoff.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/src/projeto && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles/takeoff.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/takeoff.dir/depend
 

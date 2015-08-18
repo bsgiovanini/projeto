@@ -32,10 +32,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 # Utility rule file for tests.
 
@@ -57,6 +57,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/bruno/ros_workspace/src/projeto && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto /home/bruno/ros_workspace/src/projeto/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/robotica/bruno_workspace/src/projeto/src/projeto && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 
