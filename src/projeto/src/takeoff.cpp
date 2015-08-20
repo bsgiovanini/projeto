@@ -43,6 +43,7 @@
 
 #include <ardrone_autonomy/Navdata.h>
 #include <sensor_msgs/Range.h>
+#include "sensor_msgs/Joy.h"
 #include <octomap/octomap.h>
 #include <octomap/OcTree.h>
 #include <math.h>
@@ -64,7 +65,6 @@ using namespace std;
 
 
 ros::Publisher pub_enable_collision_mode, pub_vel;
-ros::Subscriber joy_sub;
 geometry_msgs::Twist twist;
 
 
@@ -72,6 +72,8 @@ Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
 Vector3d previous_omega(0,0,0);
 Vector3d previous_vel(0,0,0);
+
+
 
 
 float previous_tm = 0.0;
@@ -96,6 +98,8 @@ class Command
       }
 
 };
+
+Command current_command(0.0, 0.0, 0.0, 0.0);
 
 vector<Command> collision_avoiding_commands;
 
@@ -216,10 +220,10 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
 
-
-    Vector3d omega_p = omega0;
+    cout << current_command.x_l << " " << current_command.y_l << " " << current_command.z_l << " " << current_command.z_a << endl;
+    Vector3d omega_p = omega0 + Vector3d(0.0, 0.0, current_command.z_a);
     Vector3d theta_p = theta0;
-    Vector3d xdot_p = xdot0;
+    Vector3d xdot_p = xdot0 + (rotation(theta_p).matrix()*Vector3d(current_command.x_l, current_command.y_l, current_command.z_l));
     Vector3d x_p = x0;
     vector<Vector3d> trajectory;
 
@@ -414,6 +418,16 @@ void send_velocity_command(Command cmd) {
 
 }
 
+void joy_callback(const sensor_msgs::JoyConstPtr joy_msg){
+
+    float scale = 1;
+
+    current_command.x_l = scale*joy_msg->axes[1];
+    current_command.y_l = scale*joy_msg->axes[0];
+    current_command.z_l = scale*joy_msg->axes[3];
+    current_command.z_a = scale*joy_msg->axes[2];
+}
+
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
 
@@ -510,7 +524,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     gettimeofday(&stop, NULL);
 
-    cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
+    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
     if (short_dist < MAX_DIST) {
         float ttc = short_dist/vel.norm();

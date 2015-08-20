@@ -6,19 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/operation.cpp
+/home/bruno/ros_workspace/src/projeto/src/operation.cpp
 ros/ros.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/ros/ros.h
+/home/bruno/ros_workspace/src/projeto/src/ros/ros.h
 sensor_msgs/Joy.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/sensor_msgs/Joy.h
+/home/bruno/ros_workspace/src/projeto/src/sensor_msgs/Joy.h
 geometry_msgs/Twist.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/geometry_msgs/Twist.h
+/home/bruno/ros_workspace/src/projeto/src/geometry_msgs/Twist.h
 std_msgs/Empty.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/std_msgs/Empty.h
+/home/bruno/ros_workspace/src/projeto/src/std_msgs/Empty.h
 std_msgs/Bool.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/std_msgs/Bool.h
+/home/bruno/ros_workspace/src/projeto/src/std_msgs/Bool.h
 std_srvs/Empty.h
-/home/robotica/bruno_workspace/src/projeto/src/projeto/src/std_srvs/Empty.h
+/home/bruno/ros_workspace/src/projeto/src/std_srvs/Empty.h
 
 /opt/ros/fuerte/include/XmlRpcDecl.h
 ros/macros.h
