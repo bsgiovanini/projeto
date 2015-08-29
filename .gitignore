@@ -41,5 +41,7 @@ src/projeto/bin/**
 src/projeto/CMakeCache.txt
 octomap/**
 octomap-example/**
+src/projeto/CMakeFiles/**
+*.bt
 
 

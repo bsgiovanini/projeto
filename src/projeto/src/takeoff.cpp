@@ -54,6 +54,7 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits>
 #include <unistd.h>
 #include <vector>
 
@@ -76,10 +77,65 @@ Vector3d previous_vel(0,0,0);
 
 
 
+
+
 float previous_tm = 0.0;
 
 float quadrotor_sphere_radius = 0.8;
 
+
+class PID {
+    public:
+     double kp, kd, ki;
+     double _last_time, _last_error, _error_sum;
+
+     void configure(double kp_l, double kd_l, double ki_l) {
+        kp = kp_l;
+        kd = kd_l;
+        ki = ki_l;
+     }
+
+     void reset() {
+        _last_time = 0;
+        _last_error = std::numeric_limits<double>::infinity();
+        _error_sum = 0;
+     }
+
+    double getCommand(double e, double timestamp) {
+    // Compute dt in seconds
+        double dt = timestamp - _last_time;
+
+        double de = 0;
+        if (_last_time != 0) {
+            // Compute de (error derivation)
+            if (_last_error < std::numeric_limits<double>::infinity()) {
+
+                de = (e - _last_error) / dt;
+            }
+
+            // Integrate error
+            _error_sum += e * dt;
+        }
+
+        // Update our trackers
+        _last_time = timestamp;
+        _last_error = e;
+
+        // Compute commands
+        double command = kp * e + ki * _error_sum + kd * de;
+
+        return command;
+    }
+
+     PID(double kp_l, double kd_l, double ki_l) {
+        configure(kp_l, kd_l, ki_l);
+        reset();
+     }
+
+     PID() {
+     }
+
+};
 
 
 class Command
@@ -101,9 +157,21 @@ class Command
 
 Command current_command(0.0, 0.0, 0.0, 0.0);
 
+PID pid_x(2.0, 0.5, 0.35);
+PID pid_y(2.0, 0.5, 0.35);
+PID pid_z(2.0, 0.5, 0.35);
+PID pid_yaw(1.0, 0, 0.30);
+
+
 vector<Command> collision_avoiding_commands;
 
 OcTree tree (OCTREE_RESOLUTION);  // create empty tree with resolution
+
+Vector3d pos_obj;
+double yaw_obj;
+int control_mode = 0;
+float contador;
+
 
 Vector3d x(0,0,0);// global pose quadrotor
 Vector3d s_front_rel_pose;
@@ -220,10 +288,10 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
 
-    cout << current_command.x_l << " " << current_command.y_l << " " << current_command.z_l << " " << current_command.z_a << endl;
-    Vector3d omega_p = omega0 + Vector3d(0.0, 0.0, current_command.z_a);
+    //cout << current_command.x_l << " " << current_command.y_l << " " << current_command.z_l << " " << current_command.z_a << endl;
+    Vector3d omega_p = omega0;// + Vector3d(0.0, 0.0, current_command.z_a);
     Vector3d theta_p = theta0;
-    Vector3d xdot_p = xdot0 + (rotation(theta_p).matrix()*Vector3d(current_command.x_l, current_command.y_l, current_command.z_l));
+    Vector3d xdot_p = xdot0; //+ (rotation(theta_p).matrix()*Vector3d(current_command.x_l, current_command.y_l, current_command.z_l));
     Vector3d x_p = x0;
     vector<Vector3d> trajectory;
 
@@ -428,6 +496,21 @@ void joy_callback(const sensor_msgs::JoyConstPtr joy_msg){
     current_command.z_a = scale*joy_msg->axes[2];
 }
 
+double within(double v,double vmin,double vmax) {
+
+    if (abs(v) > 0.01) {
+        if (v < vmin) {
+            return vmin;
+        } else if (v > vmax) {
+            return vmax;
+        } else {
+            return v;
+        }
+    } else {
+        return 0.0;
+    }
+}
+
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
 
@@ -530,30 +613,72 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         float ttc = short_dist/vel.norm();
         if (ttc < TTC_LIMIT) {
 
-            send_collision_mode_msg(true);
-
-            if (collision_avoiding_commands.empty() ) {
-                generate_commands(velV, omegadot);
-
+            if (!control_mode) {
+                pos_obj = x;
+                yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
+                send_collision_mode_msg(true);
+                control_mode = 1;
+                contador = timestamp;
             }
 
-            Command cmd = collision_avoiding_commands.back();
-            send_velocity_command(cmd);
-            collision_avoiding_commands.pop_back();
+
+            if (timestamp < contador + 3000) {
+
+
+                double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
+                double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
+                double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
+                double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
+
+                cout << " ----- inicio ------ " << endl;
+
+                cout << " pos_obj_x "<< pos_obj(0) << " pos_obj_y " << pos_obj(1) << " pos_obj_z " <<  pos_obj(2)  << " yaw_obj " << yaw_obj << endl;
+                cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
+                cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
+
+                cout << " ----- fim ------ " << endl;
+
+                double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -2, 2);
+                double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -2, 2);
+                double cz   = within(u_z, -2, 2);
+                double cyaw = within(u_yaw, -2, 2);
+
+
+
+                Command cmd(cx, cy, cz, cyaw);
+                send_velocity_command(cmd);
+            } else {
+
+                control_mode = 0;
+                send_collision_mode_msg(false);
+                pid_x.reset();
+                pid_y.reset();
+                pid_z.reset();
+                pid_yaw.reset();
+            }
+
+
 
         } else {
 
-            collision_avoiding_commands.clear();
-
+            control_mode = 0;
             send_collision_mode_msg(false);
+            pid_x.reset();
+            pid_y.reset();
+            pid_z.reset();
+            pid_yaw.reset();
 
         }
         cout << "Opa!! vai colidir em " << ttc << "s" << endl;
 
     } else {
 
+        control_mode = 0;
         send_collision_mode_msg(false);
-        collision_avoiding_commands.clear();
+        pid_x.reset();
+        pid_y.reset();
+        pid_z.reset();
+        pid_yaw.reset();
     }
 
     //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
