@@ -158,10 +158,10 @@ class Command
 
 Command current_command(0.0, 0.0, 0.0, 0.0);
 
-PID pid_x(2.0, 0.5, 0.35);
-PID pid_y(2.0, 0.5, 0.35);
-PID pid_z(2.0, 0.5, 0.35);
-PID pid_yaw(1.0, 0, 0.30);
+PID pid_x(2.0, 0.0, 0.0);
+PID pid_y(2.0, 0.0, 0.0);
+PID pid_z(2.0, 0.0, 0.0);
+PID pid_yaw(1.0, 0, 0.0);
 
 
 vector<Command> collision_avoiding_commands;
@@ -637,14 +637,12 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
                 cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
                 cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
 
-                cout << " ----- fim ------ " << endl;
-
                 double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -2, 2);
                 double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -2, 2);
                 double cz   = within(u_z, -2, 2);
                 double cyaw = within(u_yaw, -2, 2);
-
-
+                cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
+                cout << " ----- fim ------ " << endl;
 
                 Command cmd(cx, cy, cz, cyaw);
                 send_velocity_command(cmd);
