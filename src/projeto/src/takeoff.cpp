@@ -155,6 +155,7 @@ class Command
 
 };
 
+
 Command current_command(0.0, 0.0, 0.0, 0.0);
 
 PID pid_x(2.0, 0.5, 0.35);
@@ -530,9 +531,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	theta(1) = degree_to_rad(msg_in.rotY);
 	theta(2) = degree_to_rad(msg_in.rotZ);
 
-	Matrix3d R = rotation(theta).matrix();
-
 	Vector3d velV (vx_, vy_, vz_);
+
+	Matrix3d R = rotation(theta).matrix();
 
 	Vector3d vel = R * velV;
 
