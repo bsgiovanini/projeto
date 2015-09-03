@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_SOURCE_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_BINARY_DIR = /home/robotica/bruno_workspace/src/projeto/src/projeto
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -66,9 +66,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/ros_workspace/src/projeto/CMakeFiles /home/bruno/ros_workspace/src/projeto/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/ros_workspace/src/projeto/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/robotica/bruno_workspace/src/projeto/src/projeto/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -172,6 +172,19 @@ operation: cmake_check_build_system
 operation/fast:
 	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/build
 .PHONY : operation/fast
+
+#=============================================================================
+# Target rules for targets named pose
+
+# Build rule for target.
+pose: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pose
+.PHONY : pose
+
+# fast build rule for target.
+pose/fast:
+	$(MAKE) -f CMakeFiles/pose.dir/build.make CMakeFiles/pose.dir/build
+.PHONY : pose/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_precompile
@@ -332,6 +345,21 @@ src/operation.s:
 .PHONY : src/operation.s
 
 # target to build an object file
+src/pose.o:
+	$(MAKE) -f CMakeFiles/pose.dir/build.make CMakeFiles/pose.dir/src/pose.o
+.PHONY : src/pose.o
+
+# target to preprocess a source file
+src/pose.i:
+	$(MAKE) -f CMakeFiles/pose.dir/build.make CMakeFiles/pose.dir/src/pose.i
+.PHONY : src/pose.i
+
+# target to generate assembly for a file
+src/pose.s:
+	$(MAKE) -f CMakeFiles/pose.dir/build.make CMakeFiles/pose.dir/src/pose.s
+.PHONY : src/pose.s
+
+# target to build an object file
 src/takeoff.o:
 	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.o
 .PHONY : src/takeoff.o
@@ -359,6 +387,7 @@ help:
 	@echo "... clean-test-results"
 	@echo "... edit_cache"
 	@echo "... operation"
+	@echo "... pose"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_precompile"
 	@echo "... rosbuild_premsgsrvgen"
@@ -374,6 +403,9 @@ help:
 	@echo "... src/operation.o"
 	@echo "... src/operation.i"
 	@echo "... src/operation.s"
+	@echo "... src/pose.o"
+	@echo "... src/pose.i"
+	@echo "... src/pose.s"
 	@echo "... src/takeoff.o"
 	@echo "... src/takeoff.i"
 	@echo "... src/takeoff.s"
