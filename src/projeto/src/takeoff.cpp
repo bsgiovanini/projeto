@@ -40,6 +40,9 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
 #include "geometry_msgs/Twist.h"
+#include "nav_msgs/GridCells.h"
+#include "geometry_msgs/Point.h"
+#include "geometry_msgs/PoseStamped.h"
 
 #include <ardrone_autonomy/Navdata.h>
 #include <sensor_msgs/Range.h>
@@ -59,25 +62,20 @@
 #include <vector>
 
 using namespace Eigen;
-using namespace std;
 using namespace octomap;
 
 using namespace std;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose;
 geometry_msgs::Twist twist;
+
 
 
 Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
 Vector3d previous_omega(0,0,0);
 Vector3d previous_vel(0,0,0);
-
-
-
-
-
 
 float previous_tm = 0.0;
 
@@ -176,6 +174,8 @@ float contador;
 
 Vector3d x(0,0,0);// global pose quadrotor
 Vector3d s_front_rel_pose;
+Vector3d s_left_rel_pose;
+Vector3d s_right_rel_pose;
 
 Vector3d acc_max(1.5, 1.5, 1.0); //global max acc quadrotor meter per sec
 
@@ -228,62 +228,46 @@ void load_sonar_rel_transform_m() {
     Vector3d sonar_f_rel_rot_pos(0, 0, 0);
     s_front_rel_pose = rotation(sonar_f_rel_rot_pos).matrix() * sonar_f_rel_linear_pos;
 
+    Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_l_rel_rot_pos(-1, 0, 0);
+    s_left_rel_pose = rotation(sonar_l_rel_rot_pos).matrix() * sonar_l_rel_linear_pos;
+
+    Vector3d sonar_r_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_r_rel_rot_pos(1, 0, 0);
+    s_right_rel_pose = rotation(sonar_r_rel_rot_pos).matrix() * sonar_r_rel_linear_pos;
+
 }
 
+
+void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose) {
+
+     Vector3d global_s_pose = x + rotation(theta).matrix() * s_rel_pose;
+
+     point3d startPoint ((float) global_s_pose(0), (float) global_s_pose(1), (float) global_s_pose(2));
+
+     Vector3d global_end_ray = global_s_pose + rotation(theta).matrix() * Vector3d(msg_in.range, 0, 0);
+
+     point3d endPoint ((float) global_end_ray(0), (float) global_end_ray(1), (float) global_end_ray(2));
+
+     tree.insertRay (startPoint, endPoint, MAX_RANGE);
+
+
+}
+
+
 void sonar_front_callback(const sensor_msgs::Range& msg_in)
-{
-	//ROS_INFO("Range: [%f]", msg_in.range);
+{	//ROS_INFO("Range: [%f]", msg_in.range);
+    sonar_callback(msg_in, s_front_rel_pose);
+}
 
-    Vector3d global_s_front_pose = x + rotation(theta).matrix() * s_front_rel_pose;
-    //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_s_front_pose(0), global_s_front_pose(1), global_s_front_pose(2));
+void sonar_left_callback(const sensor_msgs::Range& msg_in)
+{	//ROS_INFO("Range: [%f]", msg_in.range);
+    sonar_callback(msg_in, s_left_rel_pose);
+}
 
-    point3d startPoint ((float) global_s_front_pose(0), (float) global_s_front_pose(1), (float) global_s_front_pose(2));
-
-    Vector3d global_end_ray = global_s_front_pose + rotation(theta).matrix() * Vector3d(msg_in.range, 0, 0);
-
-    //ROS_INFO("I heard rayx: [%f]  rayy: [%f] rayz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
-
-    point3d endPoint ((float) global_end_ray(0), (float) global_end_ray(1), (float) global_end_ray(2));
-
-    //if (msg_in.range < MAX_RANGE) {
-        tree.insertRay (startPoint, endPoint, MAX_RANGE);
-    // }
-
-    // insert some measurements of occupied cells
-
-/*    for (int x=-20; x<20; x++) {
-        for (int y=-20; y<20; y++) {
-            for (int z=-20; z<20; z++) {
-                point3d endpoint ((float) x*0.05f, (float) y*0.05f, (float) z*0.05f);
-                tree.updateNode(endpoint, true); // integrate 'occupied' measurement
-            }
-        }
-    }
-
-    // insert some measurements of free cells
-
-    for (int x=-30; x<30; x++) {
-        for (int y=-30; y<30; y++) {
-            for (int z=-30; z<30; z++) {
-                point3d endpoint ((float) x*0.02f-1.0f, (float) y*0.02f-1.0f, (float) z*0.02f-1.0f);
-                tree.updateNode(endpoint, false);  // integrate 'free' measurement
-            }
-        }
-    }
-
-    point3d query (0., 0., 0.);
-    OcTreeNode* result = tree.search (query);
-
-
-    query = point3d(-1.,-1.,-1.);
-    result = tree.search (query);
-
-
-    query = point3d(1.,1.,1.);
-    result = tree.search (query);
-    */
-
-
+void sonar_right_callback(const sensor_msgs::Range& msg_in)
+{	//ROS_INFO("Range: [%f]", msg_in.range);
+    sonar_callback(msg_in, s_right_rel_pose);
 }
 
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
@@ -384,91 +368,6 @@ int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
 }
 
-int is_occupied(point3d center, point3d direction, double shortest_dist) {
-
-    point3d obstacle;
-    int is_occupied = tree.castRay(center, direction, obstacle, false, MAX_RANGE);
-
-    double dist = (obstacle - center).norm();
-    if (dist < shortest_dist) {
-        shortest_dist = dist;
-    }
-    return is_occupied;
-}
-
-
-int it_is_safe(point3d center, double clearence) {
-
-    float c_factor = (OCTREE_RESOLUTION/2) + quadrotor_sphere_radius;
-
-    double shortest_dist = (point3d(1000,1000,1000)-center).norm();
-
-    int is_occupied_111 = is_occupied(center, point3d(1,1,1), shortest_dist);
-
-    int is_occupied_m111 = is_occupied(center, point3d(-1,1,1), shortest_dist);
-
-    int is_occupied_1m11 = is_occupied(center, point3d(1,-1,1), shortest_dist);
-
-    int is_occupied_11m1 = is_occupied(center, point3d(1,1,-1), shortest_dist);
-
-    int is_occupied_m1m11 = is_occupied(center, point3d(-1,-1,1), shortest_dist);
-
-    int is_occupied_1m1m1 = is_occupied(center, point3d(1,-1,-1), shortest_dist);
-
-    int is_occupied_m11m1 = is_occupied(center, point3d(-1,1,-1), shortest_dist);
-
-    int is_occupied_m1m1m1 = is_occupied(center, point3d(-1,-1,-1), shortest_dist);
-
-    clearence = shortest_dist - c_factor;
-
-    return shortest_dist > c_factor;
-
-}
-
-int bounding_box_is_free_at_position(Vector3d position) {
-
-    float factor = quadrotor_sphere_radius;
-
-    point3d min_vol = point3d(position(0)-factor, position(1)-factor, position(2)-factor);
-    point3d max_vol = point3d(position(0)+factor, position(1)+factor, position(2)+factor);
-
-    OcTreeKey bbxMinKey, bbxMaxKey;
-
-    tree.coordToKeyChecked(min_vol, bbxMinKey);
-    tree.coordToKeyChecked(max_vol, bbxMaxKey);
-
-    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
-    {
-        point3d coords = it.getCoordinate();
-        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
-        if (it->getValue() > 0.0) {
-
-            return 0;
-
-        }
-      //manipulate node, e.g.:
-      //cout << "Node center: " << it.getCoordinate() << endl;
-      //cout << "Node size: " << it.getSize() << endl;
-      //cout << "Node value: " << it->getValue() << endl;
-    }
-
-    return 1;
-
-
-}
-
-void generate_commands(Vector3d linear_vel, Vector3d angular_vel) {
-
-    for(int i = 6; i >= 0; i-= 1) {
-        float scale = i;
-        Command command(-linear_vel(0)*scale, -linear_vel(1)*scale, -linear_vel(2)*scale, 0);
-        collision_avoiding_commands.insert(collision_avoiding_commands.begin(), command);
-    }
-
-
-
-}
-
 void send_collision_mode_msg(bool value) {
 
     std_msgs::Bool msg;
@@ -533,7 +432,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d velV (vx_, vy_, vz_);
 
-	Matrix3d R = rotation(theta).matrix();
+	Quaternion<double> rotQ = rotation(theta);
+
+	Matrix3d R = rotQ.matrix();
 
 	Vector3d vel = R * velV;
 
@@ -565,12 +466,42 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     float short_dist = MAX_DIST;
 
 
+    geometry_msgs::PoseStamped pose;
+    pose.header.frame_id = "/nav";
+    pose.header.stamp = ros::Time();
+
+    pose.pose.orientation.x = rotQ.x();
+    pose.pose.orientation.y = rotQ.y();
+    pose.pose.orientation.z = rotQ.z();
+    pose.pose.orientation.w = rotQ.w();
+    pose.pose.position.x = x(0);
+    pose.pose.position.y = x(1);
+    pose.pose.position.z = x(2);
+
+    pub_pose.publish(pose);
+
+    nav_msgs::GridCells gcells;
+    gcells.header.frame_id = "/nav";
+    gcells.header.stamp = ros::Time();
+    gcells.cell_width = OCTREE_RESOLUTION;
+    gcells.cell_height = OCTREE_RESOLUTION;
+
+
+    vector<geometry_msgs::Point> obstaclerepo;
 
     for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
     {
         point3d coords = it.getCoordinate();
+
         Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
         if (it->getValue() > 0.0) {
+
+            geometry_msgs::Point cell;
+            cell.x = coords(0);
+            cell.y = coords(1);
+            cell.z = coords(2);
+            obstaclerepo.push_back(cell);
+
 
             for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
@@ -588,23 +519,21 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
             }
 
-        } /*else {
-
-            double clearence = 0.0;
-
-            double dist = (wrapped_coords - future_position).norm();
-
-            if(it_is_safe(coords, clearence) && dist < distance_to_goal) {
-
-                best_avoiding_position = wrapped_coords;
-                distance_to_goal = dist;
-            }
-        }*/
+        }
       //manipulate node, e.g.:
       //cout << "Node center: " << it.getCoordinate() << endl;
       //cout << "Node size: " << it.getSize() << endl;
       //cout << "Node value: " << it->getValue() << endl;
     }
+
+    int count_cells = 0;
+    gcells.cells.resize(obstaclerepo.size());
+    while (!obstaclerepo.empty()) {
+        gcells.cells[count_cells++] = obstaclerepo.back();
+        obstaclerepo.pop_back();
+    }
+
+    pub_grid_cell.publish(gcells);
 
     gettimeofday(&stop, NULL);
 
@@ -749,7 +678,7 @@ int main(int argc, char **argv)
   /**
    * The subscribe() call is how you tell ROS that you want to receive messages
    * on a given topic.  This invokes a call to the ROS
-   * master node, which keeps a registry of who is publishing and who
+   * master node, which keeps a registry of who ising and who
    * is subscribing.  Messages are passed to a callback function, here
    * called chatterCallback.  subscribe() returns a Subscriber object that you
    * must hold on to until you want to unsubscribe.  When all copies of the Subscriber
@@ -764,12 +693,18 @@ int main(int argc, char **argv)
 // %Tag(SUBSCRIBER)%
   ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
-  ros::Subscriber sub_sensor = n.subscribe("/sonar_front", 1, sonar_front_callback);
+  ros::Subscriber sub_sensor_f = n.subscribe("/sonar_front", 1, sonar_front_callback);
+
+  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
+
+  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
 
   ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
   pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
+  pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
+  pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all

@@ -189,6 +189,8 @@ class EKF {
 };
 
 
+
+
 EKF ekf;
 
 Vector3d theta(0,0,0);
@@ -271,13 +273,13 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 
     Vector3d rel_ray_pose = s_front_rel_pose + Vector3d(msg_in.range, 0, 0);
 
-    ekf.correct_state(rel_ray_pose);
+    //ekf.correct_state(rel_ray_pose);
 
-    cout << "odometria x_x: " <<  x(0) << " x_y: " << x(1) << endl;
+    //cout << "odometria x_x: " <<  x(0) << " x_y: " << x(1) << endl;
 
-    Vector3d k_x = ekf.state();
+    //Vector3d k_x = ekf.state();
 
-    cout << "kalman f  x_x: " <<  k_x(0) << " x_y: " << k_x(1) << endl;
+    //cout << "kalman f  x_x: " <<  k_x(0) << " x_y: " << k_x(1) << endl;
     //ROS_INFO("kalman f  x_x: [%f]  x_y: [%f]", k_x(0), k_x(1));
 }
 
@@ -310,6 +312,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     x = x + vel*dt;
 
     ekf.predict_state(dt, velV, theta);
+
+
 
 
 

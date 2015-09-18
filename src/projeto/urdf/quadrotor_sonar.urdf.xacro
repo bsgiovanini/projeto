@@ -22,10 +22,19 @@ xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
     </xacro:sonar_sensor>
 
     <!-- Sonar front sensor -->
-    <xacro:sonar_sensor name="sonar_medida" parent="base_link" ros_topic="sonar_front" update_rate="10" min_range="0.2" max_range="3.0" field_of_view="2" ray_count="1">
+    <xacro:sonar_sensor name="sonar_medida0" parent="base_link" ros_topic="sonar_front" update_rate="10" min_range="0.2" max_range="5.0" field_of_view="2" ray_count="1">
       <origin xyz="0.1 0.0 0.12" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 
+    <!-- Sonar front sensor -->
+    <xacro:sonar_sensor name="sonar_medida1" parent="base_link" ros_topic="sonar_left" update_rate="10" min_range="0.2" max_range="5.0" field_of_view="2" ray_count="1">
+      <origin xyz="0.1 0.0 0.12" rpy="-1 0 0"/>
+    </xacro:sonar_sensor>
+
+    <!-- Sonar front sensor -->
+    <xacro:sonar_sensor name="sonar_medida2" parent="base_link" ros_topic="sonar_right" update_rate="10" min_range="0.2" max_range="5.0" field_of_view="2" ray_count="1">
+      <origin xyz="0.1 0.0 0.12" rpy="1 0 0"/>
+    </xacro:sonar_sensor>
 
     <!-- Hokuyo UTM-30LX mounted upside down below the quadrotor body
     <include filename="$(find cvg_sim_gazebo)/urdf/sensors/hokuyo_utm30lx.urdf.xacro" />
