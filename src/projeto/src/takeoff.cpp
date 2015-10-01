@@ -26,7 +26,7 @@
  */
 
 #define M_PI 3.14159265358979323846
-#define MAX_RANGE 2.99
+#define MAX_RANGE 5.00
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
 #define TIME_AHEAD 1.25 // amount of time will be looked to predict the trajectory
@@ -224,17 +224,17 @@ double degree_to_rad(int degrees) {
 
 void load_sonar_rel_transform_m() {
 
-    Vector3d sonar_f_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_f_rel_linear_pos(0.0, 0.0, 0.0);
     Vector3d sonar_f_rel_rot_pos(0, 0, 0);
     s_front_rel_pose = rotation(sonar_f_rel_rot_pos).matrix() * sonar_f_rel_linear_pos;
 
-    Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
+    /*Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
     Vector3d sonar_l_rel_rot_pos(-1, 0, 0);
     s_left_rel_pose = rotation(sonar_l_rel_rot_pos).matrix() * sonar_l_rel_linear_pos;
 
     Vector3d sonar_r_rel_linear_pos(0.1, 0.0, 0.12);
     Vector3d sonar_r_rel_rot_pos(1, 0, 0);
-    s_right_rel_pose = rotation(sonar_r_rel_rot_pos).matrix() * sonar_r_rel_linear_pos;
+    s_right_rel_pose = rotation(sonar_r_rel_rot_pos).matrix() * sonar_r_rel_linear_pos;*/
 
 }
 
@@ -243,13 +243,23 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose) {
 
      Vector3d global_s_pose = x + rotation(theta).matrix() * s_rel_pose;
 
-     point3d startPoint ((float) global_s_pose(0), (float) global_s_pose(1), (float) global_s_pose(2));
+     Vector3d global_end_ray = x + rotation(theta).matrix() * (s_rel_pose + Vector3d(msg_in.range, 0, 0));
 
-     Vector3d global_end_ray = global_s_pose + rotation(theta).matrix() * Vector3d(msg_in.range, 0, 0);
+     point3d startPoint ((float) global_s_pose(0), (float) global_s_pose(1), (float) global_s_pose(2));
 
      point3d endPoint ((float) global_end_ray(0), (float) global_end_ray(1), (float) global_end_ray(2));
 
-     tree.insertRay (startPoint, endPoint, MAX_RANGE);
+     ROS_INFO("rx: [%f]  ry: [%f] rz: [%f]", theta(0), theta(1), theta(2));
+
+     ROS_INFO("Range: [%f]", msg_in.range);
+
+     ROS_INFO("sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0) - x(0), global_end_ray(1) - x(1), global_end_ray(2) - x(2));
+
+     if (global_end_ray(2) > 0.01) {  //evict the ground
+        tree.insertRay (startPoint, endPoint, MAX_RANGE);
+     }
+
+
 
 
 }
@@ -260,15 +270,15 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
     sonar_callback(msg_in, s_front_rel_pose);
 }
 
-void sonar_left_callback(const sensor_msgs::Range& msg_in)
+/*void sonar_left_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
     sonar_callback(msg_in, s_left_rel_pose);
-}
+}*/
 
-void sonar_right_callback(const sensor_msgs::Range& msg_in)
+/*void sonar_right_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
     sonar_callback(msg_in, s_right_rel_pose);
-}
+}*/
 
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
@@ -446,7 +456,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d omegadot = (omega - previous_omega)/dt;
 
-    //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", omegadot(0), omegadot(1), omegadot(2));
+    //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", x(0), x(1), x(2));
 
     Vector3d acc_linear = (vel - previous_vel)/dt;
 
@@ -695,9 +705,9 @@ int main(int argc, char **argv)
 // %EndTag(SUBSCRIBER)%
   ros::Subscriber sub_sensor_f = n.subscribe("/sonar_front", 1, sonar_front_callback);
 
-  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
+//  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
 
-  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
+//  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
 
   ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
