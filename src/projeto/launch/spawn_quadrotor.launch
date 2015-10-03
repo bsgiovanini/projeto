@@ -8,8 +8,8 @@
    <arg name="z" default="0.5"/>
    <arg name="roll" default="0"/>
    <arg name="pitch" default="0"/>
-   <arg name="yaw" default="3.14159265"/>
-   <arg name="model" default="$(find cvg_sim_gazebo)/urdf/quadrotor.urdf.xacro"/>
+   <arg name="yaw" default="0"/>
+   <arg name="model" default="$(find projeto)/urdf/quadrotor_sonar.urdf.xacro"/>
    <!-- send the robot XML to param server -->
    <param name="robot_description" command="$(find xacro)/xacro.py '$(arg model)'" />
 

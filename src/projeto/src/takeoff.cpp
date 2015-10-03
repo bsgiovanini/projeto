@@ -25,8 +25,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define M_PI 3.14159265358979323846
-#define MAX_RANGE 5.00
+#define M_PI 3.1415926535897931
+#define MAX_RANGE 3.00
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
 #define TIME_AHEAD 1.25 // amount of time will be looked to predict the trajectory
@@ -39,6 +39,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
+#include <sensor_msgs/PointCloud.h>
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/GridCells.h"
 #include "geometry_msgs/Point.h"
@@ -67,8 +68,9 @@ using namespace octomap;
 using namespace std;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc;
 geometry_msgs::Twist twist;
+
 
 
 
@@ -176,6 +178,10 @@ Vector3d x(0,0,0);// global pose quadrotor
 Vector3d s_front_rel_pose;
 Vector3d s_left_rel_pose;
 Vector3d s_right_rel_pose;
+Matrix3d s_front_rel_rot_pos;
+Matrix3d s_left_rel_rot_pos;
+Matrix3d s_right_rel_rot_pos;
+
 
 Vector3d acc_max(1.5, 1.5, 1.0); //global max acc quadrotor meter per sec
 
@@ -185,7 +191,7 @@ Quaternion<double> rotation(Vector3d theta) {
     AngleAxisd pitchAngle(theta(1), Vector3d::UnitY());
     AngleAxisd yawAngle(theta(2), Vector3d::UnitZ());
 
-    Quaternion<double> q = rollAngle * pitchAngle * yawAngle;
+    Quaternion<double> q = yawAngle * pitchAngle * rollAngle;
 
     return q;
 }
@@ -224,61 +230,83 @@ double degree_to_rad(int degrees) {
 
 void load_sonar_rel_transform_m() {
 
-    Vector3d sonar_f_rel_linear_pos(0.0, 0.0, 0.0);
-    Vector3d sonar_f_rel_rot_pos(0, 0, 0);
-    s_front_rel_pose = rotation(sonar_f_rel_rot_pos).matrix() * sonar_f_rel_linear_pos;
+    Vector3d sonar_f_rel_linear_pos(0.1, 0.0, 0.12);
+    s_front_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
+    s_front_rel_pose = sonar_f_rel_linear_pos;
 
-    /*Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
-    Vector3d sonar_l_rel_rot_pos(-1, 0, 0);
-    s_left_rel_pose = rotation(sonar_l_rel_rot_pos).matrix() * sonar_l_rel_linear_pos;
+    Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
+    s_left_rel_rot_pos = rotation(Vector3d(0, 0, -degree_to_rad(30))).matrix();
+    s_left_rel_pose = sonar_l_rel_linear_pos;
 
     Vector3d sonar_r_rel_linear_pos(0.1, 0.0, 0.12);
-    Vector3d sonar_r_rel_rot_pos(1, 0, 0);
-    s_right_rel_pose = rotation(sonar_r_rel_rot_pos).matrix() * sonar_r_rel_linear_pos;*/
+    s_right_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
+    s_right_rel_pose = sonar_r_rel_linear_pos;
 
 }
 
 
-void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose) {
+void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matrix3d s_rel_rot_pose, Vector3d v_pose, Vector3d attitude) {
 
-     Vector3d global_s_pose = x + rotation(theta).matrix() * s_rel_pose;
 
-     Vector3d global_end_ray = x + rotation(theta).matrix() * (s_rel_pose + Vector3d(msg_in.range, 0, 0));
+     Matrix3d R = rotation(attitude).matrix();
+
+     Vector3d global_s_pose = v_pose + R * s_rel_pose;
+
+     Vector3d interm = s_rel_pose +  s_rel_rot_pose * Vector3d(msg_in.range, 0, 0);
+
+     Vector3d global_end_ray = v_pose + R * (interm);
 
      point3d startPoint ((float) global_s_pose(0), (float) global_s_pose(1), (float) global_s_pose(2));
 
      point3d endPoint ((float) global_end_ray(0), (float) global_end_ray(1), (float) global_end_ray(2));
 
-     ROS_INFO("rx: [%f]  ry: [%f] rz: [%f]", theta(0), theta(1), theta(2));
+     //ROS_INFO("I heard xx: [%f]  xy: [%f] xz: [%f]", global_s_pose(0), global_s_pose(1), global_s_pose(2));
 
-     ROS_INFO("Range: [%f]", msg_in.range);
+     //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
 
-     ROS_INFO("sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0) - x(0), global_end_ray(1) - x(1), global_end_ray(2) - x(2));
+     //ROS_INFO("I heard xx: [%f]  xy: [%f] xz: [%f]", v_pose(0), v_pose(1), v_pose(2));
 
-     if (global_end_ray(2) > 0.01) {  //evict the ground
+     //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
+
+      sensor_msgs::PointCloud pc;
+      pc.header.frame_id = "/nav";
+      pc.header.stamp = ros::Time();
+      pc.channels.resize(1);
+      pc.channels[0].name="intensity";
+      pc.channels[0].values.resize(1);
+      pc.points.resize(1);
+      pc.channels[0].values[0] = 0;
+      pc.points[0].x = global_end_ray(0);
+      pc.points[0].y = global_end_ray(1);
+      pc.points[0].z = global_end_ray(2);
+
+      pub_pc.publish(pc);
+
+
+     if (theta(1) <= 0.2 && theta(1) >= -0.2) {  //evict the ground
+
+        cout << msg_in.range << endl;
+        cout << global_end_ray(2) << endl;
         tree.insertRay (startPoint, endPoint, MAX_RANGE);
      }
-
-
-
 
 }
 
 
 void sonar_front_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_front_rel_pose);
+    sonar_callback(msg_in, s_front_rel_pose, s_front_rel_rot_pos, x, theta);
 }
 
-/*void sonar_left_callback(const sensor_msgs::Range& msg_in)
+void sonar_left_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_left_rel_pose);
-}*/
+    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta);
+}
 
-/*void sonar_right_callback(const sensor_msgs::Range& msg_in)
+void sonar_right_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_right_rel_pose);
-}*/
+    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta);
+}
 
 vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
@@ -440,6 +468,10 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	theta(1) = degree_to_rad(msg_in.rotY);
 	theta(2) = degree_to_rad(msg_in.rotZ);
 
+
+
+	ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
+
 	Vector3d velV (vx_, vy_, vz_);
 
 	Quaternion<double> rotQ = rotation(theta);
@@ -468,7 +500,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     OcTreeKey bbxMinKey, bbxMaxKey;
 
     point3d min_vol = point3d(x(0), x(1)-DELTA_VOL, x(2)-0.5);
-    point3d max_vol = point3d(x(0)+DELTA_VOL, x(1)+DELTA_VOL, x(2)+0.5);
+    point3d max_vol = point3d(x(0)+ DELTA_VOL, x(1)+DELTA_VOL, x(2)+0.5);
 
     tree.coordToKeyChecked(min_vol, bbxMinKey);
     tree.coordToKeyChecked(max_vol, bbxMaxKey);
@@ -499,7 +531,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     vector<geometry_msgs::Point> obstaclerepo;
 
-    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
+    /*for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
     {
         point3d coords = it.getCoordinate();
 
@@ -534,7 +566,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
       //cout << "Node center: " << it.getCoordinate() << endl;
       //cout << "Node size: " << it.getSize() << endl;
       //cout << "Node value: " << it->getValue() << endl;
-    }
+    } */
 
     int count_cells = 0;
     gcells.cells.resize(obstaclerepo.size());
@@ -705,9 +737,9 @@ int main(int argc, char **argv)
 // %EndTag(SUBSCRIBER)%
   ros::Subscriber sub_sensor_f = n.subscribe("/sonar_front", 1, sonar_front_callback);
 
-//  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
+  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
 
-//  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
+  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
 
   ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
@@ -715,6 +747,7 @@ int main(int argc, char **argv)
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
   pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
   pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
+  pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
