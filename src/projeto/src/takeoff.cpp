@@ -62,17 +62,21 @@
 #include <limits>
 #include <unistd.h>
 #include <vector>
+#include <cstdlib>
+#include <cmath>
+#include <limits>
+
 
 using namespace Eigen;
 using namespace octomap;
 
 using namespace std;
 
+pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
+
 
 ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3;
 geometry_msgs::Twist twist;
-
-
 
 
 Vector3d theta(0,0,0);
@@ -234,6 +238,31 @@ double degree_to_rad(int degrees) {
 
 }
 
+double generateGaussianNoise(double mu, double sigma)
+{
+	const double epsilon = std::numeric_limits<double>::min();
+	const double two_pi = 2.0*3.14159265358979323846;
+
+	static double z0, z1;
+	static bool generate;
+	generate = !generate;
+
+	if (!generate)
+	   return z1 * sigma + mu;
+
+	double u1, u2;
+	do
+	 {
+	   u1 = rand() * (1.0 / RAND_MAX);
+	   u2 = rand() * (1.0 / RAND_MAX);
+	 }
+	while ( u1 <= epsilon );
+
+	z0 = sqrt(-2.0 * log(u1)) * cos(two_pi * u2);
+	z1 = sqrt(-2.0 * log(u1)) * sin(two_pi * u2);
+	return z0 * sigma + mu;
+}
+
 void load_sonar_rel_transform_m() {
 
     Vector3d sonar_f_rel_linear_pos(0.1, 0.0, 0.12);
@@ -251,7 +280,7 @@ void load_sonar_rel_transform_m() {
 }
 
 
-void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matrix3d s_rel_rot_pose, Vector3d v_pose, Vector3d attitude, float rel_degrees) {
+void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matrix3d s_rel_rot_pose, Vector3d v_pose, Vector3d attitude, int debug) {
 
 
      Matrix3d R = rotation(attitude).matrix();
@@ -274,20 +303,21 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
      //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
 
-      sensor_msgs::PointCloud pc;
-      pc.header.frame_id = "/nav";
-      pc.header.stamp = ros::Time();
-      pc.channels.resize(1);
-      pc.channels[0].name="ray";
-      pc.channels[0].values.resize(1);
-      pc.points.resize(1);
-      pc.channels[0].values[0] = 0;
-      pc.points[0].x = global_end_ray(0);
-      pc.points[0].y = global_end_ray(1);
-      pc.points[0].z = global_end_ray(2);
+     if (debug) {
+        sensor_msgs::PointCloud pc;
+        pc.header.frame_id = "/nav";
+        pc.header.stamp = ros::Time();
+        pc.channels.resize(1);
+        pc.channels[0].name="ray";
+        pc.channels[0].values.resize(1);
+        pc.points.resize(1);
+        pc.channels[0].values[0] = 0;
+        pc.points[0].x = global_end_ray(0);
+        pc.points[0].y = global_end_ray(1);
+        pc.points[0].z = global_end_ray(2);
 
-      pub_pc.publish(pc);
-
+        pub_pc.publish(pc);
+    }
 
      if (global_end_ray(2) > 0.1) {  //evict the ground
 
@@ -297,33 +327,54 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
         point3d direction ((float) (global_end_ray(0) - global_s_pose(0)), (float) (global_end_ray(1) - global_s_pose(1)), (float) (global_end_ray(2) - global_s_pose(2)));
 
-        tree.castRay(startPoint, direction, endcast);
+        int found = tree.castRay(startPoint, direction, endcast, true, MAX_RANGE);
 
-        float factor = OCTREE_RESOLUTION/2;
+        float variance = (OCTREE_RESOLUTION * sqrt(2))/2 - OCTREE_RESOLUTION/2;
 
-        float endcast_a = endcast(0) > 0 ? endcast(0)- factor : endcast(0) + factor ;
-        float endcast_b = endcast(1) > 0 ? endcast(1)- factor : endcast(1) + factor ;
-        float endcast_c = endcast(2) > 0 ? endcast(2)- factor : endcast(2) + factor ;
-
-        f_vector_print("end_ray", global_end_ray);
-        f_vector_print("castray", Vector3d(endcast_a, endcast_b, endcast_c));
-
-        sensor_msgs::PointCloud pc3;
-        pc3.header.frame_id = "/nav";
-        pc3.header.stamp = ros::Time();
-        pc3.channels.resize(1);
-        pc3.channels[0].name="ray";
-        pc3.channels[0].values.resize(1);
-        pc3.points.resize(1);
-        pc3.channels[0].values[0] = 0;
+        double noise = generateGaussianNoise(0.0, variance);
 
 
 
-        pc3.points[0].x = endcast_a - (cos(degree_to_rad(theta(2) + rel_degrees))*msg_in.range);
-        pc3.points[0].y = endcast_b - (sin(degree_to_rad(theta(2) + rel_degrees))*msg_in.range);
-        pc3.points[0].z = x(2) + 2;
+        float endcast_a = endcast(0); //> 0 ? endcast(0)- variance : endcast(0) + variance ;
+        float endcast_b = endcast(1);//> 0 ? endcast(1)- variance : endcast(1) + variance ;
+        float endcast_c = endcast(2);//> 0 ? endcast(2)- variance : endcast(2) + variance ;
 
-        pub_pc3.publish(pc3);
+        Vector3d endcast_w(endcast_a, endcast_b, endcast_c);
+
+        float distance = (endcast_w - global_s_pose).norm();
+
+        Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
+
+        Vector3d x_temp = endcast_w - R*(interm2);
+
+        Vector3d x_new = x_temp;//x*0.8 + x_temp*0.2;
+
+        //pthread_mutex_lock(&mutex_1);
+        //x = x_temp;
+        //pthread_mutex_unlock(&mutex_1);
+
+        //x = x_new;
+        if (debug) {
+            f_vector_print("predict", x);
+            f_vector_print("endcast", x_new);
+
+            cout << noise << endl;
+            sensor_msgs::PointCloud pc3;
+            pc3.header.frame_id = "/nav";
+            pc3.header.stamp = ros::Time();
+            pc3.channels.resize(1);
+            pc3.channels[0].name="ray";
+            pc3.channels[0].values.resize(1);
+            pc3.points.resize(1);
+            pc3.channels[0].values[0] = 0;
+            pc3.points[0].x = x_new(0);
+            pc3.points[0].y = x_new(1);
+            pc3.points[0].z = x_new(2);
+
+            pub_pc3.publish(pc3);
+        }
+
+
 
      }
 
@@ -334,59 +385,20 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
 void sonar_front_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_front_rel_pose, s_front_rel_rot_pos, x, theta, 0);
+    sonar_callback(msg_in, s_front_rel_pose, s_front_rel_rot_pos, x, theta, 1);
 }
 
 void sonar_left_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta, -30);
+    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta, 1);
 }
 
 void sonar_right_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta, 30);
+    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta, 1);
 }
 
-vector<Vector3d> predict_trajectory(Vector3d omega0, Vector3d omegadot, Vector3d theta0, Vector3d a, Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
 
-
-    //cout << current_command.x_l << " " << current_command.y_l << " " << current_command.z_l << " " << current_command.z_a << endl;
-    Vector3d omega_p = omega0;// + Vector3d(0.0, 0.0, current_command.z_a);
-    Vector3d theta_p = theta0;
-    Vector3d xdot_p = xdot0; //+ (rotation(theta_p).matrix()*Vector3d(current_command.x_l, current_command.y_l, current_command.z_l));
-    Vector3d x_p = x0;
-    vector<Vector3d> trajectory;
-
-    int nIntervals = (tend - tstart)/dt_p;
-
-    for (int nTurn = 1; nTurn <= nIntervals; nTurn++) {
-
-        omega_p = omega_p + (dt_p * omegadot);
-
-        Vector3d thetadot_p = omega2thetadot(omega_p, theta_p); //taxa de variacao angular
-
-        //cout << thetadot << endl;
-
-        theta_p = theta_p + (dt_p * thetadot_p); //orientacao
-
-        //cout << theta << endl;
-
-        xdot_p = xdot_p + (dt_p * a); //velocidade linear
-
-        //cout << xdot << endl;
-        x_p = x_p + (dt_p * xdot_p); //posicao linear
-
-        trajectory.push_back(x_p);
-
-    }
-
-    future_position = x_p;
-
-    return trajectory;
-
-    //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", x_p(0), x_p(1), x_p(2));
-
-}
 
 
 vector<Vector3d> predict_trajectory2(Vector3d xdot0, Vector3d x0, float tstart, float tend, float dt_p, Vector3d future_position) {
@@ -547,21 +559,13 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d vel = R * velV;
 
-    x = x + vel*dt;
+	Vector3d x_new = x + vel*dt;
 
-    Vector3d thetadot = (theta - previous_theta)/dt;
-
-    Vector3d omega = thetadot2omega(thetadot, theta);
-
-    Vector3d omegadot = (omega - previous_omega)/dt;
-
-    //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", x(0), x(1), x(2));
-
-    Vector3d acc_linear = (vel - previous_vel)/dt;
+    //pthread_mutex_lock(&mutex_1);
+    x = x_new;
+    //pthread_mutex_unlock(&mutex_1);
 
     Vector3d future_position;
-
-    //vector<Vector3d> trajectory = predict_trajectory(omega, omegadot, theta, acc_linear, vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
 
     vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
 
@@ -761,7 +765,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     previous_theta = theta;
 
-    previous_omega = omega;
+    //previous_omega = omega;
 
     //gettimeofday(&stop, NULL);
 
@@ -789,7 +793,7 @@ void my_handler(int s){
 int main(int argc, char **argv)
 {
     load_sonar_rel_transform_m();
-
+    tree.setProbHit(0.5);
 
 
   /**
