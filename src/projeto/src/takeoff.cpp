@@ -695,26 +695,33 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
             if (timestamp < contador + 3000) {
 
-
-                double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
-                double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
-                double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
+                Vector3d u(pid_x.getCommand(pos_obj(0) - x(0), timestamp), pid_y.getCommand(pos_obj(1) - x(1), timestamp), pid_z.getCommand(pos_obj(2) - x(2), timestamp));
+                //double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
+                //double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
+                //double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
                 double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
 
-                cout << " ----- inicio ------ " << endl;
+                Vector3d c = rotation(theta).inverse()*u;
 
-                cout << " pos_obj_x "<< pos_obj(0) << " pos_obj_y " << pos_obj(1) << " pos_obj_z " <<  pos_obj(2)  << " yaw_obj " << yaw_obj << endl;
-                cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
-                cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
+                c(0) = within(c(0), -2, 2);
+                c(1) = within(c(1), -2, 2);
+                c(2) = within(u(2), -2, 2);
 
-                double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -2, 2);
-                double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -2, 2);
-                double cz   = within(u_z, -2, 2);
+
+                //cout << " ----- inicio ------ " << endl;
+
+                //cout << " pos_obj_x "<< pos_obj(0) << " pos_obj_y " << pos_obj(1) << " pos_obj_z " <<  pos_obj(2)  << " yaw_obj " << yaw_obj << endl;
+                //cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
+                //cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
+
+                //double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -2, 2);
+                //double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -2, 2);
+                //double cz   = within(u_z, -2, 2);
                 double cyaw = within(u_yaw, -2, 2);
-                cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
-                cout << " ----- fim ------ " << endl;
+                //cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
+                //cout << " ----- fim ------ " << endl;
 
-                Command cmd(cx, cy, cz, cyaw);
+                Command cmd(c(0), c(1), c(2), cyaw);
                 send_velocity_command(cmd);
             } else {
 
