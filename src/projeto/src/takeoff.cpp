@@ -30,10 +30,11 @@
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.25 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 5.0
-#define OCTREE_RESOLUTION 0.05
+#define TTC_LIMIT 2.0
+#define OCTREE_RESOLUTION 0.1
+#define CONTROL_LIMIT 1.0
 
 
 // %Tag(FULLTEXT)%
@@ -163,10 +164,10 @@ class Command
 
 Command current_command(0.0, 0.0, 0.0, 0.0);
 
-PID pid_x(2.0, 0.0, 0.0);
-PID pid_y(2.0, 0.0, 0.0);
-PID pid_z(2.0, 0.0, 0.0);
-PID pid_yaw(1.0, 0, 0.0);
+PID pid_x(0.5, 0, 0.35);
+PID pid_y(0.5, 0, 0.35);
+PID pid_z(0.8, 0, 0.35);
+PID pid_yaw(1.0, 0, 0.30);
 
 
 vector<Command> collision_avoiding_commands;
@@ -355,10 +356,10 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
         //x = x_new;
         if (debug) {
-            f_vector_print("predict", x);
-            f_vector_print("endcast", x_new);
+            //f_vector_print("predict", x);
+            //f_vector_print("endcast", x_new);
 
-            cout << noise << endl;
+            //cout << noise << endl;
             sensor_msgs::PointCloud pc3;
             pc3.header.frame_id = "/nav";
             pc3.header.stamp = ros::Time();
@@ -430,7 +431,7 @@ vector<Vector3d> predict_trajectory2(Vector3d xdot0, Vector3d x0, float tstart, 
 
 int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
-    float c_factor = (OCTREE_RESOLUTION/2) + quadrotor_sphere_radius;
+    float c_factor = (OCTREE_RESOLUTION * sqrt(2)/2) + quadrotor_sphere_radius;
 
     //front - left - bottom
     float flb_x_c_obstacle = obs_center(0) - c_factor;
@@ -472,14 +473,14 @@ int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
     float brt_y_c_obstacle = obs_center(1) + c_factor;
     float brt_z_c_obstacle = obs_center(2) + c_factor;
 
-    int verify_x = ((x(0) >= flb_x_c_obstacle) && (x(0) >= frb_x_c_obstacle) && (x(0) >= flt_x_c_obstacle) && (x(0) >= frt_x_c_obstacle) &&
-    (x(0) <= blb_x_c_obstacle) && (x(0) <= brb_x_c_obstacle) && (x(0) <= blt_x_c_obstacle) && (x(0) <= brt_x_c_obstacle));
+    int verify_x = ((pos(0) >= flb_x_c_obstacle) && (pos(0) >= frb_x_c_obstacle) && (pos(0) >= flt_x_c_obstacle) && (pos(0) >= frt_x_c_obstacle) &&
+    (pos(0) <= blb_x_c_obstacle) && (pos(0) <= brb_x_c_obstacle) && (pos(0) <= blt_x_c_obstacle) && (pos(0) <= brt_x_c_obstacle));
 
-    int verify_y = ((x(1) >= flb_y_c_obstacle) && (x(1) >= blb_y_c_obstacle) && (x(1) >= flt_y_c_obstacle) && (x(1) >= blt_y_c_obstacle) &&
-    (x(1) <=  frb_y_c_obstacle ) && (x(1) <= brb_y_c_obstacle) && (x(1) <= frt_y_c_obstacle ) && (x(1) <= brt_y_c_obstacle));
+    int verify_y = ((pos(1) >= flb_y_c_obstacle) && (pos(1) >= blb_y_c_obstacle) && (pos(1) >= flt_y_c_obstacle) && (pos(1) >= blt_y_c_obstacle) &&
+    (pos(1) <=  frb_y_c_obstacle ) && (pos(1) <= brb_y_c_obstacle) && (pos(1) <= frt_y_c_obstacle ) && (pos(1) <= brt_y_c_obstacle));
 
-    int verify_z = ((x(2) >= flb_z_c_obstacle) && (x(2) >= frb_z_c_obstacle) && (x(2) >= blb_z_c_obstacle) && (x(2) >= brb_z_c_obstacle) &&
-    (x(2) <= flt_z_c_obstacle  ) && (x(2) <= frt_z_c_obstacle ) && (x(2) <= blt_z_c_obstacle) && (x(2) <= brt_z_c_obstacle));
+    int verify_z = ((pos(2) >= flb_z_c_obstacle) && (pos(2) >= frb_z_c_obstacle) && (pos(2) >= blb_z_c_obstacle) && (pos(2) >= brb_z_c_obstacle) &&
+    (pos(2) <= flt_z_c_obstacle  ) && (pos(2) <= frt_z_c_obstacle ) && (pos(2) <= blt_z_c_obstacle) && (pos(2) <= brt_z_c_obstacle));
 
     return verify_x && verify_y && verify_z;
 
@@ -536,6 +537,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     //do stuff
 
     float timestamp = msg_in.tm/1000000;
+
     //timestamp in microsecs
     float dt = timestamp - previous_tm; //geting dt in secs
 
@@ -563,6 +565,10 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     //pthread_mutex_lock(&mutex_1);
     x = x_new;
+
+    //f_vector_print("posicao", x);
+
+
     //pthread_mutex_unlock(&mutex_1);
 
     Vector3d future_position;
@@ -596,13 +602,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
 
-    OcTreeKey bbxMinKey, bbxMaxKey;
 
-    point3d min_vol = point3d(x(0), x(1)-DELTA_VOL, x(2)-0.5);
-    point3d max_vol = point3d(x(0)+ DELTA_VOL, x(1)+DELTA_VOL, x(2)+0.5);
-
-    tree.coordToKeyChecked(min_vol, bbxMinKey);
-    tree.coordToKeyChecked(max_vol, bbxMaxKey);
 
     float short_dist = MAX_DIST;
 
@@ -630,12 +630,62 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     vector<geometry_msgs::Point> obstaclerepo;
 
-    for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it)
-    {
-        point3d coords = it.getCoordinate();
 
-        Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
-        if (it->getValue() > 0.0) {
+    if (control_mode) {
+
+        if (timestamp < contador + CONTROL_LIMIT) {
+
+            double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
+            double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
+            double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
+            double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
+
+
+
+            double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -1, 1);
+            double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -1, 1);
+            double cz   = within(u_z, -1, 1);
+            double cyaw = within(u_yaw, -1, 1);
+
+            f_vector_print("objetivo", pos_obj);
+
+            f_vector_print("posicao", x);
+
+            Command cmd(cx, cy, cz, cyaw);
+            send_velocity_command(cmd);
+
+        } else {
+
+            control_mode = 0;
+            send_collision_mode_msg(false);
+            pid_x.reset();
+            pid_y.reset();
+            pid_z.reset();
+            pid_yaw.reset();
+        }
+
+
+    } else {
+
+        OcTreeKey bbxMinKey, bbxMaxKey;
+
+        Vector3d lim1 = x + R * Vector3d(0, -DELTA_VOL/2, -1.0);
+        Vector3d lim2 = x + R * Vector3d(DELTA_VOL, DELTA_VOL/2, 1.0);
+
+        point3d min_vol = point3d(x(0)-DELTA_VOL/2, x(1) -DELTA_VOL/2, x(2)-1.0);
+        point3d max_vol = point3d(x(0)+DELTA_VOL/2, x(1) +DELTA_VOL/2, x(2)+1.0);
+
+
+        tree.coordToKeyChecked(min_vol, bbxMinKey);
+        tree.coordToKeyChecked(max_vol, bbxMaxKey);
+
+        for(OcTree::leaf_bbx_iterator it = tree.begin_leafs_bbx(bbxMinKey, bbxMaxKey), end_bbx = tree.end_leafs_bbx(); it!= end_bbx; ++it){
+
+            //cout << "passei" << endl;
+
+            point3d coords = it.getCoordinate();
+
+            Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
 
             geometry_msgs::Point cell;
             cell.x = coords(0);
@@ -644,27 +694,54 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
             obstaclerepo.push_back(cell);
 
 
-            for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
+            if (it->getValue() > 0.0) {
 
-                Vector3d pos = *it;
 
-                if (there_will_be_collision(pos, wrapped_coords)) {
 
-                    float dist = (wrapped_coords - x).norm();
 
-                    if (dist < short_dist) {
-                        short_dist = dist;
+                for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
+
+                    Vector3d pos = *it;
+
+                    if (there_will_be_collision(pos, wrapped_coords)) {
+
+                        float dist = (wrapped_coords - x).norm();
+
+                        if (dist < short_dist) {
+                            short_dist = dist;
+                        }
+                        break;
                     }
-                    break;
+
                 }
+
+            }
+          //manipulate node, e.g.:
+          //cout << "Node center: " << it.getCoordinate() << endl;
+          //cout << "Node size: " << it.getSize() << endl;
+          //cout << "Node value: " << it->getValue() << endl;
+        }
+        if (short_dist < MAX_DIST) {
+
+            cout << "short dist " << short_dist << endl;
+
+            float ttc = short_dist/vel.norm();
+
+            if (ttc < TTC_LIMIT) {
+
+                pos_obj = x;
+                yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
+                send_collision_mode_msg(true);
+                control_mode = 1;
+                contador = timestamp;
+                pid_x.reset();
+                pid_y.reset();
+                pid_z.reset();
+                pid_yaw.reset();
 
             }
 
         }
-      //manipulate node, e.g.:
-      //cout << "Node center: " << it.getCoordinate() << endl;
-      //cout << "Node size: " << it.getSize() << endl;
-      //cout << "Node value: " << it->getValue() << endl;
     }
 
     int count_cells = 0;
@@ -678,94 +755,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     gettimeofday(&stop, NULL);
 
-    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
-
-    if (short_dist < MAX_DIST) {
-        float ttc = short_dist/vel.norm();
-        if (ttc < TTC_LIMIT) {
-
-            if (!control_mode) {
-                pos_obj = x;
-                yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
-                send_collision_mode_msg(true);
-                control_mode = 1;
-                contador = timestamp;
-            }
-
-
-            if (timestamp < contador + 3000) {
-
-                Vector3d u(pid_x.getCommand(pos_obj(0) - x(0), timestamp), pid_y.getCommand(pos_obj(1) - x(1), timestamp), pid_z.getCommand(pos_obj(2) - x(2), timestamp));
-                //double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
-                //double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
-                //double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
-                double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
-
-                Vector3d c = rotation(theta).inverse()*u;
-
-                c(0) = within(c(0), -2, 2);
-                c(1) = within(c(1), -2, 2);
-                c(2) = within(u(2), -2, 2);
-
-
-                //cout << " ----- inicio ------ " << endl;
-
-                //cout << " pos_obj_x "<< pos_obj(0) << " pos_obj_y " << pos_obj(1) << " pos_obj_z " <<  pos_obj(2)  << " yaw_obj " << yaw_obj << endl;
-                //cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
-                //cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
-
-                //double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -2, 2);
-                //double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -2, 2);
-                //double cz   = within(u_z, -2, 2);
-                double cyaw = within(u_yaw, -2, 2);
-                //cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
-                //cout << " ----- fim ------ " << endl;
-
-                Command cmd(c(0), c(1), c(2), cyaw);
-                send_velocity_command(cmd);
-            } else {
-
-                control_mode = 0;
-                send_collision_mode_msg(false);
-                pid_x.reset();
-                pid_y.reset();
-                pid_z.reset();
-                pid_yaw.reset();
-            }
-
-
-
-        } else {
-
-            control_mode = 0;
-            send_collision_mode_msg(false);
-            pid_x.reset();
-            pid_y.reset();
-            pid_z.reset();
-            pid_yaw.reset();
-
-        }
-        cout << "Opa!! vai colidir em " << ttc << "s" << endl;
-
-    } else {
-
-        control_mode = 0;
-        send_collision_mode_msg(false);
-        pid_x.reset();
-        pid_y.reset();
-        pid_z.reset();
-        pid_yaw.reset();
-    }
-
-    //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
-    //ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
-    //ROS_INFO("distance to goal: [%f]", distance_to_goal);
-
-	//ROS_INFO("getting sensor reading");
-	//
-	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", acc_linear(0), acc_linear(1), acc_linear(2));
-
-    //ROS_INFO("Time: [%f]", dt);
     previous_tm = timestamp;
 
     previous_vel = vel;
@@ -800,7 +789,7 @@ void my_handler(int s){
 int main(int argc, char **argv)
 {
     load_sonar_rel_transform_m();
-    tree.setProbHit(0.5);
+
 
 
   /**

@@ -303,44 +303,39 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     //pthread_mutex_lock(&mutex_1);
     x = x_new;
-    //pthread_mutex_unlock(&mutex_1);
+
     f_vector_print("posicao", x);
+
     //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
-
+    if (!control_mode) {
+        send_collision_mode_msg(true);
+        control_mode = 1;
+    } else {
 
     //Vector3d u(pid_x.getCommand(pos_obj(0) - x(0), timestamp), pid_y.getCommand(pos_obj(1) - x(1), timestamp), pid_z.getCommand(pos_obj(2) - x(2), timestamp));
-    double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
-    double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
-    double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
-    double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
-
-    //Vector3d c = rotation(theta).inverse()*u;
-
-    //c(0) = within(c(0), -2, 2);
-    //c(1) = within(c(1), -2, 2);
-    //c(2) = within(u(2), -2, 2);
+        double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
+        double u_y = pid_y.getCommand(pos_obj(1) - x(1), timestamp);
+        double u_z = pid_z.getCommand(pos_obj(2) - x(2), timestamp);
+        double u_yaw = pid_yaw.getCommand(yaw_obj - theta(2), timestamp);
 
 
-    //cout << " ----- inicio ------ " << endl;
 
-    //cout << " pos_obj_x "<< pos_obj(0) << " pos_obj_y " << pos_obj(1) << " pos_obj_z " <<  pos_obj(2)  << " yaw_obj " << yaw_obj << endl;
-    //cout << " x_x       "<< x(0) << " x_y     " << x(1) << " x_z     " <<  x(2)  << " yaw   " << theta(2) << endl;
-    //cout << " u_x: "<< u_x << " u_y " << u_y << " u_z " <<  u_z  << " u_yaw " << u_yaw << endl;
+        double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -1, 1);
+        double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -1, 1);
+        double cz   = within(u_z, -1, 1);
+        double cyaw = within(u_yaw, -1, 1);
 
-    double cx   = within(cos(theta(2)) * u_x + sin(theta(2)) * u_y, -1, 1);
-    double cy   = within(-sin(theta(2)) * u_x + cos(theta(2)) * u_y, -1, 1);
-    double cz   = within(u_z, -1, 1);
-    double cyaw = within(u_yaw, -1, 1);
+        f_vector_print("commando", Vector3d(cx, cy, cz));
+        //cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
+        //cout << " ----- fim ------ " << endl;
 
-    f_vector_print("commando", Vector3d(cx, cy, cz));
-    //cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
-    //cout << " ----- fim ------ " << endl;
+        Command cmd(cx, cy, cz, cyaw);
+        send_velocity_command(cmd);
 
-    Command cmd(cx, cy, cz, cyaw);
-    send_velocity_command(cmd);
+    }
 
-
+    previous_tm = timestamp;
     //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
     //ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
     //ROS_INFO("distance to goal: [%f]", distance_to_goal);
@@ -377,7 +372,7 @@ int main(int argc, char **argv)
     //load_sonar_rel_transform_m();
     //tree.setProbHit(0.5);
 
-    pos_obj = Vector3d(0.5,0.5,1);
+    pos_obj = Vector3d(0.5,0.5,0.5);
     yaw_obj = 0;
 
 
