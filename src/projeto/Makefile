@@ -174,6 +174,19 @@ control/fast:
 .PHONY : control/fast
 
 #=============================================================================
+# Target rules for targets named navigation
+
+# Build rule for target.
+navigation: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation
+.PHONY : navigation
+
+# fast build rule for target.
+navigation/fast:
+	$(MAKE) -f CMakeFiles/navigation.dir/build.make CMakeFiles/navigation.dir/build
+.PHONY : navigation/fast
+
+#=============================================================================
 # Target rules for targets named operation
 
 # Build rule for target.
@@ -358,6 +371,21 @@ src/control.s:
 .PHONY : src/control.s
 
 # target to build an object file
+src/navegation.o:
+	$(MAKE) -f CMakeFiles/navigation.dir/build.make CMakeFiles/navigation.dir/src/navegation.o
+.PHONY : src/navegation.o
+
+# target to preprocess a source file
+src/navegation.i:
+	$(MAKE) -f CMakeFiles/navigation.dir/build.make CMakeFiles/navigation.dir/src/navegation.i
+.PHONY : src/navegation.i
+
+# target to generate assembly for a file
+src/navegation.s:
+	$(MAKE) -f CMakeFiles/navigation.dir/build.make CMakeFiles/navigation.dir/src/navegation.s
+.PHONY : src/navegation.s
+
+# target to build an object file
 src/operation.o:
 	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.o
 .PHONY : src/operation.o
@@ -415,6 +443,7 @@ help:
 	@echo "... clean-test-results"
 	@echo "... control"
 	@echo "... edit_cache"
+	@echo "... navigation"
 	@echo "... operation"
 	@echo "... pose"
 	@echo "... rebuild_cache"
@@ -432,6 +461,9 @@ help:
 	@echo "... src/control.o"
 	@echo "... src/control.i"
 	@echo "... src/control.s"
+	@echo "... src/navegation.o"
+	@echo "... src/navegation.i"
+	@echo "... src/navegation.s"
 	@echo "... src/operation.o"
 	@echo "... src/operation.i"
 	@echo "... src/operation.s"
