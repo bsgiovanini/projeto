@@ -16,15 +16,21 @@
 #include "geometry_msgs/Twist.h"
 #include "std_msgs/Empty.h"
 #include "std_msgs/Bool.h"
+#include "std_msgs/Float32.h"
 #include "std_srvs/Empty.h"
+#include <fstream>
 
 const int PUBLISH_FREQ = 50;
 
+
+
 using namespace std;
+
+ofstream result_command_txt;
 
 struct TeleopArDrone
 {
-    ros::Subscriber joy_sub, project_collision_mode;
+    ros::Subscriber joy_sub, project_collision_mode, project_distance;
     ros::Publisher pub_takeoff, pub_land, pub_toggle_state, pub_vel;
 
     bool got_first_joy_msg;
@@ -46,10 +52,23 @@ struct TeleopArDrone
         autopilot_ = collision_msg.data;
     }
 
+    void onDistance(const std_msgs::Float32 distance) {
+
+
+        if (distance.data < 3.00) {
+
+            char text[50];
+            float val_cmd = sqrt(twist.linear.x * twist.linear.x + twist.linear.y * twist.linear.y);
+            sprintf (text, "%f;%f\n", distance.data, val_cmd);
+            result_command_txt << text;
+        }
+
+    }
+
 	void joyCb(const sensor_msgs::JoyConstPtr joy_msg){
 
 
-
+        cout << "recebendo..." << joy_msg->axes[1] <<" "<< joy_msg->axes[0] << " " << joy_msg->axes[3] << " " << joy_msg->axes[2] <<  endl;
          if (!got_first_joy_msg){
         ROS_INFO("Found joystick with %zu buttons and %zu axes", joy_msg->buttons.size(), joy_msg->axes.size());
 
@@ -121,6 +140,7 @@ struct TeleopArDrone
 	 joy_sub = nh_.subscribe("/joy", 1,&TeleopArDrone::joyCb, this);
 
 	 project_collision_mode = nh_.subscribe("/project/collision_mode", 1,&TeleopArDrone::onCollisionMode, this);
+	 project_distance = nh_.subscribe("/project/mydist", 1,&TeleopArDrone::onDistance, this);
 
 	 toggle_pressed_in_last_msg = cam_toggle_pressed_in_last_msg = false;
 
@@ -150,6 +170,11 @@ struct TeleopArDrone
 
 int main(int argc, char **argv)
 {
+
+    result_command_txt.open("commando_por_distancia.csv");
+
+    result_command_txt << "Time ;Distance to obstacle; Command\n";
+
   ros::init(argc, argv, "ardrone_teleop");
 
   ROS_INFO("Started ArDrone joystick-Teleop");
@@ -167,6 +192,8 @@ int main(int argc, char **argv)
     teleop.send_cmd_vel();
     pub_rate.sleep();
   }
+
+  result_command_txt.close();
 
   return 0;
 }

@@ -30,7 +30,7 @@
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
 #define TTC_LIMIT 2.0
 #define OCTREE_RESOLUTION 0.1
@@ -46,6 +46,7 @@
 #include "nav_msgs/GridCells.h"
 #include "geometry_msgs/Point.h"
 #include "geometry_msgs/PoseStamped.h"
+#include "std_msgs/Float32.h"
 
 #include <ardrone_autonomy/Navdata.h>
 #include <sensor_msgs/Range.h>
@@ -68,6 +69,7 @@
 #include <limits>
 
 
+
 using namespace Eigen;
 using namespace octomap;
 
@@ -76,7 +78,7 @@ using namespace std;
 pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
 geometry_msgs::Twist twist;
 
 
@@ -88,6 +90,8 @@ Vector3d previous_vel(0,0,0);
 float previous_tm = 0.0;
 
 float quadrotor_sphere_radius = 0.8;
+
+
 
 
 class PID {
@@ -296,13 +300,7 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
      point3d endPoint ((float) global_end_ray(0), (float) global_end_ray(1), (float) global_end_ray(2));
 
-     //ROS_INFO("I heard xx: [%f]  xy: [%f] xz: [%f]", global_s_pose(0), global_s_pose(1), global_s_pose(2));
 
-     //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
-
-     //ROS_INFO("I heard xx: [%f]  xy: [%f] xz: [%f]", v_pose(0), v_pose(1), v_pose(2));
-
-     //ROS_INFO("I heard sx: [%f]  sy: [%f] sz: [%f]", global_end_ray(0), global_end_ray(1), global_end_ray(2));
 
      if (debug) {
         sensor_msgs::PointCloud pc;
@@ -316,13 +314,14 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
         pc.points[0].x = global_end_ray(0);
         pc.points[0].y = global_end_ray(1);
         pc.points[0].z = global_end_ray(2);
-
         pub_pc.publish(pc);
+
+
+
     }
 
      if (global_end_ray(2) > 0.1) {  //evict the ground
 
-        tree.insertRay (startPoint, endPoint, MAP_MAX_RANGE);
 
         point3d endcast;
 
@@ -330,49 +329,61 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
         int found = tree.castRay(startPoint, direction, endcast, true, MAX_RANGE);
 
-        float variance = (OCTREE_RESOLUTION * sqrt(2))/2 - OCTREE_RESOLUTION/2;
+        tree.insertRay (startPoint, endPoint, MAP_MAX_RANGE);
 
-        double noise = generateGaussianNoise(0.0, variance);
+        if (found) {
+
+
+            float variance = (OCTREE_RESOLUTION * sqrt(2))/2 - OCTREE_RESOLUTION/2;
+
+            double noise = generateGaussianNoise(0.0, variance);
 
 
 
-        float endcast_a = endcast(0); //> 0 ? endcast(0)- variance : endcast(0) + variance ;
-        float endcast_b = endcast(1);//> 0 ? endcast(1)- variance : endcast(1) + variance ;
-        float endcast_c = endcast(2);//> 0 ? endcast(2)- variance : endcast(2) + variance ;
+            float endcast_a = endcast(0); //> 0 ? endcast(0)- variance : endcast(0) + variance ;
+            float endcast_b = endcast(1);//> 0 ? endcast(1)- variance : endcast(1) + variance ;
+            float endcast_c = endcast(2);//> 0 ? endcast(2)- variance : endcast(2) + variance ;
 
-        Vector3d endcast_w(endcast_a, endcast_b, endcast_c);
+            Vector3d endcast_w(endcast_a, endcast_b, endcast_c);
 
-        float distance = (endcast_w - global_s_pose).norm();
+            float distance = (endcast_w - global_s_pose).norm();
 
-        Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
+            std_msgs::Float32 pb_d;
+            pb_d.data = distance;
+            pub_dist.publish(pb_d);
 
-        Vector3d x_temp = endcast_w - R*(interm2);
 
-        Vector3d x_new = x_temp;//x*0.8 + x_temp*0.2;
+            Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
+
+            Vector3d x_temp = endcast_w - R*(interm2);
+
+            Vector3d x_new = x_temp;//x*0.8 + x_temp*0.2;
 
         //pthread_mutex_lock(&mutex_1);
         //x = x_temp;
         //pthread_mutex_unlock(&mutex_1);
 
         //x = x_new;
-        if (debug) {
-            //f_vector_print("predict", x);
-            //f_vector_print("endcast", x_new);
+            if (debug) {
+                //f_vector_print("predict", x);
+                //f_vector_print("endcast", x_new);
 
-            //cout << noise << endl;
-            sensor_msgs::PointCloud pc3;
-            pc3.header.frame_id = "/nav";
-            pc3.header.stamp = ros::Time();
-            pc3.channels.resize(1);
-            pc3.channels[0].name="ray";
-            pc3.channels[0].values.resize(1);
-            pc3.points.resize(1);
-            pc3.channels[0].values[0] = 0;
-            pc3.points[0].x = x_new(0);
-            pc3.points[0].y = x_new(1);
-            pc3.points[0].z = x_new(2);
+                //cout << noise << endl;
+                sensor_msgs::PointCloud pc3;
+                pc3.header.frame_id = "/nav";
+                pc3.header.stamp = ros::Time();
+                pc3.channels.resize(1);
+                pc3.channels[0].name="ray";
+                pc3.channels[0].values.resize(1);
+                pc3.points.resize(1);
+                pc3.channels[0].values[0] = 0;
+                pc3.points[0].x = x_new(0);
+                pc3.points[0].y = x_new(1);
+                pc3.points[0].z = x_new(2);
 
-            pub_pc3.publish(pc3);
+                pub_pc3.publish(pc3);
+            }
+
         }
 
 
@@ -391,12 +402,12 @@ void sonar_front_callback(const sensor_msgs::Range& msg_in)
 
 void sonar_left_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta, 1);
+    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta, 0);
 }
 
 void sonar_right_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta, 1);
+    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta, 0);
 }
 
 
@@ -429,11 +440,8 @@ vector<Vector3d> predict_trajectory2(Vector3d xdot0, Vector3d x0, float tstart, 
 }
 
 
-int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
+int in_perimeter(Vector3d pos, Vector3d obs_center, float c_factor) {
 
-    float c_factor = (OCTREE_RESOLUTION * sqrt(2)/2) + quadrotor_sphere_radius;
-
-    //front - left - bottom
     float flb_x_c_obstacle = obs_center(0) - c_factor;
     float flb_y_c_obstacle = obs_center(1) - c_factor;
     float flb_z_c_obstacle = obs_center(2) - c_factor;
@@ -484,7 +492,20 @@ int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
 
     return verify_x && verify_y && verify_z;
 
+
 }
+
+
+
+int there_will_be_collision(Vector3d pos, Vector3d obs_center) {
+
+    float c_factor = (OCTREE_RESOLUTION * sqrt(2)/2) + quadrotor_sphere_radius;
+
+    return in_perimeter(pos, obs_center, c_factor);
+
+}
+
+
 
 void send_collision_mode_msg(bool value) {
 
@@ -669,8 +690,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
         OcTreeKey bbxMinKey, bbxMaxKey;
 
-        Vector3d lim1 = x + R * Vector3d(0, -DELTA_VOL/2, -1.0);
-        Vector3d lim2 = x + R * Vector3d(DELTA_VOL, DELTA_VOL/2, 1.0);
+        //Vector3d lim1 = x + R * Vector3d(0, -DELTA_VOL/2, -1.0);
+        //Vector3d lim2 = x + R * Vector3d(DELTA_VOL, DELTA_VOL/2, 1.0);
 
         point3d min_vol = point3d(x(0)-DELTA_VOL/2, x(1) -DELTA_VOL/2, x(2)-1.0);
         point3d max_vol = point3d(x(0)+DELTA_VOL/2, x(1) +DELTA_VOL/2, x(2)+1.0);
@@ -687,61 +708,65 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
             Vector3d wrapped_coords = Vector3d(coords(0), coords(1), coords(2));
 
-            geometry_msgs::Point cell;
-            cell.x = coords(0);
-            cell.y = coords(1);
-            cell.z = coords(2);
-            obstaclerepo.push_back(cell);
+
+            //if (!in_perimeter(x, wrapped_coords, 0.5)) {
+
+                geometry_msgs::Point cell;
+                cell.x = coords(0);
+                cell.y = coords(1);
+                cell.z = coords(2);
+                obstaclerepo.push_back(cell);
 
 
-            if (it->getValue() > 0.0) {
+                if (it->getValue() > 0.0) {
 
 
+                    for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
+                        Vector3d pos = *it;
 
-                for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
+                        if (there_will_be_collision(pos, wrapped_coords)) {
 
-                    Vector3d pos = *it;
+                            float dist = (wrapped_coords - x).norm();
 
-                    if (there_will_be_collision(pos, wrapped_coords)) {
-
-                        float dist = (wrapped_coords - x).norm();
-
-                        if (dist < short_dist) {
-                            short_dist = dist;
+                            if (dist < short_dist) {
+                                short_dist = dist;
+                            }
+                            break;
                         }
-                        break;
+
                     }
 
                 }
+              //manipulate node, e.g.:
+              //cout << "Node center: " << it.getCoordinate() << endl;
+              //cout << "Node size: " << it.getSize() << endl;
+              //cout << "Node value: " << it->getValue() << endl;
 
+                if (short_dist < MAX_DIST) {
+
+                    cout << "short dist " << short_dist << endl;
+
+                    float ttc = short_dist/vel.norm();
+
+                    if (ttc < TTC_LIMIT) {
+
+                        pos_obj = x;
+                        yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
+                        send_collision_mode_msg(true);
+                        control_mode = 1;
+                        contador = timestamp;
+                        pid_x.reset();
+                        pid_y.reset();
+                        pid_z.reset();
+                        pid_yaw.reset();
+
+                    }
+
+                }
             }
-          //manipulate node, e.g.:
-          //cout << "Node center: " << it.getCoordinate() << endl;
-          //cout << "Node size: " << it.getSize() << endl;
-          //cout << "Node value: " << it->getValue() << endl;
-        }
-        if (short_dist < MAX_DIST) {
+        //}
 
-            cout << "short dist " << short_dist << endl;
-
-            float ttc = short_dist/vel.norm();
-
-            if (ttc < TTC_LIMIT) {
-
-                pos_obj = x;
-                yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
-                send_collision_mode_msg(true);
-                control_mode = 1;
-                contador = timestamp;
-                pid_x.reset();
-                pid_y.reset();
-                pid_z.reset();
-                pid_yaw.reset();
-
-            }
-
-        }
     }
 
     int count_cells = 0;
@@ -751,7 +776,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         obstaclerepo.pop_back();
     }
 
-    pub_grid_cell.publish(gcells);
+    //pub_grid_cell.publish(gcells);
 
     gettimeofday(&stop, NULL);
 
@@ -788,6 +813,7 @@ void my_handler(int s){
 
 int main(int argc, char **argv)
 {
+
     load_sonar_rel_transform_m();
 
 
@@ -845,6 +871,7 @@ int main(int argc, char **argv)
   pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
   pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
   pub_pc3                   = n.advertise<sensor_msgs::PointCloud>("/project/cast",  1);
+  pub_dist                  = n.advertise<std_msgs::Float32>("/project/mydist",  1);
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all

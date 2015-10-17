@@ -65,6 +65,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <limits>
+#include <fstream>
 
 
 using namespace Eigen;
@@ -163,15 +164,36 @@ class Command
 
 Command current_command(0.0, 0.0, 0.0, 0.0);
 
-PID pid_x(0.5, 0, 0.35);
-PID pid_y(0.5, 0, 0.35);
-PID pid_z(0.8, 0, 0.35);
-PID pid_yaw(1.0, 0, 0.30);
+float kp_x = 0.1;
+float kd_x = 0.0;
+float ki_x = 0.1;
+
+float kp_y = 0.1;
+float kd_y = 0.0;
+float ki_y = 0.1;
+
+float kp_z = 0.1;
+float kd_z = 0.0;
+float ki_z = 0.1;
+
+float kp_yaw = 0.1;
+float kd_yaw = 0.0;
+float ki_yaw = 0.1;
+
+
+PID pid_x(kp_x, kd_x, ki_x);
+PID pid_y(kp_y, kd_y, ki_y);
+PID pid_z(kp_z, kd_z, ki_z);
+PID pid_yaw(kp_yaw, kd_yaw, ki_yaw);
 
 Vector3d pos_obj;
 double yaw_obj;
 int control_mode = 0;
 float contador;
+
+float last_tm_ins = 0.0;
+
+ofstream pid_x_txt, pid_y_txt, pid_z_txt, pid_yaw_txt;
 
 
 Vector3d x(0,0,0);// global pose quadrotor
@@ -268,6 +290,8 @@ double within(double v,double vmin,double vmax) {
     }
 }
 
+float first_timestamp = -1;
+
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
 
@@ -276,6 +300,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     //do stuff
 
     float timestamp = msg_in.tm/1000000;
+    if (first_timestamp < 0) {
+        first_timestamp = timestamp;
+    }
     //timestamp in microsecs
     float dt = timestamp - previous_tm; //geting dt in secs
 
@@ -304,8 +331,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     //pthread_mutex_lock(&mutex_1);
     x = x_new;
 
-    f_vector_print("posicao", x);
-
     //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
     if (!control_mode) {
@@ -326,30 +351,38 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         double cz   = within(u_z, -1, 1);
         double cyaw = within(u_yaw, -1, 1);
 
-        f_vector_print("commando", Vector3d(cx, cy, cz));
         //cout << " c_x: "<< cx << " c_y " << cy << " c_z " <<  cz  << " c_yaw " << cyaw << endl;
         //cout << " ----- fim ------ " << endl;
 
         Command cmd(cx, cy, cz, cyaw);
         send_velocity_command(cmd);
 
+        f_vector_print("vel", velV);
+
+        if ((velV.norm() > 0.001) && (timestamp - last_tm_ins >= 0.2)) {
+
+            char prefix_x [50], prefix_y[50], prefix_z[50], prefix_yaw[50];
+
+            sprintf (prefix_x, "%f;%f;%f\n",timestamp - first_timestamp, pos_obj(0), x(0));
+            sprintf (prefix_y, "%f;%f;%f\n",timestamp - first_timestamp, pos_obj(1), x(1));
+            sprintf (prefix_z, "%f;%f;%f\n",timestamp - first_timestamp, pos_obj(2), x(2));
+            sprintf (prefix_yaw, "%f;%f;%f\n",timestamp - first_timestamp, yaw_obj, theta(2));
+            pid_x_txt << prefix_x;
+            pid_y_txt << prefix_y;
+            pid_z_txt << prefix_z;
+            pid_yaw_txt << prefix_yaw;
+
+            last_tm_ins = timestamp;
+
+        }
+
+
+
+
+
     }
 
     previous_tm = timestamp;
-    //ROS_INFO("Best avoid position: x [%f]  y: [%f] z: [%f]", best_avoiding_position(0), best_avoiding_position(1), best_avoiding_position(2));
-    //ROS_INFO("Future position: x [%f]  y: [%f] z: [%f]", future_position(0), future_position(1), future_position(2));
-    //ROS_INFO("distance to goal: [%f]", distance_to_goal);
-
-	//ROS_INFO("getting sensor reading");
-	//
-	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", acc_linear(0), acc_linear(1), acc_linear(2));
-
-    //ROS_INFO("Time: [%f]", dt);
-    //previous_omega = omega;
-
-    //gettimeofday(&stop, NULL);
-
-    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
 
 }
 // %EndTag(CALLBACK)%
@@ -358,11 +391,10 @@ void my_handler(int s){
 
     printf("Escrevendo no arquivo %d\n",s);
 
-    //point3d min_vol ((float)(x(0)+0.12), (float)(x(1)+0.12), (float)(x(2)+0.06));
-
-    //point3d max_vol ((float)(x(0)+0.24), (float)(x(1)+0.24), (float)(x(2)+0.20));
-
-
+    pid_x_txt.close();
+    pid_y_txt.close();
+    pid_z_txt.close();
+    pid_yaw_txt.close();
     exit(1);
 
 }
@@ -373,7 +405,26 @@ int main(int argc, char **argv)
     //tree.setProbHit(0.5);
 
     pos_obj = Vector3d(0.5,0.5,0.5);
-    yaw_obj = 0;
+    yaw_obj = 1;
+
+    char prefix_x [50], prefix_y[50], prefix_z[50], prefix_yaw[50];
+    sprintf (prefix_x, "x_kp_%.2f_kd_%.2f_ki_%.2f.csv", kp_x, kd_x, ki_x);
+    sprintf (prefix_y, "y_kp_%.2f_kd_%.2f_ki_%.2f.csv", kp_y, kd_y, ki_y);
+    sprintf (prefix_z, "z_kp_%.2f_kd_%.2f_ki_%.2f.csv", kp_z, kd_z, ki_z);
+    sprintf (prefix_yaw, "yaw_kp_%.2f_kd_%.2f_ki_%.2f.csv", kp_yaw, kd_yaw, ki_yaw);
+
+    pid_x_txt.open(prefix_x);
+    pid_y_txt.open(prefix_y);
+    pid_z_txt.open(prefix_z);
+    pid_yaw_txt.open(prefix_yaw);
+
+    pid_x_txt << "Time;Objective;Position\n";
+    pid_y_txt << "Time;Objective;Position\n";
+    pid_z_txt << "Time;Objective;Position\n";
+    pid_yaw_txt << "Time;Objective;Position\n";
+    //fprintf (pid_y_txt*, "Time \t Objective \t Position\n");
+    //fprintf (pid_z_txt*, "Time \t Objective \t Position\n");
+    //fprintf (pid_yaw_txt*, "Time \t Objective \t Position\n");
 
 
   /**
