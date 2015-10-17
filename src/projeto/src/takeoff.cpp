@@ -30,7 +30,7 @@
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 2.0 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
 #define TTC_LIMIT 2.0
 #define OCTREE_RESOLUTION 0.1
@@ -67,6 +67,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <limits>
+#include <fstream>
 
 
 
@@ -80,6 +81,8 @@ pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
 geometry_msgs::Twist twist;
+
+ofstream result_command_txt;
 
 
 Vector3d theta(0,0,0);
@@ -351,6 +354,14 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
             std_msgs::Float32 pb_d;
             pb_d.data = distance;
             pub_dist.publish(pb_d);
+
+            if (distance < 3.00) {
+
+                char text[50];
+                float val_cmd = TIME_AHEAD;
+                sprintf (text, "%f,%f\n", distance, val_cmd);
+                result_command_txt << text;
+            }
 
 
             Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
@@ -803,7 +814,7 @@ void my_handler(int s){
 
     //point3d max_vol ((float)(x(0)+0.24), (float)(x(1)+0.24), (float)(x(2)+0.20));
 
-
+    result_command_txt.close();
 
     tree.writeBinary("simple_tree.bt");
 
@@ -816,7 +827,13 @@ int main(int argc, char **argv)
 
     load_sonar_rel_transform_m();
 
+    char text[50];
+    float val_cmd = TIME_AHEAD;
+    sprintf (text, "tempo_%f_por_distancia.csv\n", val_cmd);
 
+    result_command_txt.open(text);
+
+    result_command_txt << "Time,Distance to obstacle\n";
 
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
