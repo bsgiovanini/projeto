@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string>
+#include <cstring>
 #include <map>
 #include <iostream>
 #include <pthread.h>
@@ -56,12 +57,13 @@ enum StringValue {
 };
 
 // Function was missing for some reason
-void* memcpy(void* dest, const void* src, size_t count);
+//void* memcpy(void* dest, const void* src, size_t count);
 
 // Used to associate strings with enums
 static map<string, StringValue> s_mapStringValues;
 
 // Initialization method
+string szInput = "";
 static void initMap();
 void *send_command(void *ptr);
 void handleInput(string szInput, string val);
@@ -72,8 +74,8 @@ float roll = 0, pitch = 0, gaz = 0, yaw = 0;
 int seq = 1, secWait = 0;
 
 // Networking vars
-int socketId, commandPort, bufferSize, size;
-sockaddr_in serverAddr, clientAddr;
+int socketId, bufferSize, size;
+struct sockaddr_in serverAddr, clientAddr;
 char buffer[200];
 
 int main( int argc, char *argv[] ) {
@@ -81,37 +83,28 @@ int main( int argc, char *argv[] ) {
 
 	struct in_addr ipv4addr;
 
+	pthread_t command_thread, navdata_thread;
 	// Initialize the string map
 	initMap();
 
-	ipv4addr.s_addr = inet_addr("192.168.1.1");
-	//inet_pton(AF_INET, "192.168.1.1", &ipv4addr);
 
-	// Initialize variables
-	string szInput = "", hostName = ardroneIp;
-	socketId = socket(AF_INET,SOCK_DGRAM,0);
-	commandPort = kATCommandPort;
-	pthread_t command_thread, navdata_thread;
+	char line[17] = "AT*LED=5,6,1,2\r";
+    socketId = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP); // get a tcp/ip socket
+    memset(&serverAddr, 0, sizeof(serverAddr));
+    serverAddr.sin_family = AF_INET;
+    if( inet_aton( "192.168.1.1",  &serverAddr.sin_addr )== 0) {
+		printf("Crap!, Init failed\n");
+        close(socketId);
+		return -1;
+    }
+    serverAddr.sin_port = htons( kATCommandPort );
+    cout << connect(socketId, (struct sockaddr*) &serverAddr, sizeof(serverAddr)) << endl;
+    //sendto(socketId, line, 17, 0, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 
-	sockaddr &serverAddrCast = (sockaddr &)serverAddr;
+    size = sizeof(serverAddr);
 
-	//specify server address, port
-	serverAddr.sin_family=AF_INET;
-	serverAddr.sin_port=htons(commandPort);
-	struct hostent*hp= gethostbyaddr((char *) &ipv4addr, sizeof ipv4addr, AF_INET);
-	 if (hp)
-        cout << hp->h_name << endl;
-    else
-        cout << h_errno << endl;
-        herror("gethostbyname");
-
-
-	memcpy(( char *) &serverAddr.sin_addr, (char *) hp->h_addr, hp->h_length);
-	size = sizeof(serverAddr);
-
-	// Immediately reset the trim of the drone
-	bufferSize = sprintf(buffer, "AT*FTRIM=%d,\r", seq);
-	sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
+    bufferSize = sprintf(buffer, "AT*FTRIM=%d,\r", seq);
+	sendto(socketId, &buffer, bufferSize, 0, (struct sockaddr*)&serverAddr, size);
 	seq++;
 	bufferSize = 0;
 
@@ -121,7 +114,7 @@ int main( int argc, char *argv[] ) {
 	if(argc == 2) {
 		script_name = argv[1];
 		// Run script in argument
-		//runScript(script_name);
+		runScript(script_name);
 	} else {
 		// If no script given, use user input area
 		while(1) {
@@ -142,7 +135,7 @@ int main( int argc, char *argv[] ) {
 
 			cout << endl;
 			// Send the command as UDP packet to Drone
-			sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
+			sendto(socketId, &buffer, bufferSize, 0, (struct sockaddr*) &serverAddr, size);
 			seq++;
 			bufferSize = 0;
 			cout << endl;
@@ -171,7 +164,6 @@ void initMap() {
 
 // Thread method that sends commands every 100ms or so
 void *send_command( void * ptr) {
-	sockaddr &serverAddrCast = (sockaddr &)serverAddr;
 	// Sends a command every 1.5 seconds (right now it just sets yaz, pitch, etc as they are)
 	while(1) {
 		bufferSize = sprintf(buffer, "AT*PCMD=%d,%d,%d,%d,%d,%d\r",
@@ -181,11 +173,10 @@ void *send_command( void * ptr) {
 								*(int*)(&pitch),
 								*(int*)(&gaz),
 								*(int*)(&yaw)	);
-		sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
+		sendto(socketId, &buffer, bufferSize, 0, (struct sockaddr*) &serverAddr, size);
 		seq++;
 		bufferSize = sprintf(buffer, "AT*COMWDG=%d\r", seq);
-		cout << buffer << endl;
-		sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
+		sendto(socketId, &buffer, bufferSize, 0, (struct sockaddr*) &serverAddr, size);
 		seq++;
 		usleep(100000);
 	}
@@ -268,7 +259,6 @@ void handleInput(string szInput, string val) {
 
 // Main function for running a script
 void runScript(string name) {
-	sockaddr &serverAddrCast = (sockaddr &)serverAddr;
 	string line;
 	ifstream script_file (name.c_str());
 	// Work through the script line by line
@@ -295,16 +285,16 @@ void runScript(string name) {
 				}
 
 				if(bufferSize != 0) {
-					cout << "Sending command to localhost:" << commandPort << " ";
+					cout << "Sending command to localhost:" << kATCommandPort << " ";
 					for(unsigned int i = 0; i < sizeof(buffer); i++) {
 						cout << buffer[i];
 					}
 					cout << endl;
 
-					sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
+					sendto(socketId, &buffer, bufferSize, 0, (struct sockaddr*) &serverAddr, size);
 				}
 				seq++;
-				bufferSize = 0;
+				bufferSize = 0                                                                 ;
 			}
 		}
 		script_file.close();
@@ -315,7 +305,7 @@ void runScript(string name) {
 
 // When compiling for ARM, I had an error saying memcpy was not found,
 // so I'm just including it here
-void* memcpy(void* dest, const void* src, size_t count) {
+/*void* memcpy(void* dest, const void* src, size_t count) {
         char* dst8 = (char*)dest;
         char* src8 = (char*)src;
         --src8;
@@ -325,4 +315,4 @@ void* memcpy(void* dest, const void* src, size_t count) {
             *++dst8 = *++src8;
         }
         return dest;
-}
+}*/
