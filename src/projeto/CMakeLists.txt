@@ -44,4 +44,4 @@ rosbuild_add_executable(pose src/pose.cpp)
 rosbuild_add_executable(control src/control.cpp)
 rosbuild_add_executable(navigation src/navegation.cpp)
 
-#ADD_EXECUTABLE(ARDrone src/ARDrone.cpp)
+ADD_EXECUTABLE(ARDrone src/ARDrone.cpp)

@@ -36,10 +36,10 @@ CMAKE_COMMAND = /usr/bin/cmake
 RM = /usr/bin/cmake -E remove -f
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_SOURCE_DIR = /home/bruno/projeto/src/projeto
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/bruno/ros_workspace/src/projeto
+CMAKE_BINARY_DIR = /home/bruno/projeto/src/projeto
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -66,9 +66,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/ros_workspace/src/projeto/CMakeFiles /home/bruno/ros_workspace/src/projeto/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/projeto/src/projeto/CMakeFiles /home/bruno/projeto/src/projeto/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/ros_workspace/src/projeto/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/projeto/src/projeto/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -94,6 +94,19 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named ARDrone
+
+# Build rule for target.
+ARDrone: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ARDrone
+.PHONY : ARDrone
+
+# fast build rule for target.
+ARDrone/fast:
+	$(MAKE) -f CMakeFiles/ARDrone.dir/build.make CMakeFiles/ARDrone.dir/build
+.PHONY : ARDrone/fast
 
 #=============================================================================
 # Target rules for targets named ROSBUILD_genmsg_cpp
@@ -356,6 +369,21 @@ tests/fast:
 .PHONY : tests/fast
 
 # target to build an object file
+src/ARDrone.o:
+	$(MAKE) -f CMakeFiles/ARDrone.dir/build.make CMakeFiles/ARDrone.dir/src/ARDrone.o
+.PHONY : src/ARDrone.o
+
+# target to preprocess a source file
+src/ARDrone.i:
+	$(MAKE) -f CMakeFiles/ARDrone.dir/build.make CMakeFiles/ARDrone.dir/src/ARDrone.i
+.PHONY : src/ARDrone.i
+
+# target to generate assembly for a file
+src/ARDrone.s:
+	$(MAKE) -f CMakeFiles/ARDrone.dir/build.make CMakeFiles/ARDrone.dir/src/ARDrone.s
+.PHONY : src/ARDrone.s
+
+# target to build an object file
 src/control.o:
 	$(MAKE) -f CMakeFiles/control.dir/build.make CMakeFiles/control.dir/src/control.o
 .PHONY : src/control.o
@@ -436,6 +464,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... ARDrone"
 	@echo "... ROSBUILD_genmsg_cpp"
 	@echo "... ROSBUILD_genmsg_lisp"
 	@echo "... ROSBUILD_gensrv_cpp"
@@ -458,6 +487,9 @@ help:
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
+	@echo "... src/ARDrone.o"
+	@echo "... src/ARDrone.i"
+	@echo "... src/ARDrone.s"
 	@echo "... src/control.o"
 	@echo "... src/control.i"
 	@echo "... src/control.s"

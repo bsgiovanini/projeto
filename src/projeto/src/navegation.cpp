@@ -155,8 +155,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	double vz_= msg_in.vz*0.001;
 
 	char prefix_roll [50], prefix_pitch [50], prefix_yaw[50];
-    sprintf (prefix_roll, "%f,%f\n",timestamp, msg_in.rotZ);
-    sprintf (prefix_pitch, "%f,%f\n",timestamp, msg_in.rotZ);
+    sprintf (prefix_roll, "%f,%f\n",timestamp, msg_in.rotX);
+    sprintf (prefix_pitch, "%f,%f\n",timestamp, msg_in.rotY);
     sprintf (prefix_yaw, "%f,%f\n",timestamp, msg_in.rotZ);
 
 	file_roll << prefix_roll;

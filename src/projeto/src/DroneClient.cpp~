@@ -8,7 +8,6 @@
 #include <unistd.h>
 #include <fstream>
 #include <sstream>
-#include <arpa/inet.h>
 using namespace std;
 
 #define NAVDATA_DEMO_TAG (0)
@@ -36,7 +35,7 @@ using namespace std;
 const int kNavigationDataPort = 5554;
 const int kOnBoardVideoPort = 5555;
 const int kATCommandPort = 5556;
-const string ardroneIp = "192.168.1.5";
+const string ardroneIp = "192.168.1.2";
 
 
 // Value definitions for string values
@@ -79,13 +78,9 @@ char buffer[200];
 int main( int argc, char *argv[] ) {
 	string script_name;
 
-	struct in_addr ipv4addr;
 
 	// Initialize the string map
 	initMap();
-
-	ipv4addr.s_addr = inet_addr("192.168.1.1");
-	//inet_pton(AF_INET, "192.168.1.1", &ipv4addr);
 
 	// Initialize variables
 	string szInput = "", hostName = ardroneIp;
@@ -98,13 +93,7 @@ int main( int argc, char *argv[] ) {
 	//specify server address, port
 	serverAddr.sin_family=AF_INET;
 	serverAddr.sin_port=htons(commandPort);
-	struct hostent*hp= gethostbyaddr((char *) &ipv4addr, sizeof ipv4addr, AF_INET);
-	 if (hp)
-        cout << hp->h_name << endl;
-    else
-        cout << h_errno << endl;
-        herror("gethostbyname");
-
+	struct hostent*hp=gethostbyname(hostName.c_str());
 
 	memcpy(( char *) &serverAddr.sin_addr, (char *) hp->h_addr, hp->h_length);
 	size = sizeof(serverAddr);
@@ -121,7 +110,7 @@ int main( int argc, char *argv[] ) {
 	if(argc == 2) {
 		script_name = argv[1];
 		// Run script in argument
-		//runScript(script_name);
+		runScript(script_name);
 	} else {
 		// If no script given, use user input area
 		while(1) {
@@ -184,7 +173,6 @@ void *send_command( void * ptr) {
 		sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
 		seq++;
 		bufferSize = sprintf(buffer, "AT*COMWDG=%d\r", seq);
-		cout << buffer << endl;
 		sendto(socketId, &buffer, bufferSize, 0, &serverAddrCast, size);
 		seq++;
 		usleep(100000);

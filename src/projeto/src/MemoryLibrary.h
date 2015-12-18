@@ -31,7 +31,6 @@
 
 #include <memory.h>
 
-
 namespace MemoryLibrary
 {
   template <typename T>
@@ -448,4 +447,3 @@ namespace MemoryLibrary
 } // namespace MemoryLibrary
 
 #endif
-
