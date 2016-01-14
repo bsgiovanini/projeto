@@ -40,8 +40,8 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_executable(takeoff src/takeoff.cpp)
 rosbuild_add_executable(operation src/operation.cpp)
-rosbuild_add_executable(pose src/pose.cpp)
-rosbuild_add_executable(control src/control.cpp)
-rosbuild_add_executable(navigation src/navegation.cpp)
+#rosbuild_add_executable(pose src/pose.cpp)
+#rosbuild_add_executable(control src/control.cpp)
+#rosbuild_add_executable(navigation src/navegation.cpp)
 
-ADD_EXECUTABLE(ARDrone src/ARDrone.cpp)
+#ADD_EXECUTABLE(ARDrone src/ARDrone.cpp)
