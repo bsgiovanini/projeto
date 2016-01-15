@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor1">
+        <param name="sensor" type="int" value="1" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor2">
+        <param name="sensor" type="int" value="2" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor3">
+        <param name="sensor" type="int" value="3" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor4">
+        <param name="sensor" type="int" value="4" />
+  </node>
+
+
+</launch>
+

@@ -1,0 +1,8 @@
+prefix=/home/pi/projeto/src/sonar_reading/devel
+
+Name: sonar_reading
+Description: Description of sonar_reading
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/pi/projeto/src/sonar_reading/devel/lib 
+Requires: 

@@ -22,6 +22,7 @@ sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/ind
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/message.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/message_event.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/message_forward.h
+sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/message_operations.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/message_traits.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/names.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/node_handle.h
@@ -57,4 +58,6 @@ sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/ind
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/wall_timer.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/ros/wall_timer_options.h
 sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/rosconsole/macros_generated.h
+sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/sensor_msgs/Range.h
+sonar_reading/CMakeFiles/sonar_reading.dir/src/sonar_reading.cpp.o: /opt/ros/indigo/include/std_msgs/Header.h
 

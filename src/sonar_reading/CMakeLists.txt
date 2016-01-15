@@ -6,12 +6,12 @@ project(sonar_reading)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  std_msgs
+  sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+set(CMAKE_CXX_FLAGS "-lwiringPi")
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -135,7 +135,7 @@ add_executable(sonar_reading  src/sonar_reading.cpp)
 
 ## Specify libraries to link a library or executable target against
  target_link_libraries(sonar_reading
-   ${catkin_LIBRARIES}
+   ${catkin_LIBRARIES}	
  )
 
 #############

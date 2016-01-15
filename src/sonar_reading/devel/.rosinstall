@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/pi/projeto/src/sonar_reading/devel/setup.sh

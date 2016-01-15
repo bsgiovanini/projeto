@@ -324,12 +324,18 @@ sonar_reading/all: sonar_reading/CMakeFiles/sonar_reading.dir/all
 .PHONY : sonar_reading/all
 
 # Convenience name for "clean" pass in the directory.
+sonar_reading/clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+sonar_reading/clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+sonar_reading/clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/roscpp_generate_messages_cpp.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/roscpp_generate_messages_py.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
+sonar_reading/clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
+sonar_reading/clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
+sonar_reading/clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/sonar_reading.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
 sonar_reading/clean: sonar_reading/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
@@ -339,6 +345,99 @@ sonar_reading/clean: sonar_reading/CMakeFiles/std_msgs_generate_messages_py.dir/
 # Convenience name for "preinstall" pass in the directory.
 sonar_reading/preinstall:
 .PHONY : sonar_reading/preinstall
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_cpp"
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_cpp: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/rule
+.PHONY : geometry_msgs_generate_messages_cpp
+
+# clean rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_lisp"
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_lisp: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
+.PHONY : geometry_msgs_generate_messages_lisp
+
+# clean rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target geometry_msgs_generate_messages_py"
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+geometry_msgs_generate_messages_py: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/rule
+.PHONY : geometry_msgs_generate_messages_py
+
+# clean rule for target.
+sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+.PHONY : sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/geometry_msgs_generate_messages_py.dir/clean
+.PHONY : clean
 
 #=============================================================================
 # Target rules for target sonar_reading/CMakeFiles/roscpp_generate_messages_cpp.dir
@@ -524,6 +623,99 @@ sonar_reading/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean:
 
 # clean rule for target.
 clean: sonar_reading/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target sensor_msgs_generate_messages_cpp"
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_cpp: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+.PHONY : sensor_msgs_generate_messages_cpp
+
+# clean rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target sensor_msgs_generate_messages_lisp"
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_lisp: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
+.PHONY : sensor_msgs_generate_messages_lisp
+
+# clean rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir
+
+# All Build rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/all:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/depend
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/pi/projeto/build/CMakeFiles 
+	@echo "Built target sensor_msgs_generate_messages_py"
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+
+# Build rule for subdir invocation for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+	$(MAKE) -f CMakeFiles/Makefile2 sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/build/CMakeFiles 0
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+sensor_msgs_generate_messages_py: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
+.PHONY : sensor_msgs_generate_messages_py
+
+# clean rule for target.
+sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean:
+	$(MAKE) -f sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
+.PHONY : sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
+
+# clean rule for target.
+clean: sonar_reading/CMakeFiles/sensor_msgs_generate_messages_py.dir/clean
 .PHONY : clean
 
 #=============================================================================

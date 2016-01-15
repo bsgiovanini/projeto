@@ -873,11 +873,11 @@ int main(int argc, char **argv)
 // %Tag(SUBSCRIBER)%
   ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
-  ros::Subscriber sub_sensor_f = n.subscribe("/sonar_front", 1, sonar_front_callback);
+  ros::Subscriber sub_sensor_f = n.subscribe("/sensor1/dist", 1, sonar_front_callback);
 
-  ros::Subscriber sub_sensor_l = n.subscribe("/sonar_left", 1, sonar_left_callback);
+  ros::Subscriber sub_sensor_l = n.subscribe("/sensor2/dist", 1, sonar_left_callback);
 
-  ros::Subscriber sub_sensor_r = n.subscribe("/sonar_right", 1, sonar_right_callback);
+  ros::Subscriber sub_sensor_r = n.subscribe("/sensor3/dist", 1, sonar_right_callback);
 
   ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
