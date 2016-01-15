@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/pi/projeto/install/setup.sh

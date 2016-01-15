@@ -1,0 +1,8 @@
+prefix=/home/pi/projeto/install
+
+Name: sonar_reading
+Description: Description of sonar_reading
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/pi/projeto/install/lib 
+Requires: 
