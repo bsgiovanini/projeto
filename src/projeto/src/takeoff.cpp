@@ -76,7 +76,7 @@ using namespace octomap;
 
 using namespace std;
 
-pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
+//pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
 ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
@@ -94,6 +94,7 @@ float previous_tm = 0.0;
 
 float quadrotor_sphere_radius = 0.8;
 
+bool production_mode = true;
 
 
 
@@ -188,12 +189,15 @@ float contador;
 
 
 Vector3d x(0,0,0);// global pose quadrotor
-Vector3d s_front_rel_pose;
-Vector3d s_left_rel_pose;
-Vector3d s_right_rel_pose;
-Matrix3d s_front_rel_rot_pos;
-Matrix3d s_left_rel_rot_pos;
-Matrix3d s_right_rel_rot_pos;
+Vector3d s_1_rel_pose;
+Vector3d s_2_rel_pose;
+Vector3d s_3_rel_pose;
+Vector3d s_4_rel_pose;
+Matrix3d s_1_rel_rot_pos;
+Matrix3d s_2_rel_rot_pos;
+Matrix3d s_3_rel_rot_pos;
+Matrix3d s_4_rel_rot_pos;
+
 
 
 Vector3d acc_max(1.5, 1.5, 1.0); //global max acc quadrotor meter per sec
@@ -273,17 +277,24 @@ double generateGaussianNoise(double mu, double sigma)
 
 void load_sonar_rel_transform_m() {
 
-    Vector3d sonar_f_rel_linear_pos(0.1, 0.0, 0.12);
-    s_front_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
-    s_front_rel_pose = sonar_f_rel_linear_pos;
+    Vector3d sonar_1_rel_linear_pos(0.1, 0.0, 0.12);
+    s_1_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
+    s_1_rel_pose = sonar_1_rel_linear_pos;
 
-    Vector3d sonar_l_rel_linear_pos(0.1, 0.0, 0.12);
-    s_left_rel_rot_pos = rotation(Vector3d(0, 0, -degree_to_rad(30))).matrix();
-    s_left_rel_pose = sonar_l_rel_linear_pos;
+    Vector3d sonar_2_rel_linear_pos(0.1, 0.0, 0.12);
+    s_2_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
+    //s_2_rel_rot_pos = rotation(Vector3d(0, 0, -degree_to_rad(30))).matrix();
+    s_2_rel_pose = sonar_2_rel_linear_pos;
 
-    Vector3d sonar_r_rel_linear_pos(0.1, 0.0, 0.12);
-    s_right_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
-    s_right_rel_pose = sonar_r_rel_linear_pos;
+    Vector3d sonar_3_rel_linear_pos(0.1, 0.0, 0.12);
+    s_3_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
+    //s_3_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
+    s_3_rel_pose = sonar_3_rel_linear_pos;
+
+    Vector3d sonar_4_rel_linear_pos(0.1, 0.0, 0.12);
+    s_4_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
+    //s_3_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
+    s_4_rel_pose = sonar_4_rel_linear_pos;
 
 }
 
@@ -305,7 +316,7 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
 
 
-     if (debug) {
+     if (production_mode && debug) {
         sensor_msgs::PointCloud pc;
         pc.header.frame_id = "/nav";
         pc.header.stamp = ros::Time();
@@ -319,85 +330,83 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
         pc.points[0].z = global_end_ray(2);
         pub_pc.publish(pc);
 
-
-
     }
 
      if (global_end_ray(2) > 0.1) {  //evict the ground
 
-
-        point3d endcast;
-
-        point3d direction ((float) (global_end_ray(0) - global_s_pose(0)), (float) (global_end_ray(1) - global_s_pose(1)), (float) (global_end_ray(2) - global_s_pose(2)));
-
-        int found = tree.castRay(startPoint, direction, endcast, true, MAX_RANGE);
-
         tree.insertRay (startPoint, endPoint, MAP_MAX_RANGE);
 
-        if (found) {
+        if (!production_mode) {
+            point3d endcast;
+
+            point3d direction ((float) (global_end_ray(0) - global_s_pose(0)), (float) (global_end_ray(1) - global_s_pose(1)), (float) (global_end_ray(2) - global_s_pose(2)));
+
+            int found = tree.castRay(startPoint, direction, endcast, true, MAX_RANGE);
 
 
-            float variance = (OCTREE_RESOLUTION * sqrt(2))/2 - OCTREE_RESOLUTION/2;
 
-            double noise = generateGaussianNoise(0.0, variance);
-
+            if (found) {
 
 
-            float endcast_a = endcast(0); //> 0 ? endcast(0)- variance : endcast(0) + variance ;
-            float endcast_b = endcast(1);//> 0 ? endcast(1)- variance : endcast(1) + variance ;
-            float endcast_c = endcast(2);//> 0 ? endcast(2)- variance : endcast(2) + variance ;
+                float variance = (OCTREE_RESOLUTION * sqrt(2))/2 - OCTREE_RESOLUTION/2;
 
-            Vector3d endcast_w(endcast_a, endcast_b, endcast_c);
-
-            float distance = (endcast_w - global_s_pose).norm();
-
-            std_msgs::Float32 pb_d;
-            pb_d.data = distance;
-            pub_dist.publish(pb_d);
-
-            if (distance < 3.00) {
-
-                char text[50];
-                float val_cmd = TIME_AHEAD;
-                sprintf (text, "%f,%f\n", distance, val_cmd);
-                result_command_txt << text;
-            }
+                double noise = generateGaussianNoise(0.0, variance);
 
 
-            Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
 
-            Vector3d x_temp = endcast_w - R*(interm2);
+                float endcast_a = endcast(0); //> 0 ? endcast(0)- variance : endcast(0) + variance ;
+                float endcast_b = endcast(1);//> 0 ? endcast(1)- variance : endcast(1) + variance ;
+                float endcast_c = endcast(2);//> 0 ? endcast(2)- variance : endcast(2) + variance ;
 
-            Vector3d x_new = x_temp;//x*0.8 + x_temp*0.2;
+                Vector3d endcast_w(endcast_a, endcast_b, endcast_c);
+
+                float distance = (endcast_w - global_s_pose).norm();
+
+                std_msgs::Float32 pb_d;
+                pb_d.data = distance;
+                pub_dist.publish(pb_d);
+
+                if (distance < 3.00) {
+
+                    char text[50];
+                    float val_cmd = TIME_AHEAD;
+                    sprintf (text, "%f,%f\n", distance, val_cmd);
+                    result_command_txt << text;
+                }
+
+
+                Vector3d interm2 = s_rel_pose +  s_rel_rot_pose * Vector3d(distance - OCTREE_RESOLUTION/2 + noise, 0, 0);
+
+                Vector3d x_temp = endcast_w - R*(interm2);
+
+                Vector3d x_new = x_temp;//x*0.8 + x_temp*0.2;
 
         //pthread_mutex_lock(&mutex_1);
         //x = x_temp;
         //pthread_mutex_unlock(&mutex_1);
 
         //x = x_new;
-            if (debug) {
+                if (debug) {
                 //f_vector_print("predict", x);
                 //f_vector_print("endcast", x_new);
 
                 //cout << noise << endl;
-                sensor_msgs::PointCloud pc3;
-                pc3.header.frame_id = "/nav";
-                pc3.header.stamp = ros::Time();
-                pc3.channels.resize(1);
-                pc3.channels[0].name="ray";
-                pc3.channels[0].values.resize(1);
-                pc3.points.resize(1);
-                pc3.channels[0].values[0] = 0;
-                pc3.points[0].x = x_new(0);
-                pc3.points[0].y = x_new(1);
-                pc3.points[0].z = x_new(2);
+                    sensor_msgs::PointCloud pc3;
+                    pc3.header.frame_id = "/nav";
+                    pc3.header.stamp = ros::Time();
+                    pc3.channels.resize(1);
+                    pc3.channels[0].name="ray";
+                    pc3.channels[0].values.resize(1);
+                    pc3.points.resize(1);
+                    pc3.channels[0].values[0] = 0;
+                    pc3.points[0].x = x_new(0);
+                    pc3.points[0].y = x_new(1);
+                    pc3.points[0].z = x_new(2);
 
-                pub_pc3.publish(pc3);
+                    pub_pc3.publish(pc3);
+                }
             }
-
         }
-
-
 
      }
 
@@ -406,21 +415,25 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 }
 
 
-void sonar_front_callback(const sensor_msgs::Range& msg_in)
+void sonar_1_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_front_rel_pose, s_front_rel_rot_pos, x, theta, 1);
+    sonar_callback(msg_in, s_1_rel_pose, s_1_rel_rot_pos, x, theta, 1);
 }
 
-void sonar_left_callback(const sensor_msgs::Range& msg_in)
+void sonar_2_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_left_rel_pose, s_left_rel_rot_pos, x, theta, 0);
+    sonar_callback(msg_in, s_2_rel_pose, s_2_rel_rot_pos, x, theta, 0);
 }
 
-void sonar_right_callback(const sensor_msgs::Range& msg_in)
+void sonar_3_callback(const sensor_msgs::Range& msg_in)
 {	//ROS_INFO("Range: [%f]", msg_in.range);
-    sonar_callback(msg_in, s_right_rel_pose, s_right_rel_rot_pos, x, theta, 0);
+    sonar_callback(msg_in, s_3_rel_pose, s_3_rel_rot_pos, x, theta, 0);
 }
 
+void sonar_4_callback(const sensor_msgs::Range& msg_in)
+{	//ROS_INFO("Range: [%f]", msg_in.range);
+    sonar_callback(msg_in, s_4_rel_pose, s_4_rel_rot_pos, x, theta, 0);
+}
 
 
 
@@ -607,61 +620,56 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
 
-    sensor_msgs::PointCloud pc;
-    pc.header.frame_id = "/nav";
-    pc.header.stamp = ros::Time();
-    pc.channels.resize(1);
-    pc.channels[0].name="trajectory";
-    pc.channels[0].values.resize(trajectory.size());
-    pc.points.resize(trajectory.size());
-
-    int i = 0;
-    for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
-
-        Vector3d pos = *it;
-
-        pc.channels[0].values[i] = 0;
-        pc.points[i].x = pos(0);
-        pc.points[i].y = pos(1);
-        pc.points[i].z = pos(2);
-        i++;
-    }
-
-
-
-
-    pub_pc2.publish(pc);
-
-
-
-
 
     float short_dist = MAX_DIST;
 
-
-    geometry_msgs::PoseStamped pose;
-    pose.header.frame_id = "/nav";
-    pose.header.stamp = ros::Time();
-
-    pose.pose.orientation.x = rotQ.x();
-    pose.pose.orientation.y = rotQ.y();
-    pose.pose.orientation.z = rotQ.z();
-    pose.pose.orientation.w = rotQ.w();
-    pose.pose.position.x = x(0);
-    pose.pose.position.y = x(1);
-    pose.pose.position.z = x(2);
-
-    pub_pose.publish(pose);
-
     nav_msgs::GridCells gcells;
-    gcells.header.frame_id = "/nav";
-    gcells.header.stamp = ros::Time();
-    gcells.cell_width = OCTREE_RESOLUTION;
-    gcells.cell_height = OCTREE_RESOLUTION;
-
-
     vector<geometry_msgs::Point> obstaclerepo;
 
+    if (!production_mode) {
+        sensor_msgs::PointCloud pc;
+        pc.header.frame_id = "/nav";
+        pc.header.stamp = ros::Time();
+        pc.channels.resize(1);
+        pc.channels[0].name="trajectory";
+        pc.channels[0].values.resize(trajectory.size());
+        pc.points.resize(trajectory.size());
+
+        int i = 0;
+        for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
+
+            Vector3d pos = *it;
+
+            pc.channels[0].values[i] = 0;
+            pc.points[i].x = pos(0);
+            pc.points[i].y = pos(1);
+            pc.points[i].z = pos(2);
+            i++;
+        }
+        pub_pc2.publish(pc);
+
+        geometry_msgs::PoseStamped pose;
+        pose.header.frame_id = "/nav";
+        pose.header.stamp = ros::Time();
+
+        pose.pose.orientation.x = rotQ.x();
+        pose.pose.orientation.y = rotQ.y();
+        pose.pose.orientation.z = rotQ.z();
+        pose.pose.orientation.w = rotQ.w();
+        pose.pose.position.x = x(0);
+        pose.pose.position.y = x(1);
+        pose.pose.position.z = x(2);
+
+        pub_pose.publish(pose);
+
+
+        gcells.header.frame_id = "/nav";
+        gcells.header.stamp = ros::Time();
+        gcells.cell_width = OCTREE_RESOLUTION;
+        gcells.cell_height = OCTREE_RESOLUTION;
+
+
+    }
 
     if (control_mode) {
 
@@ -721,73 +729,74 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
             //if (!in_perimeter(x, wrapped_coords, 0.5)) {
-
+            if (!production_mode) {
                 geometry_msgs::Point cell;
                 cell.x = coords(0);
                 cell.y = coords(1);
                 cell.z = coords(2);
                 obstaclerepo.push_back(cell);
+            }
 
 
-                if (it->getValue() > 0.0) {
+            if (it->getValue() > 0.0) {
 
 
-                    for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
+                for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
-                        Vector3d pos = *it;
+                    Vector3d pos = *it;
 
-                        if (there_will_be_collision(pos, wrapped_coords)) {
+                    if (there_will_be_collision(pos, wrapped_coords)) {
 
-                            float dist = (wrapped_coords - x).norm();
+                        float dist = (wrapped_coords - x).norm();
 
-                            if (dist < short_dist) {
-                                short_dist = dist;
-                            }
-                            break;
+                        if (dist < short_dist) {
+                            short_dist = dist;
                         }
-
+                        break;
                     }
 
                 }
+
+            }
               //manipulate node, e.g.:
               //cout << "Node center: " << it.getCoordinate() << endl;
               //cout << "Node size: " << it.getSize() << endl;
               //cout << "Node value: " << it->getValue() << endl;
 
-                if (short_dist < MAX_DIST) {
+            if (short_dist < MAX_DIST) {
 
-                    cout << "short dist " << short_dist << endl;
+                float ttc = short_dist/vel.norm();
 
-                    float ttc = short_dist/vel.norm();
+                if (ttc < TTC_LIMIT) {
 
-                    if (ttc < TTC_LIMIT) {
-
-                        pos_obj = x;
-                        yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
-                        send_collision_mode_msg(true);
-                        control_mode = 1;
-                        contador = timestamp;
-                        pid_x.reset();
-                        pid_y.reset();
-                        pid_z.reset();
-                        pid_yaw.reset();
-
-                    }
+                    pos_obj = x;
+                    yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
+                    send_collision_mode_msg(true);
+                    control_mode = 1;
+                    contador = timestamp;
+                    pid_x.reset();
+                    pid_y.reset();
+                    pid_z.reset();
+                    pid_yaw.reset();
 
                 }
+
             }
+        }
         //}
 
     }
 
-    int count_cells = 0;
-    gcells.cells.resize(obstaclerepo.size());
-    while (!obstaclerepo.empty()) {
-        gcells.cells[count_cells++] = obstaclerepo.back();
-        obstaclerepo.pop_back();
+    if (!production_mode) {
+        int count_cells = 0;
+        gcells.cells.resize(obstaclerepo.size());
+        while (!obstaclerepo.empty()) {
+            gcells.cells[count_cells++] = obstaclerepo.back();
+            obstaclerepo.pop_back();
+        }
+        //pub_grid_cell.publish(gcells);
     }
 
-    //pub_grid_cell.publish(gcells);
 
     gettimeofday(&stop, NULL);
 
@@ -822,18 +831,32 @@ void my_handler(int s){
 
 }
 
+
+
 int main(int argc, char **argv)
 {
 
+    if (strcmp(argv[1], "production") == 0) {
+        production_mode = true;
+    } else {
+        production_mode = false;
+    }
+
+
     load_sonar_rel_transform_m();
 
-    char text[50];
-    float val_cmd = TIME_AHEAD;
-    sprintf (text, "tempo_%f_por_distancia.csv\n", val_cmd);
 
-    result_command_txt.open(text);
+    if (!production_mode) {
 
-    result_command_txt << "Time,Distance to obstacle\n";
+        char text[50];
+        float val_cmd = TIME_AHEAD;
+        sprintf (text, "tempo_%f_por_distancia.csv\n", val_cmd);
+
+        result_command_txt.open(text);
+
+        result_command_txt << "Time,Distance to obstacle\n";
+
+    }
 
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -873,23 +896,29 @@ int main(int argc, char **argv)
 // %Tag(SUBSCRIBER)%
   ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
-  ros::Subscriber sub_sensor_f = n.subscribe("/sensor1/dist", 1, sonar_front_callback);
+  ros::Subscriber sub_sensor_1 = n.subscribe("/sensor1/dist", 1, sonar_1_callback);
 
-  ros::Subscriber sub_sensor_l = n.subscribe("/sensor2/dist", 1, sonar_left_callback);
+  ros::Subscriber sub_sensor_2 = n.subscribe("/sensor2/dist", 1, sonar_2_callback);
 
-  ros::Subscriber sub_sensor_r = n.subscribe("/sensor3/dist", 1, sonar_right_callback);
+  ros::Subscriber sub_sensor_3 = n.subscribe("/sensor3/dist", 1, sonar_3_callback);
+
+  ros::Subscriber sub_sensor_4 = n.subscribe("/sensor4/dist", 1, sonar_4_callback);
+
+
 
   ros::Subscriber joy_sub = n.subscribe("/joy", 1, joy_callback);
 
   pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
-  pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
-  pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
-  pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
-  pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
-  pub_pc3                   = n.advertise<sensor_msgs::PointCloud>("/project/cast",  1);
-  pub_dist                  = n.advertise<std_msgs::Float32>("/project/mydist",  1);
 
+  if(!production_mode) {
+    pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
+    pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
+    pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
+    pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
+    pub_pc3                   = n.advertise<sensor_msgs::PointCloud>("/project/cast",  1);
+    pub_dist                  = n.advertise<std_msgs::Float32>("/project/mydist",  1);
+ }
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
@@ -900,15 +929,17 @@ int main(int argc, char **argv)
   ros::spin();
 // %EndTag(SPIN)%
 
-  struct sigaction sigIntHandler;
+  if(!production_mode) {
+    struct sigaction sigIntHandler;
 
-   sigIntHandler.sa_handler = my_handler;
-   sigemptyset(&sigIntHandler.sa_mask);
-   sigIntHandler.sa_flags = 0;
+    sigIntHandler.sa_handler = my_handler;
+    sigemptyset(&sigIntHandler.sa_mask);
+    sigIntHandler.sa_flags = 0;
 
-   sigaction(SIGINT, &sigIntHandler, NULL);
+    sigaction(SIGINT, &sigIntHandler, NULL);
 
-   pause();
+    pause();
+ }
 
   return 0;
 }

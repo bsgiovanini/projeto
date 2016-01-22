@@ -35,14 +35,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/pi/projeto/src/projeto
+CMAKE_SOURCE_DIR = /home/bruno/projeto/src/projeto
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/pi/projeto/src/projeto
+CMAKE_BINARY_DIR = /home/bruno/projeto/src/projeto
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -57,47 +54,6 @@ edit_cache:
 edit_cache/fast: edit_cache
 .PHONY : edit_cache/fast
 
-# Special rule for the target install
-install: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install
-
-# Special rule for the target install
-install/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
-.PHONY : install/fast
-
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: install/local
-.PHONY : install/local/fast
-
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
-
-# Special rule for the target install/strip
-install/strip/fast: install/strip
-.PHONY : install/strip/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-.PHONY : list_install_components/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -110,9 +66,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/src/projeto/CMakeFiles /home/pi/projeto/src/projeto/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/projeto/src/projeto/CMakeFiles /home/bruno/projeto/src/projeto/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/pi/projeto/src/projeto/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/bruno/projeto/src/projeto/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -192,69 +148,17 @@ ROSBUILD_gensrv_lisp/fast:
 .PHONY : ROSBUILD_gensrv_lisp/fast
 
 #=============================================================================
-# Target rules for targets named _catkin_empty_exported_target
+# Target rules for targets named clean-test-results
 
 # Build rule for target.
-_catkin_empty_exported_target: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _catkin_empty_exported_target
-.PHONY : _catkin_empty_exported_target
+clean-test-results: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clean-test-results
+.PHONY : clean-test-results
 
 # fast build rule for target.
-_catkin_empty_exported_target/fast:
-	$(MAKE) -f CMakeFiles/_catkin_empty_exported_target.dir/build.make CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
-
-#=============================================================================
-# Target rules for targets named clean_test_results
-
-# Build rule for target.
-clean_test_results: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results
-.PHONY : clean_test_results
-
-# fast build rule for target.
-clean_test_results/fast:
-	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
-.PHONY : clean_test_results/fast
-
-#=============================================================================
-# Target rules for targets named clean_test_results_projeto
-
-# Build rule for target.
-clean_test_results_projeto: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results_projeto
-.PHONY : clean_test_results_projeto
-
-# fast build rule for target.
-clean_test_results_projeto/fast:
-	$(MAKE) -f CMakeFiles/clean_test_results_projeto.dir/build.make CMakeFiles/clean_test_results_projeto.dir/build
-.PHONY : clean_test_results_projeto/fast
-
-#=============================================================================
-# Target rules for targets named download_extra_data
-
-# Build rule for target.
-download_extra_data: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 download_extra_data
-.PHONY : download_extra_data
-
-# fast build rule for target.
-download_extra_data/fast:
-	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/build
-.PHONY : download_extra_data/fast
-
-#=============================================================================
-# Target rules for targets named doxygen
-
-# Build rule for target.
-doxygen: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 doxygen
-.PHONY : doxygen
-
-# fast build rule for target.
-doxygen/fast:
-	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
-.PHONY : doxygen/fast
+clean-test-results/fast:
+	$(MAKE) -f CMakeFiles/clean-test-results.dir/build.make CMakeFiles/clean-test-results.dir/build
+.PHONY : clean-test-results/fast
 
 #=============================================================================
 # Target rules for targets named operation
@@ -268,19 +172,6 @@ operation: cmake_check_build_system
 operation/fast:
 	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/build
 .PHONY : operation/fast
-
-#=============================================================================
-# Target rules for targets named rosbuild_clean-test-results
-
-# Build rule for target.
-rosbuild_clean-test-results: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rosbuild_clean-test-results
-.PHONY : rosbuild_clean-test-results
-
-# fast build rule for target.
-rosbuild_clean-test-results/fast:
-	$(MAKE) -f CMakeFiles/rosbuild_clean-test-results.dir/build.make CMakeFiles/rosbuild_clean-test-results.dir/build
-.PHONY : rosbuild_clean-test-results/fast
 
 #=============================================================================
 # Target rules for targets named rosbuild_precompile
@@ -346,19 +237,6 @@ rospack_gensrv: cmake_check_build_system
 rospack_gensrv/fast:
 	$(MAKE) -f CMakeFiles/rospack_gensrv.dir/build.make CMakeFiles/rospack_gensrv.dir/build
 .PHONY : rospack_gensrv/fast
-
-#=============================================================================
-# Target rules for targets named run_tests
-
-# Build rule for target.
-run_tests: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 run_tests
-.PHONY : run_tests
-
-# fast build rule for target.
-run_tests/fast:
-	$(MAKE) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
-.PHONY : run_tests/fast
 
 #=============================================================================
 # Target rules for targets named takeoff
@@ -438,79 +316,35 @@ tests/fast:
 	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
-#=============================================================================
-# Target rules for targets named gtest
-
-# Build rule for target.
-gtest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 gtest
-.PHONY : gtest
-
-# fast build rule for target.
-gtest/fast:
-	$(MAKE) -f gtest/CMakeFiles/gtest.dir/build.make gtest/CMakeFiles/gtest.dir/build
-.PHONY : gtest/fast
-
-#=============================================================================
-# Target rules for targets named gtest_main
-
-# Build rule for target.
-gtest_main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
-.PHONY : gtest_main
-
-# fast build rule for target.
-gtest_main/fast:
-	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
-.PHONY : gtest_main/fast
-
-src/operation.o: src/operation.cpp.o
+# target to build an object file
+src/operation.o:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.o
 .PHONY : src/operation.o
 
-# target to build an object file
-src/operation.cpp.o:
-	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.cpp.o
-.PHONY : src/operation.cpp.o
-
-src/operation.i: src/operation.cpp.i
+# target to preprocess a source file
+src/operation.i:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.i
 .PHONY : src/operation.i
 
-# target to preprocess a source file
-src/operation.cpp.i:
-	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.cpp.i
-.PHONY : src/operation.cpp.i
-
-src/operation.s: src/operation.cpp.s
+# target to generate assembly for a file
+src/operation.s:
+	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.s
 .PHONY : src/operation.s
 
-# target to generate assembly for a file
-src/operation.cpp.s:
-	$(MAKE) -f CMakeFiles/operation.dir/build.make CMakeFiles/operation.dir/src/operation.cpp.s
-.PHONY : src/operation.cpp.s
-
-src/takeoff.o: src/takeoff.cpp.o
+# target to build an object file
+src/takeoff.o:
+	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.o
 .PHONY : src/takeoff.o
 
-# target to build an object file
-src/takeoff.cpp.o:
-	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.cpp.o
-.PHONY : src/takeoff.cpp.o
-
-src/takeoff.i: src/takeoff.cpp.i
+# target to preprocess a source file
+src/takeoff.i:
+	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.i
 .PHONY : src/takeoff.i
 
-# target to preprocess a source file
-src/takeoff.cpp.i:
-	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.cpp.i
-.PHONY : src/takeoff.cpp.i
-
-src/takeoff.s: src/takeoff.cpp.s
-.PHONY : src/takeoff.s
-
 # target to generate assembly for a file
-src/takeoff.cpp.s:
-	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.cpp.s
-.PHONY : src/takeoff.cpp.s
+src/takeoff.s:
+	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.s
+.PHONY : src/takeoff.s
 
 # Help Target
 help:
@@ -522,33 +356,21 @@ help:
 	@echo "... ROSBUILD_genmsg_lisp"
 	@echo "... ROSBUILD_gensrv_cpp"
 	@echo "... ROSBUILD_gensrv_lisp"
-	@echo "... _catkin_empty_exported_target"
-	@echo "... clean_test_results"
-	@echo "... clean_test_results_projeto"
-	@echo "... download_extra_data"
-	@echo "... doxygen"
+	@echo "... clean-test-results"
 	@echo "... edit_cache"
-	@echo "... install"
-	@echo "... install/local"
-	@echo "... install/strip"
-	@echo "... list_install_components"
 	@echo "... operation"
 	@echo "... rebuild_cache"
-	@echo "... rosbuild_clean-test-results"
 	@echo "... rosbuild_precompile"
 	@echo "... rosbuild_premsgsrvgen"
 	@echo "... rospack_genmsg"
 	@echo "... rospack_genmsg_libexe"
 	@echo "... rospack_gensrv"
-	@echo "... run_tests"
 	@echo "... takeoff"
 	@echo "... test"
 	@echo "... test-future"
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
-	@echo "... gtest"
-	@echo "... gtest_main"
 	@echo "... src/operation.o"
 	@echo "... src/operation.i"
 	@echo "... src/operation.s"
