@@ -306,6 +306,8 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
      Vector3d global_s_pose = v_pose + R * s_rel_pose;
 
+     cout << msg_in.range << endl;
+
      Vector3d interm = s_rel_pose +  s_rel_rot_pose * Vector3d(msg_in.range, 0, 0);
 
      Vector3d global_end_ray = v_pose + R * (interm);
