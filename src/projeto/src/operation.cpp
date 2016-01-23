@@ -68,7 +68,7 @@ struct TeleopArDrone
 	void joyCb(const sensor_msgs::JoyConstPtr joy_msg){
 
 
-        cout << "recebendo..." << joy_msg->axes[1] <<" "<< joy_msg->axes[0] << " " << joy_msg->axes[3] << " " << joy_msg->axes[2] <<  endl;
+        //cout << "recebendo..." << joy_msg->axes[1] <<" "<< joy_msg->axes[0] << " " << joy_msg->axes[3] << " " << joy_msg->axes[2] <<  endl;
          if (!got_first_joy_msg){
         ROS_INFO("Found joystick with %zu buttons and %zu axes", joy_msg->buttons.size(), joy_msg->axes.size());
 

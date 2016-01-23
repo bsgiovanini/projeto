@@ -318,7 +318,7 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
 
 
-     if (production_mode && debug) {
+     if (!production_mode && debug) {
         sensor_msgs::PointCloud pc;
         pc.header.frame_id = "/nav";
         pc.header.stamp = ros::Time();
@@ -838,11 +838,13 @@ void my_handler(int s){
 int main(int argc, char **argv)
 {
 
-    if (strcmp(argv[1], "production") == 0) {
+    if (argc > 1 && strcmp(argv[1], "production") == 0) {
         production_mode = true;
     } else {
         production_mode = false;
     }
+
+    cout << "production_mode = " << production_mode << endl;
 
 
     load_sonar_rel_transform_m();
