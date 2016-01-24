@@ -7,6 +7,8 @@
 #include <string>
 #include <stdio.h>
 
+#define MAX_READING 150 // max reading in cm
+
 int getSensorAddress(int sensorNumber) {
 	switch(sensorNumber) {
 		case 1: return 0x3a;
@@ -53,10 +55,14 @@ int main(int argc , char **argv) {
 		rate.sleep();
 		int r = wiringPiI2CReadReg16(fd, 0xe1);
 		int val = (r >> 8) & 0xff | (r << 8) & 0x1;
-		msg.range = val/100.0;
+		if (val <= MAX_READING) {
+            msg.range = val/100.0;
 	     	msg.header.stamp = ros::Time();
-		pub.publish(msg);
+            pub.publish(msg);
+            ROS_INFO_STREAM("Sending "<< msg.range);
+		} else {
+            ROS_INFO_STREAM("Not sending "<< val/100.0);
+		}
 		// Send a message to rosout with the details.
-		ROS_INFO_STREAM("Sending "<< msg.range);
 	}
 }
