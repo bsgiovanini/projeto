@@ -22,22 +22,22 @@ xmlns:xacro="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface">
     </xacro:sonar_sensor>
 
     <!-- Sonar 1 sensor -->
-    <xacro:sonar_sensor name="sonar_medida0" parent="base_link" ros_topic="sensor1/dist" update_rate="10" min_range="0.2" max_range="1.5" field_of_view="1" ray_count="1">
+    <xacro:sonar_sensor name="sonar_medida0" parent="base_link" ros_topic="sensor1/dist" update_rate="10" min_range="0.2" max_range="1.0" field_of_view="1" ray_count="1">
       <origin xyz="0.1 0.0 0.12" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 
     <!-- Sonar 2 sensor -${30*M_PI/180}-->
-    <xacro:sonar_sensor name="sonar_medida1" parent="base_link" ros_topic="sensor2/dist" update_rate="10" min_range="0.2" max_range="1.5" field_of_view="1" ray_count="1">
+    <xacro:sonar_sensor name="sonar_medida1" parent="base_link" ros_topic="sensor2/dist" update_rate="10" min_range="0.2" max_range="1.0" field_of_view="1" ray_count="1">
       <origin xyz="0.1 0.0 0.12" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 
     <!-- Sonar 3 sensor  ${30*M_PI/180}-->
-    <xacro:sonar_sensor name="sonar_medida2" parent="base_link" ros_topic="sensor3/dist" update_rate="10" min_range="0.2" max_range="1.5" field_of_view="1" ray_count="1">
+    <xacro:sonar_sensor name="sonar_medida2" parent="base_link" ros_topic="sensor3/dist" update_rate="10" min_range="0.2" max_range="1.0" field_of_view="1" ray_count="1">
       <origin xyz="0.1 0.0 0.12" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 
      <!-- Sonar 4 sensor -${30*M_PI/180}-->
-    <xacro:sonar_sensor name="sonar_medida3" parent="base_link" ros_topic="sensor4/dist" update_rate="10" min_range="0.2" max_range="1.5" field_of_view="1" ray_count="1">
+    <xacro:sonar_sensor name="sonar_medida3" parent="base_link" ros_topic="sensor4/dist" update_rate="10" min_range="0.2" max_range="1.0" field_of_view="1" ray_count="1">
       <origin xyz="0.1 0.0 0.12" rpy="0 0 0"/>
     </xacro:sonar_sensor>
 

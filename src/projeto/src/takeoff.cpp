@@ -26,7 +26,7 @@
  */
 
 #define M_PI 3.1415926535897931
-#define MAX_RANGE 1.50 // sonar max range in meters
+#define MAX_RANGE 1.00 // sonar max range in meters
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s

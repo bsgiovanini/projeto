@@ -7,7 +7,7 @@
 #include <string>
 #include <stdio.h>
 
-#define MAX_READING 150 // max reading in cm
+#define MAX_READING 100 // max reading in cm
 
 int getSensorAddress(int sensorNumber) {
 	switch(sensorNumber) {
@@ -47,7 +47,7 @@ int main(int argc , char **argv) {
   	msg.header.frame_id =  "ultrasound_ranger";
   	msg.field_of_view = 1;
   	msg.min_range = 0.20;
-  	msg.max_range = 1.50;
+  	msg.max_range = MAX_READING/100;
 	ros::Publisher pub = nh.advertise<sensor_msgs::Range> ("dist", 1000);
 	ros::Rate rate(10);
 	while(ros::ok()) {
