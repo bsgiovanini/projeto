@@ -248,9 +248,7 @@ Vector3d omega2thetadot(Vector3d omega, Vector3d angles) {
 
 double degree_to_rad(int degrees) {
 
-    double degreesd;
-    if (degrees == 0) degreesd = 0.000001; else degreesd = degrees; 	
-    return M_PI / 180.0 * degreesd;
+    return M_PI / 180.0 * degrees;
 
 }
 
