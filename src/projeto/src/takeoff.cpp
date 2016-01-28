@@ -26,15 +26,16 @@
  */
 
 #define M_PI 3.1415926535897931
-#define MAX_RANGE 1.50
+#define MAX_RANGE 1.50 // sonar max range in meters
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 1.0 // amount of time will be watch out to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 1.0
-#define OCTREE_RESOLUTION 0.1
-#define CONTROL_LIMIT 1.0
+#define TTC_LIMIT 1.0 // time to colide limit
+#define OCTREE_RESOLUTION 0.1 // tree grid resolution
+#define CONTROL_LIMIT 1.0 // duration of the automatic control (in second)
+#define OCCUPIED_PROB 1.0 // 0 is 50%
 
 
 // %Tag(FULLTEXT)%
@@ -92,9 +93,9 @@ Vector3d previous_vel(0,0,0);
 
 float previous_tm = 0.0;
 
-float quadrotor_sphere_radius = 0.8;
+float quadrotor_sphere_radius = 0.32;
 
-bool production_mode = true;
+bool production_mode;
 
 
 
@@ -740,7 +741,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
             }
 
 
-            if (it->getValue() > 0.0) {
+            if (it->getValue() > OCCUPIED_PROB) {
 
 
                 for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
