@@ -598,10 +598,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	theta(1) = degree_to_rad(msg_in.rotY);
 	theta(2) = degree_to_rad(msg_in.rotZ);
 
-	if (vz_ == -0) vz_ = 0.000001;
-	if (vy_ == -0) vy_ = 0.000001;
-	if (vx_ == -0) vx_ = 0.000001;
-
 	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
 
 	Vector3d velV (vx_, vy_, vz_);
@@ -614,21 +610,22 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d x_new = x + vel*dt;
 
-      if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
-                f_vector_print("velocidade", velV);
-                f_vector_print("theta", theta);
+    if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
+
+        cout << dt << endl;
+        f_vector_print("velocidade", velV);
+        f_vector_print("theta", theta);
 		f_vector_print("x", x);
 		f_vector_print("x_new", x_new);
 		return;
-        }
+    }
 
 
     pthread_mutex_lock(&mutex_1);
+
     x = x_new;
 
-
-    //f_vector_print("posicao", x);
-
+    previous_tm = timestamp;
 
     pthread_mutex_unlock(&mutex_1);
 
@@ -816,7 +813,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     gettimeofday(&stop, NULL);
 
-    previous_tm = timestamp;
+
 
     previous_vel = vel;
 
