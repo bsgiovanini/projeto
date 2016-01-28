@@ -23,6 +23,8 @@
 
   <node pkg="joy" type="joy_node" name="joy_node"/>
 
+  <node pkg="projeto" type="operation" name="operation"/>
+
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
 
 

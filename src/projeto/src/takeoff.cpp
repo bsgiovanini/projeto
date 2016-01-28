@@ -26,13 +26,13 @@
  */
 
 #define M_PI 3.1415926535897931
-#define MAX_RANGE 3.00
+#define MAX_RANGE 1.50
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 2.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 2.0
+#define TTC_LIMIT 1.0
 #define OCTREE_RESOLUTION 0.1
 #define CONTROL_LIMIT 1.0
 
@@ -368,7 +368,7 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
                 pb_d.data = distance;
                 pub_dist.publish(pb_d);
 
-                if (distance < 3.00) {
+                if (distance < MAX_RANGE) {
 
                     char text[50];
                     float val_cmd = TIME_AHEAD;

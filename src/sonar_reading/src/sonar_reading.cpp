@@ -45,9 +45,9 @@ int main(int argc , char **argv) {
 
 	msg.radiation_type = sensor_msgs::Range::ULTRASOUND;
   	msg.header.frame_id =  "ultrasound_ranger";
-  	msg.field_of_view = 0.01;
+  	msg.field_of_view = 1;
   	msg.min_range = 0.20;
-  	msg.max_range = 2.00;
+  	msg.max_range = 1.50;
 	ros::Publisher pub = nh.advertise<sensor_msgs::Range> ("dist", 1000);
 	ros::Rate rate(10);
 	while(ros::ok()) {
