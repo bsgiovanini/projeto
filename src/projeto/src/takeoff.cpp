@@ -77,7 +77,7 @@ using namespace octomap;
 
 using namespace std;
 
-//pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
 ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
@@ -247,7 +247,10 @@ Vector3d omega2thetadot(Vector3d omega, Vector3d angles) {
 
 
 double degree_to_rad(int degrees) {
-    return M_PI / 180 * degrees;
+
+    double degreesd;
+    if (degrees == 0) degreesd = 0.000001; else degreesd = degrees; 	
+    return M_PI / 180.0 * degreesd;
 
 }
 
@@ -307,7 +310,7 @@ void sonar_callback(const sensor_msgs::Range& msg_in, Vector3d s_rel_pose, Matri
 
      Vector3d global_s_pose = v_pose + R * s_rel_pose;
 
-     cout << msg_in.range << endl;
+    // cout << msg_in.range << endl;
 
      Vector3d interm = s_rel_pose +  s_rel_rot_pose * Vector3d(msg_in.range, 0, 0);
 
@@ -597,7 +600,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	theta(1) = degree_to_rad(msg_in.rotY);
 	theta(2) = degree_to_rad(msg_in.rotZ);
 
-
+	if (vz_ == -0) vz_ = 0.000001;
+	if (vy_ == -0) vy_ = 0.000001;
+	if (vx_ == -0) vx_ = 0.000001;
 
 	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
 
@@ -611,13 +616,23 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d x_new = x + vel*dt;
 
-    //pthread_mutex_lock(&mutex_1);
+      if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
+                f_vector_print("velocidade", velV);
+                f_vector_print("theta", theta);
+		f_vector_print("x", x);
+		f_vector_print("x_new", x_new);
+		return;
+        }
+
+
+    pthread_mutex_lock(&mutex_1);
     x = x_new;
+
 
     //f_vector_print("posicao", x);
 
 
-    //pthread_mutex_unlock(&mutex_1);
+    pthread_mutex_unlock(&mutex_1);
 
     Vector3d future_position;
 
@@ -690,9 +705,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
             double cz   = within(u_z, -1, 1);
             double cyaw = within(u_yaw, -1, 1);
 
-            f_vector_print("objetivo", pos_obj);
+           // f_vector_print("objetivo", pos_obj);
 
-            f_vector_print("posicao", x);
+           // f_vector_print("posicao", x);
 
             Command cmd(cx, cy, cz, cyaw);
             send_velocity_command(cmd);

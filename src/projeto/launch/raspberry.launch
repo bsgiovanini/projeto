@@ -9,7 +9,7 @@
   <node pkg="sonar_reading" type="sonar_reading" name="sensor1">
         <param name="sensor" type="int" value="1" />
   </node>
-  <node pkg="sonar_reading" type="sonar_reading" name="sensor2">
+  <!--node pkg="sonar_reading" type="sonar_reading" name="sensor2">
         <param name="sensor" type="int" value="2" />
   </node>
   <node pkg="sonar_reading" type="sonar_reading" name="sensor3">
@@ -17,7 +17,7 @@
   </node>
   <node pkg="sonar_reading" type="sonar_reading" name="sensor4">
         <param name="sensor" type="int" value="4" />
-  </node>
+  </node-->
   <node pkg="projeto" type="operation" name="operation" />
 
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
