@@ -28,14 +28,15 @@
 #define M_PI 3.1415926535897931
 #define MAX_RANGE 1.00 // sonar max range in meters
 #define MAP_MAX_RANGE MAX_RANGE-0.01
-#define MAX_DIST 1000
+#define MAX_DIST 1000 // a big enough initialization distance (meters)
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.0 // amount of time will be watch out to predict the trajectory
+#define TIME_AHEAD 1.5 // amount of time will be watch out to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 1.0 // time to colide limit
-#define OCTREE_RESOLUTION 0.1 // tree grid resolution
+#define TTC_LIMIT 2.0 // time to colide limit
+#define OCTREE_RESOLUTION 0.25 // tree grid resolution (meters)
 #define CONTROL_LIMIT 1.0 // duration of the automatic control (in second)
-#define OCCUPIED_PROB 1.0 // 0 is 50%
+#define OCCUPIED_PROB 0.0 // 0 is 50%
+#define TRAJECTORY_DT 0.25 // time interval between future trajectory steps (seconds)
 
 
 // %Tag(FULLTEXT)%
@@ -179,8 +180,6 @@ PID pid_z(0.8, 0, 0.35);
 PID pid_yaw(1.0, 0, 0.30);
 
 
-vector<Command> collision_avoiding_commands;
-
 OcTree tree (OCTREE_RESOLUTION);  // create empty tree with resolution
 
 Vector3d pos_obj;
@@ -279,21 +278,21 @@ double generateGaussianNoise(double mu, double sigma)
 
 void load_sonar_rel_transform_m() {
 
-    Vector3d sonar_1_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_1_rel_linear_pos(0.1, -0.1, 0.12);
     s_1_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
     s_1_rel_pose = sonar_1_rel_linear_pos;
 
-    Vector3d sonar_2_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_2_rel_linear_pos(0.1, -0.2, 0.12);
     s_2_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
     //s_2_rel_rot_pos = rotation(Vector3d(0, 0, -degree_to_rad(30))).matrix();
     s_2_rel_pose = sonar_2_rel_linear_pos;
 
-    Vector3d sonar_3_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_3_rel_linear_pos(0.1, 0.1, 0.12);
     s_3_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
     //s_3_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
     s_3_rel_pose = sonar_3_rel_linear_pos;
 
-    Vector3d sonar_4_rel_linear_pos(0.1, 0.0, 0.12);
+    Vector3d sonar_4_rel_linear_pos(0.1, 0.2, 0.12);
     s_4_rel_rot_pos = rotation(Vector3d(0, 0, 0)).matrix();
     //s_3_rel_rot_pos = rotation(Vector3d(0, 0, degree_to_rad(30))).matrix();
     s_4_rel_pose = sonar_4_rel_linear_pos;
@@ -607,7 +606,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d vel = R * velV;
 
-    pthread_mutex_lock(&mutex_1);
+    //pthread_mutex_lock(&mutex_1);
     
     float dt = timestamp - previous_tm; //geting dt in secs
     
@@ -627,11 +626,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     previous_tm = timestamp;
 
-    pthread_mutex_unlock(&mutex_1);
+   // pthread_mutex_unlock(&mutex_1);
 
     Vector3d future_position;
 
-    vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
+    vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, TRAJECTORY_DT, future_position);
 
 
     float short_dist = MAX_DIST;
@@ -686,6 +685,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     if (control_mode) {
 
+//        cout << "TIMESTAMP " << timestamp << endl;
+//        cout << "CONTADOR " << contador << endl;
+//        cout << "LIMIT " << CONTROL_LIMIT << endl;
         if (timestamp < contador + CONTROL_LIMIT) {
 
             double u_x = pid_x.getCommand(pos_obj(0) - x(0), timestamp);
@@ -704,12 +706,15 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
            // f_vector_print("posicao", x);
 
+	   cout << "SENDING AUTOMATIC CONTROLS" << endl;
+
             Command cmd(cx, cy, cz, cyaw);
             send_velocity_command(cmd);
 
         } else {
 
             control_mode = 0;
+	    cout << "CONTROL MODE OFF" << endl;
             send_collision_mode_msg(false);
             pid_x.reset();
             pid_y.reset();
@@ -762,6 +767,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
                         float dist = (wrapped_coords - x).norm();
 
+			cout << "DIST " << dist << endl;
+
                         if (dist < short_dist) {
                             short_dist = dist;
                         }
@@ -787,6 +794,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
                     send_collision_mode_msg(true);
                     control_mode = 1;
                     contador = timestamp;
+	            cout << "CONTROL MODE ON" << endl;
                     pid_x.reset();
                     pid_y.reset();
                     pid_z.reset();
@@ -821,9 +829,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     //previous_omega = omega;
 
-    //gettimeofday(&stop, NULL);
+    gettimeofday(&stop, NULL);
 
-    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
+    //cout << "time took: "<< stop.tv_sec - start.tv_sec << "." << (stop.tv_usec - start.tv_usec)/1000000 << "s" << endl;
 
 }
 // %EndTag(CALLBACK)%

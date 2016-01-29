@@ -2,14 +2,17 @@
 
 <launch>
 
-  <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver"/>
+  <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver">
+     <param name="navdata_demo" value="1" />
+     <param name="realtime_navdata" value="true" />  
+  </node>
 
   <node pkg="joy" type="joy_node" name="joy_node"/>
 
   <node pkg="sonar_reading" type="sonar_reading" name="sensor1">
         <param name="sensor" type="int" value="1" />
   </node>
-  <!--node pkg="sonar_reading" type="sonar_reading" name="sensor2">
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor2">
         <param name="sensor" type="int" value="2" />
   </node>
   <node pkg="sonar_reading" type="sonar_reading" name="sensor3">
@@ -17,7 +20,7 @@
   </node>
   <node pkg="sonar_reading" type="sonar_reading" name="sensor4">
         <param name="sensor" type="int" value="4" />
-  </node-->
+  </node>
   <node pkg="projeto" type="operation" name="operation" />
 
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
