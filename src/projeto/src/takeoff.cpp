@@ -588,7 +588,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     float timestamp = msg_in.tm/1000000;
 
     //timestamp in microsecs
-    float dt = timestamp - previous_tm; //geting dt in secs
 
 	double vx_= msg_in.vx*0.001;
 	double vy_= msg_in.vy*0.001;
@@ -608,7 +607,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d vel = R * velV;
 
-	Vector3d x_new = x + vel*dt;
+    pthread_mutex_lock(&mutex_1);
+    
+    float dt = timestamp - previous_tm; //geting dt in secs
+    
+    Vector3d x_new = x + vel*dt;
 
     if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
 
@@ -619,9 +622,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 		f_vector_print("x_new", x_new);
 		return;
     }
-
-
-    pthread_mutex_lock(&mutex_1);
 
     x = x_new;
 
