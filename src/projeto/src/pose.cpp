@@ -15,6 +15,7 @@
 #include "std_msgs/Bool.h"
 
 #include <ardrone_autonomy/Navdata.h>
+#include "projeto/QuadStatus.h"
 #include "geometry_msgs/PoseStamped.h"
 #include <math.h>
 #include <eigen3/Eigen/Dense>
@@ -34,7 +35,7 @@ using namespace Eigen;
 using namespace std;
 
 
-ros::Publisher  pub_pose;
+ros::Publisher  pub_pose, pub_pose_rviz;
 
 Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
@@ -45,8 +46,10 @@ Vector3d previous_vel(0,0,0);
 Vector3d x(0,0,0);// global pose quadrotor
 
 int freq_pub_pose = 0;
+int debug = 0;
 
 float previous_tm = 0.0;
+float last_pose_tm = 0.0;
 
 void f_vector_print(string name, Vector3d vectors) {
 
@@ -119,21 +122,46 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     x = x_new;
 
-    if (!freq_pub_pose || (timestamp - previous_tm) >= (1/freq_pub_pose)) {
+    if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/freq_pub_pose)) {
 
-        geometry_msgs::PoseStamped pose;
-        pose.header.frame_id = "odom";
-        pose.header.stamp = ros::Time();
+        projeto::QuadStatus status;
+        status.header.frame_id = "odom";
+        status.header.stamp = ros::Time::now();
 
-        pose.pose.orientation.x = rotQ.x();
-        pose.pose.orientation.y = rotQ.y();
-        pose.pose.orientation.z = rotQ.z();
-        pose.pose.orientation.w = rotQ.w();
-        pose.pose.position.x = x(0);
-        pose.pose.position.y = x(1);
-        pose.pose.position.z = x(2);
+        status.position.x = x(0);
+        status.position.y = x(1);
+        status.position.z = x(2);
 
-        pub_pose.publish(pose);
+        status.vel.x = vel(0);
+        status.vel.y = vel(1);
+        status.vel.z = vel(2);
+
+        status.theta.x = theta(0);
+        status.theta.y = theta(1);
+        status.theta.z = theta(2);
+
+        f_vector_print("theta", theta);
+        f_vector_print("x", x);
+        f_vector_print("vel", vel);
+
+        pub_pose.publish(status);
+
+        last_pose_tm = timestamp;
+
+        if(pub_pose_rviz.getNumSubscribers()) {
+            geometry_msgs::PoseStamped pose;
+            pose.header.frame_id = "odom";
+            pose.header.stamp = ros::Time::now();
+            pose.pose.orientation.x = rotQ.x();
+            pose.pose.orientation.y = rotQ.y();
+            pose.pose.orientation.z = rotQ.z();
+            pose.pose.orientation.w = rotQ.w();
+            pose.pose.position.x = x(0);
+            pose.pose.position.y = x(1);
+            pose.pose.position.z = x(2);
+
+            pub_pose_rviz.publish(pose);
+        }
 
     }
 
@@ -150,14 +178,21 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 int main(int argc, char **argv)
 {
 
-    ros::init(argc, argv, "listener");
+    ros::init(argc, argv, "pose");
 
-    ros::NodeHandle n;
+    ros::NodeHandle n("~");
 
     n.getParam("freq_pub_pose", freq_pub_pose);
 
+    if (freq_pub_pose > 0) {
+        cout << "Pose frequency in " << freq_pub_pose << "Hz" << endl;
+    } else {
+        cout << "Pose frequency not setted " << endl;
+    }
+
 // %Tag(SUBSCRIBER)%
-    pub_pose                = n.advertise<geometry_msgs::PoseStamped>("/project/pose", 1);
+    pub_pose                = n.advertise<projeto::QuadStatus>("/project/status", 1);
+    pub_pose_rviz           = n.advertise<geometry_msgs::PoseStamped>("/project/pose", 1);
     ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
 
 

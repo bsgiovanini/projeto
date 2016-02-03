@@ -30,7 +30,7 @@ ofstream result_command_txt;
 
 struct TeleopArDrone
 {
-    ros::Subscriber joy_sub, project_collision_mode, project_distance;
+    ros::Subscriber joy_sub, project_collision_mode;
     ros::Publisher pub_takeoff, pub_land, pub_toggle_state, pub_vel;
 
     bool got_first_joy_msg;
@@ -140,7 +140,6 @@ struct TeleopArDrone
 	 joy_sub = nh_.subscribe("/joy", 1,&TeleopArDrone::joyCb, this);
 
 	 project_collision_mode = nh_.subscribe("/project/collision_mode", 1,&TeleopArDrone::onCollisionMode, this);
-	 project_distance = nh_.subscribe("/project/mydist", 1,&TeleopArDrone::onDistance, this);
 
 	 toggle_pressed_in_last_msg = cam_toggle_pressed_in_last_msg = false;
 

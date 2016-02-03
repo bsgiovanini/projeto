@@ -4,7 +4,7 @@
 
   <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver">
      <param name="navdata_demo" value="0" />
-     <param name="realtime_navdata" value="true" />  
+     <param name="realtime_navdata" value="true" />
   </node>
 
   <node pkg="joy" type="joy_node" name="joy_node"/>
@@ -22,6 +22,10 @@
         <param name="sensor" type="int" value="4" />
   </node>
   <node pkg="projeto" type="operation" name="operation" />
+
+  <node pkg="projeto" type="pose" name="pose">
+    <param name="freq_pub_pose" value="20" />
+  </node>
 
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
 
