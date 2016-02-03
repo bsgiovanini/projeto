@@ -592,12 +592,6 @@ void nav_callback(const projeto::QuadStatus status)
 
     Vector3d vel(status.vel.x, status.vel.y, status.vel.z);
 
-    f_vector_print("x_new", x_new);
-
-    f_vector_print("theta", theta);
-
-    f_vector_print("vel", vel);
-
 	//theta(0) = degree_to_rad(msg_in.rotX);
 	//theta(1) = degree_to_rad(msg_in.rotY);
 	//theta(2) = degree_to_rad(msg_in.rotZ);

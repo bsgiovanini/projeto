@@ -140,10 +140,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         status.theta.y = theta(1);
         status.theta.z = theta(2);
 
-        f_vector_print("theta", theta);
-        f_vector_print("x", x);
-        f_vector_print("vel", vel);
-
         pub_pose.publish(status);
 
         last_pose_tm = timestamp;
