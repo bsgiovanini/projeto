@@ -93,7 +93,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	double vy_= msg_in.vy*0.001;
 	double vz_= msg_in.vz*0.001;
 
-	char prefix_x [50];
+	char prefix_x [500];
 
 	theta(0) = degree_to_rad(msg_in.rotX);
 	theta(1) = degree_to_rad(msg_in.rotY);
@@ -120,7 +120,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d x_new = x + vel*dt;
 
-    x_new(2) = msg_in.altd*0.001;	
+    x_new(2) = msg_in.altd*0.001;
 
     if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
 
