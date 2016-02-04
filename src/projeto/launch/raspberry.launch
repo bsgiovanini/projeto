@@ -2,9 +2,17 @@
 
 <launch>
 
-  <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver">
+  <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver"  output="screen" clear_params="true">
      <param name="navdata_demo" value="0" />
      <param name="realtime_navdata" value="true" />
+     <param name="euler_angle_max" value="0.21" />
+     <param name="control_vz_max" value="700" />
+     <param name="control_yaw" value="1.75" />
+     <param name="realtime_video" value="false" />
+
+     <rosparam param="cov/imu_la">[0.1, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1]</rosparam>
+     <rosparam param="cov/imu_av">[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]</rosparam>
+     <rosparam param="cov/imu_or">[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 100000.0]</rosparam>
   </node>
 
   <node pkg="joy" type="joy_node" name="joy_node"/>
@@ -28,6 +36,8 @@
   </node>
 
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
+
+
 
 
 </launch>
