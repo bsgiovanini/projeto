@@ -28,6 +28,7 @@
 #include <limits>
 #include <unistd.h>
 #include <vector>
+#include <fstream>
 
 
 
@@ -41,6 +42,8 @@ Vector3d theta(0,0,0);
 Vector3d previous_theta(0,0,0);
 Vector3d previous_omega(0,0,0);
 Vector3d previous_vel(0,0,0);
+
+ofstream txt;
 
 
 Vector3d x(0,0,0);// global pose quadrotor
@@ -90,9 +93,16 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	double vy_= msg_in.vy*0.001;
 	double vz_= msg_in.vz*0.001;
 
+	char prefix_x [50];
+
 	theta(0) = degree_to_rad(msg_in.rotX);
 	theta(1) = degree_to_rad(msg_in.rotY);
 	theta(2) = degree_to_rad(msg_in.rotZ);
+
+        sprintf (prefix_x, "%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_, theta(0), theta(1), theta(2));
+
+	txt << prefix_x;
+
 
 	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
 
@@ -109,6 +119,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     float dt = timestamp - previous_tm; //geting dt in secs
 
     Vector3d x_new = x + vel*dt;
+
+    x_new(2) = msg_in.altd*0.001;	
 
     if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
 
@@ -173,6 +185,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 int main(int argc, char **argv)
 {
+
+    txt.open("velocidade.txt");
 
     ros::init(argc, argv, "pose");
 
