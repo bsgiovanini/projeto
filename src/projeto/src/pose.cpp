@@ -1,12 +1,6 @@
 
 #define M_PI 3.14159265358979323846
-#define MAX_RANGE 2.99
-#define MAX_DIST 1000
-#define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.25 // amount of time will be looked to predict the trajectory
-#define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 5.0
-#define OCTREE_RESOLUTION 0.15
+#define ALTD_MIN 0.5
 
 
 // %Tag(FULLTEXT)%
@@ -48,9 +42,7 @@ ofstream txt;
 
 Vector3d x(0,0,0);// global pose quadrotor
 
-int freq_pub_pose = 0;
-int debug = 0;
-
+float freq_pub_pose = 0.0;
 float previous_tm = 0.0;
 float last_pose_tm = 0.0;
 
@@ -85,54 +77,52 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     gettimeofday(&start, NULL);
     //do stuff
 
-   float timestamp = msg_in.tm/1000000;
+   float timestamp = msg_in.tm*0.000001;
 
     //timestamp in microsecs
 
-	double vx_= msg_in.vx*0.001;
-	double vy_= msg_in.vy*0.001;
-	double vz_= msg_in.vz*0.001;
-
-	char prefix_x [500];
-
-	theta(0) = degree_to_rad(msg_in.rotX);
-	theta(1) = degree_to_rad(msg_in.rotY);
-	theta(2) = degree_to_rad(msg_in.rotZ);
-
-        sprintf (prefix_x, "%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_, theta(0), theta(1), theta(2));
-
-	txt << prefix_x;
+    double vx_= msg_in.vx*0.001;
+    double vy_= msg_in.vy*0.001;
+    double vz_= msg_in.vz*0.001;
 
 
-	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
+    theta(0) = degree_to_rad(msg_in.rotX);
+    theta(1) = degree_to_rad(msg_in.rotY);
+    theta(2) = degree_to_rad(msg_in.rotZ);
 
-	Vector3d velV (vx_, vy_, vz_);
+    //ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
 
-	Quaternion<double> rotQ = rotation(theta);
+    Vector3d velV (vx_, vy_, vz_);
 
-	Matrix3d R = rotQ.matrix();
+    Quaternion<double> rotQ = rotation(theta);
 
-	Vector3d vel = R * velV;
+    Matrix3d R = rotQ.matrix();
+
+    Vector3d vel = R * velV;
 
     //pthread_mutex_lock(&mutex_1);
 
-    float dt = timestamp - previous_tm; //geting dt in secs
+    double altitude = msg_in.altd*0.001;
 
-    Vector3d x_new = x + vel*dt;
+    if (msg_in.state == 3 || msg_in.state == 4 || msg_in.state == 7) { //verify if it is flying, hovering and over a minimal altitud
+	
+	float dt = timestamp - previous_tm; //geting dt in secs
 
-    x_new(2) = msg_in.altd*0.001;
+	if (altitude > ALTD_MIN) {
 
-    if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
+    		Vector3d x_new = x + vel*dt;
 
-        cout << dt << endl;
-        f_vector_print("velocidade", velV);
-        f_vector_print("theta", theta);
-		f_vector_print("x", x);
-		f_vector_print("x_new", x_new);
-		return;
+    		x_new(2) = msg_in.altd*0.001;
+
+    		char prefix_x [1000];
+
+    		sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_,x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
+
+    		txt << prefix_x;
+
+   		x = x_new;
+	}
     }
-
-    x = x_new;
 
     if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/freq_pub_pose)) {
 
@@ -151,6 +141,8 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         status.theta.x = theta(0);
         status.theta.y = theta(1);
         status.theta.z = theta(2);
+
+	//cout << "Sending status...." << endl;
 
         pub_pose.publish(status);
 
