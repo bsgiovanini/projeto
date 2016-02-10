@@ -1,6 +1,6 @@
 
 #define M_PI 3.14159265358979323846
-#define ALTD_MIN 0.5
+#define ALTD_MIN 0.0
 
 
 // %Tag(FULLTEXT)%
