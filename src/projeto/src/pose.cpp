@@ -1,6 +1,6 @@
 
 #define M_PI 3.14159265358979323846
-#define ALTD_MIN 0.5
+#define ALTD_MIN 0.0
 
 
 // %Tag(FULLTEXT)%
@@ -42,7 +42,7 @@ ofstream txt;
 
 Vector3d x(0,0,0);// global pose quadrotor
 
-float freq_pub_pose = 0.0;
+int freq_pub_pose = 0;
 float previous_tm = 0.0;
 float last_pose_tm = 0.0;
 
@@ -105,7 +105,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     double altitude = msg_in.altd*0.001;
 
     if (msg_in.state == 3 || msg_in.state == 4 || msg_in.state == 7) { //verify if it is flying, hovering and over a minimal altitud
-	
+
 	float dt = timestamp - previous_tm; //geting dt in secs
 
 	if (altitude > ALTD_MIN) {
@@ -124,7 +124,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 	}
     }
 
-    if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/freq_pub_pose)) {
+    if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/(freq_pub_pose*1.0))) {
 
         projeto::QuadStatus status;
         status.header.frame_id = "odom";
