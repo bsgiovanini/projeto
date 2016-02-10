@@ -9,6 +9,7 @@
 #include "std_msgs/Bool.h"
 
 #include <ardrone_autonomy/Navdata.h>
+#include <ardrone_autonomy/navdata_altitude.h>
 #include "projeto/QuadStatus.h"
 #include "geometry_msgs/PoseStamped.h"
 #include <math.h>
@@ -39,6 +40,7 @@ Vector3d previous_vel(0,0,0);
 
 ofstream txt;
 
+double vz = 0.0;
 
 Vector3d x(0,0,0);// global pose quadrotor
 
@@ -69,6 +71,11 @@ double degree_to_rad(int degrees) {
 
 }
 
+void alt_callback(const ardrone_autonomy::navdata_altitude& msg_in) {
+
+    vz = msg_in.altitude_vz*0.001;
+}
+
 
 void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 {
@@ -83,7 +90,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     double vx_= msg_in.vx*0.001;
     double vy_= msg_in.vy*0.001;
-    double vz_= msg_in.vz*0.001;
+    double vz_ = vz;
 
 
     theta(0) = degree_to_rad(msg_in.rotX);
@@ -108,20 +115,20 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	float dt = timestamp - previous_tm; //geting dt in secs
 
-	if (altitude > ALTD_MIN) {
+        if (altitude > ALTD_MIN) {
 
-    		Vector3d x_new = x + vel*dt;
+                Vector3d x_new = x + vel*dt;
 
-    		x_new(2) = msg_in.altd*0.001;
+                x_new(2) = msg_in.altd*0.001;
 
-    		char prefix_x [1000];
+                char prefix_x [1000];
 
-    		sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_,x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
+                sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_,x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
 
-    		txt << prefix_x;
+                txt << prefix_x;
 
-   		x = x_new;
-	}
+            x = x_new;
+        }
     }
 
     if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/(freq_pub_pose*1.0))) {
@@ -196,6 +203,7 @@ int main(int argc, char **argv)
     pub_pose                = n.advertise<projeto::QuadStatus>("/project/status", 1);
     pub_pose_rviz           = n.advertise<geometry_msgs::PoseStamped>("/project/pose", 1);
     ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
+    ros::Subscriber sub_alt = n.subscribe("/ardrone/navdata_altitude", 1, alt_callback);
 
 
     ros::spin();
