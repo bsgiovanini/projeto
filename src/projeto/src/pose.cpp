@@ -1,6 +1,6 @@
 
 #define M_PI 3.14159265358979323846
-#define ALTD_MIN 0.0
+#define ALTD_MIN 0.5
 
 
 // %Tag(FULLTEXT)%
@@ -73,7 +73,7 @@ double degree_to_rad(int degrees) {
 
 void alt_callback(const ardrone_autonomy::navdata_altitude& msg_in) {
 
-    vz = msg_in.altitude_vz*0.001;
+    vz = -msg_in.altitude_vz*0.001;
 }
 
 
@@ -90,7 +90,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     double vx_= msg_in.vx*0.001;
     double vy_= msg_in.vy*0.001;
-    double vz_ = vz;
+    double vz_= vz;
 
 
     theta(0) = degree_to_rad(msg_in.rotX);
@@ -123,7 +123,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
                 char prefix_x [1000];
 
-                sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vx_, vy_, vz_,x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
+                sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vel(0), vel(1), vel(2),x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
 
                 txt << prefix_x;
 
