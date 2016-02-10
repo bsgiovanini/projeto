@@ -9,6 +9,8 @@
      <param name="control_vz_max" value="700" />
      <param name="control_yaw" value="1.75" />
      <param name="realtime_video" value="false" />
+     <param name="enable_navdata_altitude" value="true" />
+
 
      <rosparam param="cov/imu_la">[0.1, 0.0, 0.0, 0.0, 0.1, 0.0, 0.0, 0.0, 0.1]</rosparam>
      <rosparam param="cov/imu_av">[1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]</rosparam>
