@@ -2,8 +2,6 @@
 #define M_PI 3.14159265358979323846
 #define ALTD_MIN 0.01
 
-
-// %Tag(FULLTEXT)%
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"

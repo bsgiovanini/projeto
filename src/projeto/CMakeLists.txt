@@ -41,6 +41,7 @@ rosbuild_genmsg()
 rosbuild_add_executable(takeoff src/takeoff.cpp)
 rosbuild_add_executable(operation src/operation.cpp)
 rosbuild_add_executable(pose src/pose.cpp)
+rosbuild_add_executable(ardrone_altitude_fake src/ardrone_altitude_fake.cpp)
 #rosbuild_add_executable(control src/control.cpp)
 #rosbuild_add_executable(navigation src/navegation.cpp)
 
