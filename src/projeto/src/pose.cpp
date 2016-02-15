@@ -1,6 +1,6 @@
 
 #define M_PI 3.14159265358979323846
-#define ALTD_MIN 0.5
+#define ALTD_MIN 0.01
 
 
 // %Tag(FULLTEXT)%
@@ -43,6 +43,7 @@ ofstream txt;
 double vz = 0.0;
 
 Vector3d x(0,0,0);// global pose quadrotor
+Vector3d xl(0,0,0);
 
 int freq_pub_pose = 0;
 float previous_tm = 0.0;
@@ -67,7 +68,7 @@ Quaternion<double> rotation(Vector3d theta) {
 
 
 double degree_to_rad(int degrees) {
-    return M_PI / 180 * degrees;
+    return M_PI / 180.0 * degrees;
 
 }
 
@@ -111,25 +112,46 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     double altitude = msg_in.altd*0.001;
 
-    if (msg_in.state == 3 || msg_in.state == 4 || msg_in.state == 7) { //verify if it is flying, hovering and over a minimal altitud
+//    if (msg_in.state == 3 || msg_in.state == 4 || msg_in.state == 7) { //verify if it is flying, hovering and over a minimal altitud
 
-	float dt = timestamp - previous_tm; //geting dt in secs
 
         if (altitude > ALTD_MIN) {
+		if (previous_tm == 0.0) {
+			previous_tm = timestamp;
+		}
+
+		float dt = timestamp - previous_tm; //geting dt in secs
 
                 Vector3d x_new = x + vel*dt;
+
+		Vector3d x_loc = xl + velV*dt;
 
                 x_new(2) = msg_in.altd*0.001;
 
                 char prefix_x [1000];
 
                 sprintf (prefix_x, "%f;%f;%f;%f;%f;%f;%f;%f;%f\n",vel(0), vel(1), vel(2),x_new(0), x_new(1), x_new(2), theta(0), theta(1), theta(2));
+	    	if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/(freq_pub_pose*1.0))) {
+			f_vector_print("vel", vel);
+			f_vector_print("vll", velV);
+
+		
+			cout << "tm: " <<  timestamp << " dt: " << dt << endl;
+
+			f_vector_print("posg", x_new);
+			f_vector_print("posl", x_loc);
+	
+		}
 
                 txt << prefix_x;
 
             x = x_new;
+
+	    xl = x_loc;
+
+	    previous_tm = timestamp;
         }
-    }
+//    }
 
     if (!freq_pub_pose || (timestamp - last_pose_tm) >= (1/(freq_pub_pose*1.0))) {
 
@@ -172,7 +194,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     }
 
-    previous_tm = timestamp;
+    //previous_tm = timestamp;
 
     gettimeofday(&stop, NULL);
 
