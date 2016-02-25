@@ -47,7 +47,7 @@
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/GridCells.h"
 #include "geometry_msgs/Point.h"
-#include "geometry_msgs/PoseStamped.h"
+#include "projeto/QuadStatus.h"
 #include "std_msgs/Float32.h"
 
 #include <ardrone_autonomy/Navdata.h>
@@ -81,7 +81,7 @@ using namespace std;
 pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pc, pub_pc2, pub_pc3, pub_dist;
 geometry_msgs::Twist twist;
 
 ofstream result_command_txt;
@@ -577,45 +577,43 @@ double within(double v,double vmin,double vmax) {
     }
 }
 
-void nav_callback(const ardrone_autonomy::Navdata& msg_in)
+void nav_callback(const projeto::QuadStatus status)
 {
 
     struct timeval stop, start;
     gettimeofday(&start, NULL);
     //do stuff
 
-    float timestamp = msg_in.tm/1000000;
+    double timestamp = status.header.stamp.toSec();
 
-    //timestamp in microsecs
+    theta = Vector3d(status.theta.x, status.theta.y, status.theta.z);
 
-	double vx_= msg_in.vx*0.001;
-	double vy_= msg_in.vy*0.001;
-	double vz_= msg_in.vz*0.001;
+    Vector3d x_new(status.position.x, status.position.y, status.position.z);
 
-	theta(0) = degree_to_rad(msg_in.rotX);
-	theta(1) = degree_to_rad(msg_in.rotY);
-	theta(2) = degree_to_rad(msg_in.rotZ);
+    Vector3d vel(status.vel.x, status.vel.y, status.vel.z);
+
+	//theta(0) = degree_to_rad(msg_in.rotX);
+	//theta(1) = degree_to_rad(msg_in.rotY);
+	//theta(2) = degree_to_rad(msg_in.rotZ);
 
 	//ROS_INFO("I heard ax: [%f]  ay: [%f] az: [%f]", vx_, vy_, vz_);
 
-	Vector3d velV (vx_, vy_, vz_);
+	//Vector3d velV (vx_, vy_, vz_);
 
-	Quaternion<double> rotQ = rotation(theta);
+	//Quaternion<double> rotQ = rotation(theta);
 
-	Matrix3d R = rotQ.matrix();
+	//Matrix3d R = rotQ.matrix();
 
-	Vector3d vel = R * velV;
+	//Vector3d vel = R * velV;
 
     //pthread_mutex_lock(&mutex_1);
-    
-    float dt = timestamp - previous_tm; //geting dt in secs
-    
-    Vector3d x_new = x + vel*dt;
+
+    //float dt = timestamp - previous_tm; //geting dt in secs
+
+
 
     if (x_new(0) < -10 || x_new(0) > 10 || x_new(1) < -10 || x_new(1) > 10) {
 
-        cout << dt << endl;
-        f_vector_print("velocidade", velV);
         f_vector_print("theta", theta);
 		f_vector_print("x", x);
 		f_vector_print("x_new", x_new);
@@ -659,21 +657,6 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
             i++;
         }
         pub_pc2.publish(pc);
-
-        geometry_msgs::PoseStamped pose;
-        pose.header.frame_id = "/nav";
-        pose.header.stamp = ros::Time();
-
-        pose.pose.orientation.x = rotQ.x();
-        pose.pose.orientation.y = rotQ.y();
-        pose.pose.orientation.z = rotQ.z();
-        pose.pose.orientation.w = rotQ.w();
-        pose.pose.position.x = x(0);
-        pose.pose.position.y = x(1);
-        pose.pose.position.z = x(2);
-
-        pub_pose.publish(pose);
-
 
         gcells.header.frame_id = "/nav";
         gcells.header.stamp = ros::Time();
@@ -917,7 +900,7 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
 // %Tag(SUBSCRIBER)%
-  ros::Subscriber sub_nav = n.subscribe("/ardrone/navdata", 1, nav_callback);
+  ros::Subscriber sub_nav = n.subscribe("/project/status", 1, nav_callback);
 // %EndTag(SUBSCRIBER)%
   ros::Subscriber sub_sensor_1 = n.subscribe("/sensor1/dist", 1, sonar_1_callback);
 
@@ -936,7 +919,6 @@ int main(int argc, char **argv)
 
   if(!production_mode) {
     pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
-    pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
     pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
     pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
     pub_pc3                   = n.advertise<sensor_msgs::PointCloud>("/project/cast",  1);

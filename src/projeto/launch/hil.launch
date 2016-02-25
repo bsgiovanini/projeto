@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <node pkg="ardrone_autonomy" type="ardrone_driver" name="ardrone_driver">
+     <param name="navdata_demo" value="0" />
+     <param name="realtime_navdata" value="true" />
+  </node>
+
+  <include file="$(find projeto)/launch/spawn_quadrotor.launch" >
+    <arg name="model" value="$(find projeto)/urdf/quadrotor_sonar.urdf.xacro"/>
+  </include>
+
+  <!-- Start rviz visualization with preset config -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find projeto)/rviz_configs/rviz_config.vcg"/>
+
+  <node pkg="joy" type="joy_node" name="joy_node"/>
+
+  <!--node pkg="sonar_reading" type="sonar_reading" name="sensor1">
+        <param name="sensor" type="int" value="1" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor2">
+        <param name="sensor" type="int" value="2" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor3">
+        <param name="sensor" type="int" value="3" />
+  </node>
+  <node pkg="sonar_reading" type="sonar_reading" name="sensor4">
+        <param name="sensor" type="int" value="4" />
+  </node-->
+  <node pkg="projeto" type="operation" name="operation" />
+
+  <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
+  <node pkg="projeto" type="pose" name="pose">
+    <param name="freq_pub_pose" value="50" />
+    <param name="debug" value="1" />
+  </node>
+
+</launch>

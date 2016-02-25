@@ -25,6 +25,12 @@
 
   <node pkg="projeto" type="operation" name="operation"/>
 
+  <node pkg="projeto" type="pose" name="pose" output="screen">
+    <param name="freq_pub_pose" value="50.0" />
+  </node>
+
+   <node pkg="projeto" type="ardrone_altitude_fake" name="ardrone_altitude_fake" output="screen"/>
+
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
 
 

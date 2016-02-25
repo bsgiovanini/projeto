@@ -34,6 +34,7 @@ int nomain(int argc, char** argv)
   try
   {
     Controller.connectWithDroneAtAddress("192.168.1.1");
+    cout << "oi" << endl;
     ccxx::Thread::sleep(200);
     ARDrone::NavigationDataReceiver navDataReceiver(&Controller, "192.168.1.1");
     navDataReceiver.start();
