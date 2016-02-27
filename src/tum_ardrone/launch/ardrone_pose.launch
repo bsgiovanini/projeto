@@ -11,6 +11,6 @@
 
   <node pkg="projeto" type="operation" name="operation" />
 
-  <node name="drone_stateestimation" pkg="tum_ardrone" type="drone_stateestimation">
-  </node>
+  <!-- node name="drone_stateestimation" pkg="tum_ardrone" type="drone_stateestimation">
+  </node-->
 </launch>

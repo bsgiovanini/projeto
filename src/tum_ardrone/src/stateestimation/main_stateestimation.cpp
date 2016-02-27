@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with tum_ardrone.  If not, see <http://www.gnu.org/licenses/>.
  */
- 
+
 #include "EstimationNode.h"
 #include "ros/ros.h"
 #include "PTAMWrapper.h"
@@ -44,11 +44,11 @@ int main(int argc, char **argv)
   srv.setCallback(f);
 
   estimator.ptamWrapper->startSystem();
-  estimator.mapView->startSystem();
+  //estimator.mapView->startSystem();
 
   estimator.Loop();
 
-  estimator.mapView->stopSystem();
+  //estimator.mapView->stopSystem();
   estimator.ptamWrapper->stopSystem();
 
   return 0;
