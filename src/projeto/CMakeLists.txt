@@ -45,4 +45,4 @@ rosbuild_add_executable(ardrone_altitude_fake src/ardrone_altitude_fake.cpp)
 #rosbuild_add_executable(control src/control.cpp)
 #rosbuild_add_executable(navigation src/navegation.cpp)
 
-#ADD_EXECUTABLE(ARDrone src/ARDrone.cpp)
+ADD_EXECUTABLE(Acc src/Acceleration.cpp)

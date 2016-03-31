@@ -96,6 +96,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named Acc
+
+# Build rule for target.
+Acc: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 Acc
+.PHONY : Acc
+
+# fast build rule for target.
+Acc/fast:
+	$(MAKE) -f CMakeFiles/Acc.dir/build.make CMakeFiles/Acc.dir/build
+.PHONY : Acc/fast
+
+#=============================================================================
 # Target rules for targets named ROSBUILD_genmsg_cpp
 
 # Build rule for target.
@@ -369,6 +382,21 @@ tests/fast:
 .PHONY : tests/fast
 
 # target to build an object file
+src/Acceleration.o:
+	$(MAKE) -f CMakeFiles/Acc.dir/build.make CMakeFiles/Acc.dir/src/Acceleration.o
+.PHONY : src/Acceleration.o
+
+# target to preprocess a source file
+src/Acceleration.i:
+	$(MAKE) -f CMakeFiles/Acc.dir/build.make CMakeFiles/Acc.dir/src/Acceleration.i
+.PHONY : src/Acceleration.i
+
+# target to generate assembly for a file
+src/Acceleration.s:
+	$(MAKE) -f CMakeFiles/Acc.dir/build.make CMakeFiles/Acc.dir/src/Acceleration.s
+.PHONY : src/Acceleration.s
+
+# target to build an object file
 src/ardrone_altitude_fake.o:
 	$(MAKE) -f CMakeFiles/ardrone_altitude_fake.dir/build.make CMakeFiles/ardrone_altitude_fake.dir/src/ardrone_altitude_fake.o
 .PHONY : src/ardrone_altitude_fake.o
@@ -434,6 +462,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... Acc"
 	@echo "... ROSBUILD_genmsg_cpp"
 	@echo "... ROSBUILD_genmsg_lisp"
 	@echo "... ROSBUILD_genmsg_py"
@@ -457,6 +486,9 @@ help:
 	@echo "... test-results"
 	@echo "... test-results-run"
 	@echo "... tests"
+	@echo "... src/Acceleration.o"
+	@echo "... src/Acceleration.i"
+	@echo "... src/Acceleration.s"
 	@echo "... src/ardrone_altitude_fake.o"
 	@echo "... src/ardrone_altitude_fake.i"
 	@echo "... src/ardrone_altitude_fake.s"
