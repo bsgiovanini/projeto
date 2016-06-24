@@ -7,7 +7,7 @@
 
   <param name="/use_sim_time" value="true" />
 
-  <node name="gazebo" pkg="gazebo" type="gazebo" args="$(find cvg_sim_gazebo)/worlds/3boxes_room.world" respawn="false" output="screen"/>
+  <node name="gazebo" pkg="gazebo" type="gazebo" args="$(find projeto)/worlds/3boxes_room.world" respawn="false" output="screen"/>
     <!-- start gui -->
   <group if="$(arg gui)">
     <node name="gazebo_gui" pkg="gazebo" type="gui" respawn="false" output="screen" required="true"/>
@@ -22,6 +22,8 @@
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find projeto)/rviz_configs/rviz_config.vcg"/>
 
   <node pkg="joy" type="joy_node" name="joy_node"/>
+
+  <node pkg="projeto" type="operation" name="operation" />
 
   <!--<node pkg="ardrone_joystick" type="ardrone_teleop" name="ardrone_teleop"/>-->
 

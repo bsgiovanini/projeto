@@ -200,6 +200,19 @@ pose/fast:
 .PHONY : pose/fast
 
 #=============================================================================
+# Target rules for targets named project
+
+# Build rule for target.
+project: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 project
+.PHONY : project
+
+# fast build rule for target.
+project/fast:
+	$(MAKE) -f CMakeFiles/project.dir/build.make CMakeFiles/project.dir/build
+.PHONY : project/fast
+
+#=============================================================================
 # Target rules for targets named rosbuild_precompile
 
 # Build rule for target.
@@ -388,6 +401,21 @@ src/pose.s:
 .PHONY : src/pose.s
 
 # target to build an object file
+src/project.o:
+	$(MAKE) -f CMakeFiles/project.dir/build.make CMakeFiles/project.dir/src/project.o
+.PHONY : src/project.o
+
+# target to preprocess a source file
+src/project.i:
+	$(MAKE) -f CMakeFiles/project.dir/build.make CMakeFiles/project.dir/src/project.i
+.PHONY : src/project.i
+
+# target to generate assembly for a file
+src/project.s:
+	$(MAKE) -f CMakeFiles/project.dir/build.make CMakeFiles/project.dir/src/project.s
+.PHONY : src/project.s
+
+# target to build an object file
 src/takeoff.o:
 	$(MAKE) -f CMakeFiles/takeoff.dir/build.make CMakeFiles/takeoff.dir/src/takeoff.o
 .PHONY : src/takeoff.o
@@ -417,6 +445,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... operation"
 	@echo "... pose"
+	@echo "... project"
 	@echo "... rebuild_cache"
 	@echo "... rosbuild_precompile"
 	@echo "... rosbuild_premsgsrvgen"
@@ -438,6 +467,9 @@ help:
 	@echo "... src/pose.o"
 	@echo "... src/pose.i"
 	@echo "... src/pose.s"
+	@echo "... src/project.o"
+	@echo "... src/project.i"
+	@echo "... src/project.s"
 	@echo "... src/takeoff.o"
 	@echo "... src/takeoff.i"
 	@echo "... src/takeoff.s"

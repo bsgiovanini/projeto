@@ -1,29 +1,4 @@
-/*
- * Copyright (C) 2008, Morgan Quigley and Willow Garage, Inc.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- *   * Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer.
- *   * Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *   * Neither the names of Stanford University or Willow Garage, Inc. nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- * POSSIBILITY OF SUCH DAMAGE.
- */
+
 
 #define M_PI 3.1415926535897931
 #define MAX_RANGE 3.00
@@ -35,6 +10,7 @@
 #define TTC_LIMIT 2.0
 #define OCTREE_RESOLUTION 0.1
 #define CONTROL_LIMIT 1.0
+#define DT_TRAJ 0.1
 
 
 // %Tag(FULLTEXT)%
@@ -89,7 +65,7 @@ Vector3d previous_vel(0,0,0);
 
 float previous_tm = 0.0;
 
-float quadrotor_sphere_radius = 0.8;
+float quadrotor_sphere_radius = 0.40;
 
 
 
@@ -594,7 +570,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     Vector3d future_position;
 
-    vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, 0.1, future_position);
+    vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, DT_TRAJ, future_position);
 
     sensor_msgs::PointCloud pc;
     pc.header.frame_id = "/nav";
@@ -609,7 +585,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
         Vector3d pos = *it;
 
-        pc.channels[0].values[i] = 0;
+        pc.channels[0].values[i] = timestamp + (i+1)*DT_TRAJ;
         pc.points[i].x = pos(0);
         pc.points[i].y = pos(1);
         pc.points[i].z = pos(2);
