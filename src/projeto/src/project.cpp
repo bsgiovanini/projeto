@@ -20,6 +20,7 @@ ofstream result_txt;
 float pose_x, pose_y, pose_z;
 vector<Vector3d> trajectory;
 vector<float> trajectory_tm;
+Vector3d vel;
 
 
 void pose_callback(const geometry_msgs::PoseStamped& msg_in)
@@ -28,6 +29,12 @@ void pose_callback(const geometry_msgs::PoseStamped& msg_in)
     pose_y = msg_in.pose.position.y;
     pose_z = msg_in.pose.position.z;
 }
+
+void vel_callback(const geometry_msgs::Point& msg_in)
+{
+    vel = Vector3d(msg_in.x, msg_in.y, msg_in.z);
+}
+
 
 void trajectory_callback(const sensor_msgs::PointCloud& msg_in)
 {
@@ -48,13 +55,15 @@ int main(int argc, char** argv){
 
   result_txt.open("mybag.csv");
 
-  result_txt << "time, tf_x, tf_y, tf_z, pose_x, pose_y, pose_z\n";
+  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z\n";
 
   ros::init(argc, argv, "my_tf_listener");
 
   ros::NodeHandle node;
 
   ros::Subscriber sub_pose = node.subscribe("/project/pose", 1, pose_callback);
+
+  ros::Subscriber sub_vel = node.subscribe("/project/vel", 1, vel_callback);
 
   ros::Subscriber sub_trajectory = node.subscribe("/project/trajectory", 1, trajectory_callback);
 
@@ -90,6 +99,7 @@ int main(int argc, char** argv){
         << ros::Time::now().toSec() << ","
         << mtransform.getOrigin().x() << "," << mtransform.getOrigin().y() << "," << mtransform.getOrigin().z() << ","
         << pose_x << "," << pose_y << "," << pose_z << ","
+        << vel(0) << "," << vel(1) << "," << vel(2) << ","
         << traj_text << ","
         << endl;
 
