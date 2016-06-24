@@ -81,7 +81,7 @@ int main(int argc, char** argv){
     for (unsigned j=0; j<trajectory.size(); j++) {
         Vector3d pos = trajectory.at(j);
         float tm = trajectory_tm.at(j);
-        traj_text += "[" + boost::to_string(tm) + ":"  + "[" + boost::to_string(pos(0)) +";"+ boost::to_string(pos(1)) + ";"+ boost::to_string(pos(2)) +  "]" + "]";
+        traj_text += "[" + boost::to_string(tm) + ":"  + "[" + boost::to_string(pos(0)) +";"+ boost::to_string(pos(1)) + ";"+ boost::to_string(pos(2)) +  "]" + "],";
     }
 
     traj_text += "]";

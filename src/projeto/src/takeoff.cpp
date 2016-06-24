@@ -54,7 +54,7 @@ using namespace std;
 pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_grid_cell2, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist, pub_vel2;
 geometry_msgs::Twist twist;
 
 
@@ -558,6 +558,15 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d vel = R * velV;
 
+
+
+	geometry_msgs::Point velPoint;
+    velPoint.x = vel(0);
+    velPoint.y = vel(1);
+    velPoint.z = vel(2);
+
+    pub_vel2.publish(velPoint);
+
 	Vector3d x_new = x + vel*dt;
 
     //pthread_mutex_lock(&mutex_1);
@@ -624,8 +633,16 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     gcells.cell_width = OCTREE_RESOLUTION;
     gcells.cell_height = OCTREE_RESOLUTION;
 
+    nav_msgs::GridCells gcells2;
+    gcells2.header.frame_id = "/nav";
+    gcells2.header.stamp = ros::Time();
+    gcells2.cell_width = OCTREE_RESOLUTION;
+    gcells2.cell_height = OCTREE_RESOLUTION;
+
 
     vector<geometry_msgs::Point> obstaclerepo;
+    vector<geometry_msgs::Point> obstaclerepo2;
+
 
 
     if (control_mode) {
@@ -686,15 +703,21 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
             //if (!in_perimeter(x, wrapped_coords, 0.5)) {
+            geometry_msgs::Point cell;
+            cell.x = coords(0);
+            cell.y = coords(1);
+            cell.z = coords(2);
+            obstaclerepo.push_back(cell);
 
-                geometry_msgs::Point cell;
-                cell.x = coords(0);
-                cell.y = coords(1);
-                cell.z = coords(2);
-                obstaclerepo.push_back(cell);
 
 
                 if (it->getValue() > 0.0) {
+
+                    geometry_msgs::Point cell2;
+                    cell2.x = coords(0);
+                    cell2.y = coords(1);
+                    cell2.z = coords(2);
+                    obstaclerepo2.push_back(cell2);
 
 
                     for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
@@ -752,7 +775,16 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         obstaclerepo.pop_back();
     }
 
-    //pub_grid_cell.publish(gcells);
+    pub_grid_cell.publish(gcells);
+
+    int count_cells2 = 0;
+    gcells2.cells.resize(obstaclerepo2.size());
+    while (!obstaclerepo2.empty()) {
+        gcells2.cells[count_cells2++] = obstaclerepo2.back();
+        obstaclerepo2.pop_back();
+    }
+
+    pub_grid_cell2.publish(gcells2);
 
     gettimeofday(&stop, NULL);
 
@@ -842,7 +874,9 @@ int main(int argc, char **argv)
 
   pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
+  pub_vel2                  = n.advertise<geometry_msgs::Point>("/project/vel",1);
   pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
+  pub_grid_cell2            = n.advertise<nav_msgs::GridCells>("/project/grid_cells2",1);
   pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
   pub_pc                    = n.advertise<sensor_msgs::PointCloud>("/project/ray",  1);
   pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
