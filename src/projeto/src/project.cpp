@@ -32,6 +32,8 @@ void pose_callback(const geometry_msgs::PoseStamped& msg_in)
 void trajectory_callback(const sensor_msgs::PointCloud& msg_in)
 {
 
+    trajectory.clear();
+    trajectory_tm.clear();
     int i = 0;
     for (i = 0; i < msg_in.points.size(); i++) {
         trajectory.push_back(Vector3d(msg_in.points[i].x, msg_in.points[i].y, msg_in.points[i].z));
