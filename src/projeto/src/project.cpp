@@ -83,7 +83,7 @@ int main(int argc, char** argv){
     ros::spinOnce();
     tf::StampedTransform mtransform;
     try{
-      listener.lookupTransform("/nav", "/base_footprint",
+      listener.lookupTransform("/nav", "/base_link",
                                ros::Time(0), mtransform);
     }
     catch (tf::TransformException &ex) {
