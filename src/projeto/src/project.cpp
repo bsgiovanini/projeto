@@ -21,6 +21,7 @@ float pose_x, pose_y, pose_z;
 vector<Vector3d> trajectory;
 vector<float> trajectory_tm;
 Vector3d vel;
+Vector3d velr;
 
 
 void pose_callback(const geometry_msgs::PoseStamped& msg_in)
@@ -33,6 +34,11 @@ void pose_callback(const geometry_msgs::PoseStamped& msg_in)
 void vel_callback(const geometry_msgs::Point& msg_in)
 {
     vel = Vector3d(msg_in.x, msg_in.y, msg_in.z);
+}
+
+void velr_callback(const geometry_msgs::Point& msg_in)
+{
+    velr = Vector3d(msg_in.x, msg_in.y, msg_in.z);
 }
 
 
@@ -55,7 +61,7 @@ int main(int argc, char** argv){
 
   result_txt.open("mybag.csv");
 
-  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z\n";
+  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z, velr_x, velr_y, velr_z, traj\n";
 
   ros::init(argc, argv, "my_tf_listener");
 
@@ -64,6 +70,8 @@ int main(int argc, char** argv){
   ros::Subscriber sub_pose = node.subscribe("/project/pose", 1, pose_callback);
 
   ros::Subscriber sub_vel = node.subscribe("/project/vel", 1, vel_callback);
+
+  ros::Subscriber sub_velr = node.subscribe("/project/velr", 1, velr_callback);
 
   ros::Subscriber sub_trajectory = node.subscribe("/project/trajectory", 1, trajectory_callback);
 
@@ -90,7 +98,7 @@ int main(int argc, char** argv){
     for (unsigned j=0; j<trajectory.size(); j++) {
         Vector3d pos = trajectory.at(j);
         float tm = trajectory_tm.at(j);
-        traj_text += "[" + boost::to_string(tm) + ":"  + "[" + boost::to_string(pos(0)) +";"+ boost::to_string(pos(1)) + ";"+ boost::to_string(pos(2)) +  "]" + "],";
+        traj_text += "[" + boost::to_string(tm) + ":"  + "[" + boost::to_string(pos(0)) +";"+ boost::to_string(pos(1)) + ";"+ boost::to_string(pos(2)) +  "]" + "]+";
     }
 
     traj_text += "]";
@@ -100,6 +108,7 @@ int main(int argc, char** argv){
         << mtransform.getOrigin().x() << "," << mtransform.getOrigin().y() << "," << mtransform.getOrigin().z() << ","
         << pose_x << "," << pose_y << "," << pose_z << ","
         << vel(0) << "," << vel(1) << "," << vel(2) << ","
+        << velr(0) << "," << velr(1) << "," << velr(2) << ","
         << traj_text << ","
         << endl;
 

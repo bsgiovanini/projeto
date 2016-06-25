@@ -54,7 +54,7 @@ using namespace std;
 pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_grid_cell2, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist, pub_vel2;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_grid_cell2, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist, pub_vel2, pub_vel3;
 geometry_msgs::Twist twist;
 
 
@@ -552,6 +552,13 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d velV (vx_, vy_, vz_);
 
+	geometry_msgs::Point velPointr;
+    velPointr.x = velV(0);
+    velPointr.y = velV(1);
+    velPointr.z = velV(2);
+
+    pub_vel3.publish(velPointr);
+
 	Quaternion<double> rotQ = rotation(theta);
 
 	Matrix3d R = rotQ.matrix();
@@ -875,6 +882,7 @@ int main(int argc, char **argv)
   pub_enable_collision_mode = n.advertise<std_msgs::Bool>("/project/collision_mode",1);
   pub_vel                   = n.advertise<geometry_msgs::Twist>("/cmd_vel",1);
   pub_vel2                  = n.advertise<geometry_msgs::Point>("/project/vel",1);
+  pub_vel3                  = n.advertise<geometry_msgs::Point>("/project/velr",1);
   pub_grid_cell             = n.advertise<nav_msgs::GridCells>("/project/grid_cells",1);
   pub_grid_cell2            = n.advertise<nav_msgs::GridCells>("/project/grid_cells2",1);
   pub_pose                  = n.advertise<geometry_msgs::PoseStamped>("/project/pose",1);
