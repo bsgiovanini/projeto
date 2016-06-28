@@ -44,6 +44,7 @@
 #include <cmath>
 #include <limits>
 
+#include <tf/transform_listener.h>
 
 
 using namespace Eigen;
@@ -898,8 +899,29 @@ int main(int argc, char **argv)
    */
 
 // %Tag(SPIN)%
-  ros::spin();
+   ros::spin();
 // %EndTag(SPIN)%
+    /*tf::TransformListener listener;
+
+    ros::Rate rate(50.0);
+    while (n.ok()){
+
+        ros::spinOnce();
+        tf::StampedTransform mtransform;
+        try{
+            listener.lookupTransform("/nav", "/base_link",
+                               ros::Time(0), mtransform);
+
+            x = Vector3d(mtransform.getOrigin().x(),mtransform.getOrigin().y(),mtransform.getOrigin().z());
+        }
+        catch (tf::TransformException &ex) {
+            ROS_ERROR("%s",ex.what());
+            ros::Duration(1.0).sleep();
+            continue;
+        }
+        rate.sleep();
+    }*/
+
 
   struct sigaction sigIntHandler;
 
