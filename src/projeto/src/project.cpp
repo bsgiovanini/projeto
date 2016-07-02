@@ -102,7 +102,7 @@ int main(int argc, char** argv){
 
   tf::TransformListener listener;
 
-  ros::Rate rate(10.0);
+  ros::Rate rate(200.0);
   while (node.ok()){
 
     ros::spinOnce();
