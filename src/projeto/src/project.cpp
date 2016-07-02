@@ -22,6 +22,7 @@ vector<Vector3d> trajectory;
 vector<float> trajectory_tm;
 Vector3d vel;
 Vector3d velr;
+float short_dist, control_mode, ttc;
 
 
 void pose_callback(const geometry_msgs::PoseStamped& msg_in)
@@ -39,6 +40,13 @@ void vel_callback(const geometry_msgs::Point& msg_in)
 void velr_callback(const geometry_msgs::Point& msg_in)
 {
     velr = Vector3d(msg_in.x, msg_in.y, msg_in.z);
+}
+
+void shortDist_callback(const geometry_msgs::Point& msg_in)
+{
+    short_dist = msg_in.x;
+    control_mode = msg_in.y;
+    ttc = msg_in.z;
 }
 
 
@@ -61,7 +69,7 @@ int main(int argc, char** argv){
 
   result_txt.open("mybag.csv");
 
-  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z, velr_x, velr_y, velr_z, traj\n";
+  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z, velr_x, velr_y, velr_z, shortDist, control_mode, ttc, traj\n";
 
   ros::init(argc, argv, "my_tf_listener");
 
@@ -72,6 +80,8 @@ int main(int argc, char** argv){
   ros::Subscriber sub_vel = node.subscribe("/project/vel", 1, vel_callback);
 
   ros::Subscriber sub_velr = node.subscribe("/project/velr", 1, velr_callback);
+
+  ros::Subscriber sub_shortDist = node.subscribe("/project/shortDist", 1, shortDist_callback);
 
   ros::Subscriber sub_trajectory = node.subscribe("/project/trajectory", 1, trajectory_callback);
 
@@ -109,6 +119,10 @@ int main(int argc, char** argv){
         << pose_x << "," << pose_y << "," << pose_z << ","
         << vel(0) << "," << vel(1) << "," << vel(2) << ","
         << velr(0) << "," << velr(1) << "," << velr(2) << ","
+        << short_dist << "," << control_mode << "," << ttc << ","
+        << short_dist << "," << control_mode << "," << ttc << ","
+        << short_dist << "," << control_mode << "," << ttc << ","
+        << short_dist << "," << control_mode << "," << ttc << ","
         << traj_text << ","
         << endl;
 

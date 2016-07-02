@@ -5,9 +5,9 @@
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 1.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
-#define TTC_LIMIT 2.0
+#define TTC_LIMIT TIME_AHEAD
 #define OCTREE_RESOLUTION 0.1
 #define CONTROL_LIMIT 1.0
 #define DT_TRAJ 0.1
@@ -55,7 +55,7 @@ using namespace std;
 pthread_mutex_t mutex_1     = PTHREAD_MUTEX_INITIALIZER;
 
 
-ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_grid_cell2, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist, pub_vel2, pub_vel3;
+ros::Publisher pub_enable_collision_mode, pub_vel, pub_grid_cell, pub_grid_cell2, pub_pose, pub_pc, pub_pc2, pub_pc3, pub_dist, pub_vel2, pub_vel3, pub_shortDist;
 geometry_msgs::Twist twist;
 
 
@@ -575,10 +575,10 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     pub_vel2.publish(velPoint);
 
-	Vector3d x_new = x + vel*dt;
+	//Vector3d x_new = x + vel*dt;
 
     //pthread_mutex_lock(&mutex_1);
-    x = x_new;
+    //x = x_new;
 
     //f_vector_print("posicao", x);
 
@@ -620,6 +620,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     float short_dist = MAX_DIST;
 
+    float ttc = TTC_LIMIT;
 
     geometry_msgs::PoseStamped pose;
     pose.header.frame_id = "/nav";
@@ -651,7 +652,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     vector<geometry_msgs::Point> obstaclerepo;
     vector<geometry_msgs::Point> obstaclerepo2;
 
-
+    geometry_msgs::Point shortPoint;
+    shortPoint.x = short_dist;
+    shortPoint.y = (float)control_mode;
+    shortPoint.z = ttc;
+    pub_shortDist.publish(shortPoint);
 
     if (control_mode) {
 
@@ -669,9 +674,9 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
             double cz   = within(u_z, -1, 1);
             double cyaw = within(u_yaw, -1, 1);
 
-            f_vector_print("objetivo", pos_obj);
+            //f_vector_print("objetivo", pos_obj);
 
-            f_vector_print("posicao", x);
+            //f_vector_print("posicao", x);
 
             Command cmd(cx, cy, cz, cyaw);
             send_velocity_command(cmd);
@@ -719,14 +724,18 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
 
-                if (it->getValue() > 0.0) {
+            if (it->getValue() > 0.0) {
 
-                    geometry_msgs::Point cell2;
-                    cell2.x = coords(0);
-                    cell2.y = coords(1);
-                    cell2.z = coords(2);
-                    obstaclerepo2.push_back(cell2);
+                geometry_msgs::Point cell2;
+                cell2.x = coords(0);
+                cell2.y = coords(1);
+                cell2.z = coords(2);
+                obstaclerepo2.push_back(cell2);
 
+                Vector3d vectAux = wrapped_coords - x;
+                float cos = (vel.dot(vectAux))/(vel.norm()*vectAux.norm());
+
+                if (cos >= 0.7 && cos <= 1) {
 
                     for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
@@ -743,38 +752,52 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
                         }
 
                     }
-
                 }
+
+            }
               //manipulate node, e.g.:
               //cout << "Node center: " << it.getCoordinate() << endl;
               //cout << "Node size: " << it.getSize() << endl;
               //cout << "Node value: " << it->getValue() << endl;
 
-                if (short_dist < MAX_DIST) {
 
-                    cout << "short dist " << short_dist << endl;
+        }
 
-                    float ttc = short_dist/vel.norm();
+        if (short_dist < MAX_DIST) {
 
-                    if (ttc < TTC_LIMIT) {
+                cout << "short dist " << short_dist << endl;
 
-                        pos_obj = x;
-                        yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
-                        send_collision_mode_msg(true);
-                        control_mode = 1;
-                        contador = timestamp;
-                        pid_x.reset();
-                        pid_y.reset();
-                        pid_z.reset();
-                        pid_yaw.reset();
+                ttc = short_dist/vel.norm();
 
-                    }
+                if (ttc < TTC_LIMIT) {
+
+                    pos_obj = x;
+                    yaw_obj = atan2(sin(theta(2)),cos(theta(2)));
+                    send_collision_mode_msg(true);
+                    control_mode = 1;
+                    contador = timestamp;
+                    pid_x.reset();
+                    pid_y.reset();
+                    pid_z.reset();
+                    pid_yaw.reset();
 
                 }
+
             }
+
+            geometry_msgs::Point shortPoint;
+            shortPoint.x = short_dist;
+            shortPoint.y = (float)control_mode;
+            shortPoint.z = ttc;
+            pub_shortDist.publish(shortPoint);
+
         //}
 
     }
+
+
+
+
 
     int count_cells = 0;
     gcells.cells.resize(obstaclerepo.size());
@@ -891,6 +914,9 @@ int main(int argc, char **argv)
   pub_pc2                   = n.advertise<sensor_msgs::PointCloud>("/project/trajectory",  1);
   pub_pc3                   = n.advertise<sensor_msgs::PointCloud>("/project/cast",  1);
   pub_dist                  = n.advertise<std_msgs::Float32>("/project/mydist",  1);
+  pub_shortDist                  = n.advertise<geometry_msgs::Point>("/project/shortDist",1);
+
+
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
@@ -899,11 +925,11 @@ int main(int argc, char **argv)
    */
 
 // %Tag(SPIN)%
-   ros::spin();
+//   ros::spin();
 // %EndTag(SPIN)%
-    /*tf::TransformListener listener;
+    tf::TransformListener listener;
 
-    ros::Rate rate(50.0);
+    ros::Rate rate(200.0);
     while (n.ok()){
 
         ros::spinOnce();
@@ -920,7 +946,7 @@ int main(int argc, char **argv)
             continue;
         }
         rate.sleep();
-    }*/
+    }
 
 
   struct sigaction sigIntHandler;
