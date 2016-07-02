@@ -10,6 +10,7 @@
 #include "geometry_msgs/Point32.h"
 #include "geometry_msgs/PoseStamped.h"
 #include "std_msgs/Float32.h"
+#include "sensor_msgs/Joy.h"
 
 #include <eigen3/Eigen/Dense>
 
@@ -23,6 +24,7 @@ vector<float> trajectory_tm;
 Vector3d vel;
 Vector3d velr;
 float short_dist, control_mode, ttc;
+float command_x, command_y, command_z, command_yaw;
 
 
 void pose_callback(const geometry_msgs::PoseStamped& msg_in)
@@ -65,11 +67,22 @@ void trajectory_callback(const sensor_msgs::PointCloud& msg_in)
 
 }
 
+void joy_callback(const sensor_msgs::JoyConstPtr& joy_msg){
+
+    float scale = 1;
+
+    command_x = scale*joy_msg->axes[1];
+    command_y = scale*joy_msg->axes[0];
+    command_z = scale*joy_msg->axes[3];
+    command_yaw = scale*joy_msg->axes[2];
+}
+
+
 int main(int argc, char** argv){
 
   result_txt.open("mybag.csv");
 
-  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z, velr_x, velr_y, velr_z, shortDist, control_mode, ttc, traj\n";
+  result_txt << "time, tf_x, tf_y, tf_z, loc_x, loc_y, loc_z, vel_x, vel_y, vel_z, velr_x, velr_y, velr_z, shortDist, control_mode, ttc, joy_x, joy_y, joy_z, joy_yaw, traj_futura\n";
 
   ros::init(argc, argv, "my_tf_listener");
 
@@ -84,6 +97,8 @@ int main(int argc, char** argv){
   ros::Subscriber sub_shortDist = node.subscribe("/project/shortDist", 1, shortDist_callback);
 
   ros::Subscriber sub_trajectory = node.subscribe("/project/trajectory", 1, trajectory_callback);
+
+  ros::Subscriber joy_sub = node.subscribe("/joy", 1, joy_callback);
 
   tf::TransformListener listener;
 
@@ -120,13 +135,9 @@ int main(int argc, char** argv){
         << vel(0) << "," << vel(1) << "," << vel(2) << ","
         << velr(0) << "," << velr(1) << "," << velr(2) << ","
         << short_dist << "," << control_mode << "," << ttc << ","
-        << short_dist << "," << control_mode << "," << ttc << ","
-        << short_dist << "," << control_mode << "," << ttc << ","
-        << short_dist << "," << control_mode << "," << ttc << ","
+        << command_x << "," << command_y << "," << command_z <<  "," << command_yaw << ","
         << traj_text << ","
         << endl;
-
-
 
     rate.sleep();
   }

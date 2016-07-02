@@ -743,7 +743,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
                         if (there_will_be_collision(pos, wrapped_coords)) {
 
-                            float dist = (wrapped_coords - x).norm();
+                            float dist = (wrapped_coords - x).norm() - OCTREE_RESOLUTION;
 
                             if (dist < short_dist) {
                                 short_dist = dist;
