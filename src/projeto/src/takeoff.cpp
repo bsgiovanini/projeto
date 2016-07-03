@@ -5,7 +5,7 @@
 #define MAP_MAX_RANGE MAX_RANGE-0.01
 #define MAX_DIST 1000
 #define V_MAX 1.5 // max velocity considered in m/s
-#define TIME_AHEAD 2.0 // amount of time will be looked to predict the trajectory
+#define TIME_AHEAD 0.5 // amount of time will be looked to predict the trajectory
 #define DELTA_VOL V_MAX*TIME_AHEAD
 #define TTC_LIMIT TIME_AHEAD
 #define OCTREE_RESOLUTION 0.1
