@@ -66,7 +66,7 @@ Vector3d previous_vel(0,0,0);
 
 float previous_tm = 0.0;
 
-float quadrotor_sphere_radius = 0.40;
+float quadrotor_sphere_radius = 0.30;
 
 
 
@@ -743,7 +743,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
                         if (there_will_be_collision(pos, wrapped_coords)) {
 
-                            float dist = (wrapped_coords - x).norm() - OCTREE_RESOLUTION;
+                            float dist = (wrapped_coords - x).norm() - (quadrotor_sphere_radius);
 
                             if (dist < short_dist) {
                                 short_dist = dist;
