@@ -12,6 +12,7 @@
 #define CONTROL_LIMIT 1.0
 #define DT_TRAJ 0.1
 
+#define TIME(a,b) ((a*1000000ull) + b)
 
 // %Tag(FULLTEXT)%
 #include "ros/ros.h"
@@ -60,9 +61,6 @@ geometry_msgs::Twist twist;
 
 
 Vector3d theta(0,0,0);
-Vector3d previous_theta(0,0,0);
-Vector3d previous_omega(0,0,0);
-Vector3d previous_vel(0,0,0);
 
 float previous_tm = 0.0;
 
@@ -532,8 +530,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     struct timeval stop, start;
     gettimeofday(&start, NULL);
-    //do stuff
-
+    long starttime = TIME(start.tv_sec,start.tv_usec);
     float timestamp = msg_in.tm/1000000;
 
     //timestamp in microsecs
@@ -553,12 +550,12 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d velV (vx_, vy_, vz_);
 
-	geometry_msgs::Point velPointr;
+	/*geometry_msgs::Point velPointr;
     velPointr.x = velV(0);
     velPointr.y = velV(1);
     velPointr.z = velV(2);
 
-    pub_vel3.publish(velPointr);
+    pub_vel3.publish(velPointr);*/
 
 	Quaternion<double> rotQ = rotation(theta);
 
@@ -566,14 +563,12 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 	Vector3d vel = R * velV;
 
-
-
-	geometry_msgs::Point velPoint;
+	/*geometry_msgs::Point velPoint;
     velPoint.x = vel(0);
     velPoint.y = vel(1);
     velPoint.z = vel(2);
 
-    pub_vel2.publish(velPoint);
+    pub_vel2.publish(velPoint);*/
 
 	//Vector3d x_new = x + vel*dt;
 
@@ -589,15 +584,15 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     vector<Vector3d> trajectory = predict_trajectory2(vel, x, timestamp, timestamp + TIME_AHEAD, DT_TRAJ, future_position);
 
-    sensor_msgs::PointCloud pc;
+    /*sensor_msgs::PointCloud pc;
     pc.header.frame_id = "/nav";
     pc.header.stamp = ros::Time();
     pc.channels.resize(1);
     pc.channels[0].name="trajectory";
     pc.channels[0].values.resize(trajectory.size());
-    pc.points.resize(trajectory.size());
+    pc.points.resize(trajectory.size());*/
 
-    int i = 0;
+   /* int i = 0;
     for (vector<Vector3d>::iterator it=trajectory.begin(); it!=trajectory.end(); ++it) {
 
         Vector3d pos = *it;
@@ -607,12 +602,12 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         pc.points[i].y = pos(1);
         pc.points[i].z = pos(2);
         i++;
-    }
+    }*/
 
 
 
 
-    pub_pc2.publish(pc);
+    /*pub_pc2.publish(pc);*/
 
 
 
@@ -622,7 +617,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
     float ttc = TTC_LIMIT;
 
-    geometry_msgs::PoseStamped pose;
+    /*geometry_msgs::PoseStamped pose;
     pose.header.frame_id = "/nav";
     pose.header.stamp = ros::Time();
 
@@ -656,7 +651,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
     shortPoint.x = short_dist;
     shortPoint.y = (float)control_mode;
     shortPoint.z = ttc;
-    pub_shortDist.publish(shortPoint);
+    pub_shortDist.publish(shortPoint); */
 
     if (control_mode) {
 
@@ -716,24 +711,24 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
             //if (!in_perimeter(x, wrapped_coords, 0.5)) {
-            geometry_msgs::Point cell;
+            /*geometry_msgs::Point cell;
             cell.x = coords(0);
             cell.y = coords(1);
             cell.z = coords(2);
-            obstaclerepo.push_back(cell);
+            obstaclerepo.push_back(cell);*/
 
 
 
             if (it->getValue() > 0.0) {
 
-                geometry_msgs::Point cell2;
+                /*geometry_msgs::Point cell2;
                 cell2.x = coords(0);
                 cell2.y = coords(1);
                 cell2.z = coords(2);
-                obstaclerepo2.push_back(cell2);
+                obstaclerepo2.push_back(cell2);*/
 
-                Vector3d vectAux = wrapped_coords - x;
-                float cos = (vel.dot(vectAux))/(vel.norm()*vectAux.norm());
+                Vector3d d = wrapped_coords - x;
+                float cos = (vel.dot(d))/(vel.norm()*d.norm());
 
                 if (cos >= 0.7 && cos <= 1) {
 
@@ -765,7 +760,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
         if (short_dist < MAX_DIST) {
 
-                cout << "short dist " << short_dist << endl;
+                //cout << "short dist " << short_dist << endl;
 
                 ttc = short_dist/vel.norm();
 
@@ -785,11 +780,11 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
             }
 
-            geometry_msgs::Point shortPoint;
+            /*geometry_msgs::Point shortPoint;
             shortPoint.x = short_dist;
             shortPoint.y = (float)control_mode;
             shortPoint.z = ttc;
-            pub_shortDist.publish(shortPoint);
+            pub_shortDist.publish(shortPoint);*/
 
         //}
 
@@ -799,7 +794,7 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
 
 
 
-    int count_cells = 0;
+    /*int count_cells = 0;
     gcells.cells.resize(obstaclerepo.size());
     while (!obstaclerepo.empty()) {
         gcells.cells[count_cells++] = obstaclerepo.back();
@@ -815,21 +810,23 @@ void nav_callback(const ardrone_autonomy::Navdata& msg_in)
         obstaclerepo2.pop_back();
     }
 
-    pub_grid_cell2.publish(gcells2);
+    pub_grid_cell2.publish(gcells2);*/
 
     gettimeofday(&stop, NULL);
 
+    long stoptime = TIME(stop.tv_sec,stop.tv_usec);
+
     previous_tm = timestamp;
 
-    previous_vel = vel;
+    //previous_vel = vel;
 
-    previous_theta = theta;
+    //previous_theta = theta;
 
     //previous_omega = omega;
 
-    //gettimeofday(&stop, NULL);
+    gettimeofday(&stop, NULL);
 
-    //cout << "time took: "<< stop.tv_usec - start.tv_usec << endl;
+    cout << "time took: "<< (stoptime - starttime)/1000000.0 << endl;
 
 }
 // %EndTag(CALLBACK)%
